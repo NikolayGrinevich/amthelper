@@ -179,13 +179,18 @@ export default function LetterGeneratorPage() {
   const [isEditing, setIsEditing] = useState(false);
   const [generatedLetter, setGeneratedLetter] = useState<GeneratedLetter | null>(null);
   const [sourceDoc, setSourceDoc] = useState<AnalyzedDocument | null>(null);
-  const [showToast, setShowToast] = useState<string | null>(null);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const translations = t[locale as keyof typeof t] || t.ru;
   const templateOptions = TEMPLATE_OPTIONS[locale as keyof typeof TEMPLATE_OPTIONS] || TEMPLATE_OPTIONS.ru;
 
+  const showToastMsg = (message: string) => {
+    setToastMessage(message);
+    setTimeout(() => setToastMessage(null), 3000);
+  };
+
+  // Load source document from URL params
   useEffect(() => {
-    const fromDoc = searchParams.get('from');
     const docId = searchParams.get('id');
     if (fromDoc === 'document' && docId && user) {
       loadSourceDocument(docId);
@@ -224,7 +229,7 @@ export default function LetterGeneratorPage() {
       return;
     }
     if (!sourceDoc?.id) {
-      showToast('Нет исходного документа для генерации');
+      showToastMsg('Нет исходного документа для генерации');
       return;
     }
 
@@ -257,7 +262,7 @@ export default function LetterGeneratorPage() {
       showToastMsg(translations.letterSaved);
     } catch (err) {
       console.error('Generate error:', err);
-      showToast(err instanceof Error ? err.message : translations.error);
+      showToastMsg(err instanceof Error ? err.message : translations.error);
     } finally {
       setIsGenerating(false);
     }
@@ -284,11 +289,6 @@ export default function LetterGeneratorPage() {
   const handleSave = async () => {
     if (!generatedLetter) return;
     showToastMsg(translations.letterSaved);
-  };
-
-  const showToast_old = (message: string) => {
-    setShowToast(message);
-    setTimeout(() => setShowToast(null), 3000);
   };
 
   if (authLoading) {
@@ -486,7 +486,7 @@ export default function LetterGeneratorPage() {
           <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
           </svg>
-          {showToast}
+          {toastMessage}
         </div>
       )}
 
