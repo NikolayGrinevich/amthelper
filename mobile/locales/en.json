@@ -1,0 +1,40 @@
+{
+  "auth": {
+    "signin_title": "Sign In",
+    "signup_title": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "signin_button": "Sign In",
+    "signup_button": "Sign Up",
+    "no_account": "Don't have an account?",
+    "have_account": "Already have an account?"
+  },
+  "dashboard": {
+    "title": "Overview",
+    "upload": "Upload Document",
+    "analyze": "Analyze",
+    "deadline": "Deadline",
+    "checklist": "Checklist",
+    "letter": "Letter"
+  },
+  "documents": {
+    "title": "My Documents",
+    "empty": "No documents uploaded",
+    "type": "Document Type",
+    "deadline": "Deadline",
+    "action": "Required Action"
+  },
+  "letters": {
+    "title": "Letters",
+    "generate": "Generate Letter",
+    "edit": "Edit",
+    "export": "Export as PDF",
+    "copy": "Copy"
+  },
+  "billing": {
+    "free": "Free",
+    "pro": "Pro (€4.99/month)",
+    "business": "Business (€14.99/month)",
+    "upgrade": "Upgrade to Pro"
+  }
+}

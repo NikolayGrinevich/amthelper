@@ -1,0 +1,40 @@
+{
+  "auth": {
+    "signin_title": "Anmelden",
+    "signup_title": "Registrieren",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "signin_button": "Anmelden",
+    "signup_button": "Registrieren",
+    "no_account": "Haben Sie kein Konto?",
+    "have_account": "Haben Sie bereits ein Konto?"
+  },
+  "dashboard": {
+    "title": "Übersicht",
+    "upload": "Dokument hochladen",
+    "analyze": "Analysieren",
+    "deadline": "Fristende",
+    "checklist": "Checkliste",
+    "letter": "Brief"
+  },
+  "documents": {
+    "title": "Meine Dokumente",
+    "empty": "Keine Dokumente hochgeladen",
+    "type": "Dokumenttyp",
+    "deadline": "Fristende",
+    "action": "Erforderliche Aktion"
+  },
+  "letters": {
+    "title": "Briefe",
+    "generate": "Brief generieren",
+    "edit": "Bearbeiten",
+    "export": "Exportieren als PDF",
+    "copy": "Kopieren"
+  },
+  "billing": {
+    "free": "Kostenlos",
+    "pro": "Pro (€4,99/Monat)",
+    "business": "Business (€14,99/Monat)",
+    "upgrade": "Auf Pro aktualisieren"
+  }
+}

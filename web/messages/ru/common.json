@@ -1,0 +1,146 @@
+{
+  "nav": {
+    "dashboard": "Панель управления",
+    "analyzer": "Анализ документов",
+    "letter": "Генератор писем",
+    "deadline": "Сроки",
+    "checklist": "Чеклист",
+    "templates": "Шаблоны"
+  },
+  "home": {
+    "title": "AmtHelper - Помощник для немецких ведомств",
+    "description": "Умный анализ документов и генерация писем",
+    "cta": "Начать бесплатно"
+  },
+  "auth": {
+    "signIn": "Вход",
+    "signUp": "Регистрация",
+    "email": "Email",
+    "password": "Пароль",
+    "login": "Войти",
+    "register": "Зарегистрироваться",
+    "logout": "Выход",
+    "language": "Язык",
+    "loading": "Загрузка..."
+  },
+  "common": {
+    "welcome": "Добро пожаловать в AmtHelper!",
+    "subtitle": "Ваш помощник по немецким официальным письмам",
+    "uploadDoc": "Загрузить документ",
+    "viewDeadlines": "Посмотреть сроки",
+    "features": "Функционал",
+    "documentAnalyzer": "Анализатор документов",
+    "analyzeDescription": "Загрузите письмо и получите summary с помощью AI",
+    "deadlineTracker": "Управление сроками",
+    "trackDescription": "Отслеживайте важные даты и получайте уведомления",
+    "letterGenerator": "Генератор писем",
+    "generateDescription": "Создавайте ответы на основе шаблонов",
+    "documentChecklist": "Чек-лист документов",
+    "checklistDescription": "Отслеживайте документы, необходимые для ответа",
+    "templates": "Шаблоны",
+    "templatesDescription": "Используйте готовые шаблоны для разных типов писем",
+    "multilingual": "Многоязычность",
+    "multilingualDescription": "Поддержка DE, RU, UK, RO",
+    "recentDocuments": "Последние документы",
+    "quickLinks": "Быстрые ссылки",
+    "noDocuments": "Документов пока нет. Загрузите первый!",
+    "stats": {
+      "documents": "Документы",
+      "deadlines": "Сроки",
+      "completed": "Завершено",
+      "letters": "Письма"
+    },
+    "greetingPrefix": "Привет",
+    "dashboardDefaultTitle": "Панель управления"
+  },
+  "modules": {
+    "documentAnalyzer": {
+      "title": "Анализ документов",
+      "subtitle": "Загрузите официальное письмо для быстрого анализа",
+      "uploaderCTA": "Нажмите для загрузки или перетащите файл",
+      "uploaderHint": "PNG, JPG, GIF до 10MB",
+      "actions": {
+        "analyze": "Анализировать документ"
+      },
+      "analysis": {
+        "selectFile": "Выберите файл",
+        "running": "Анализ..."
+      },
+      "results": {
+        "title": "Результаты анализа",
+        "sender": "Отправитель",
+        "type": "Тип документа",
+        "deadline": "Крайний срок"
+      },
+      "history": {
+        "title": "Недавние анализы"
+      }
+    },
+    "deadlineTracker": {
+      "title": "Сроки",
+      "add_deadline": "Добавить срок",
+      "cancel": "Отмена",
+      "title": "Название",
+      "title_placeholder": "Например: ответ на письмо Finanzamt",
+      "description": "Описание",
+      "description_placeholder": "Дополнительные детали",
+      "due_date": "Дата",
+      "priority": "Приоритет",
+      "low": "Низкий",
+      "medium": "Средний",
+      "high": "Высокий",
+      "add": "Добавить",
+      "no_deadlines": "Сроков пока нет",
+      "days_left": "дней осталось",
+      "days_overdue": "дней просрочено"
+    },
+    "checklist": {
+      "title": "Чек-лист",
+      "add_checklist": "Добавить чек-лист",
+      "cancel": "Отмена",
+      "checklist_name": "Название списка",
+      "checklist_name_placeholder": "Например: документы для обжалования",
+      "description": "Описание",
+      "description_placeholder": "Дополнительные детали",
+      "items": "Пункты",
+      "item_placeholder": "Например: копия паспорта",
+      "add_after": "Добавить после",
+      "create": "Создать",
+      "no_checklists": "Списков пока нет",
+      "completed": "выполнено"
+    },
+    "letterGenerator": {
+      "title": "Генератор писем",
+      "subtitle": "Создавайте официальные немецкие письма с помощью AI",
+      "letter_type": "Тип письма",
+      "types": {
+        "response": "Ответ",
+        "objection": "Возражение",
+        "clarification": "Запрос уточнения",
+        "appeal": "Апелляция"
+      },
+      "recipient_address": "Адрес получателя",
+      "recipient_address_placeholder": "Введите адрес учреждения/получателя...",
+      "generate": "Сгенерировать письмо",
+      "generating": "Генерация...",
+      "error_recipient_required": "Введите адрес получателя",
+      "generated_letter": "Сгенерированное письмо",
+      "copy": "Копировать",
+      "download": "Скачать",
+      "clear": "Очистить",
+      "history": {
+        "title": "История генераций"
+      }
+    },
+    "templates": {
+      "title": "Шаблоны писем",
+      "german": "Немецкий",
+      "copy": "Копировать",
+      "close": "Закрыть",
+      "template_tips_title": "Советы по использованию",
+      "template_tip_1": "Заменяйте плейсхолдеры на реальные данные",
+      "template_tip_2": "Проверяйте письмо перед отправкой",
+      "template_tip_3": "Сохраняйте копии всех отправленных писем"
+    }
+  }
+}

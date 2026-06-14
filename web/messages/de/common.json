@@ -1,0 +1,147 @@
+{
+  "modules": {
+    "documentAnalyzer": {
+      "title": "Dokumentenanalyse",
+      "subtitle": "Laden Sie ein Dokument hoch und lassen Sie es analysieren",
+      "uploaderCTA": "Klicken zum Auswählen oder Datei hierher ziehen",
+      "uploaderHint": "unterstützt PDF und Bilder ({{locale}})",
+      "analysis": {
+        "selectFile": "Bitte wählen Sie zuerst eine Datei aus",
+        "running": "Analyse läuft..."
+      },
+      "actions": {
+        "analyze": "Analysieren"
+      },
+      "results": {
+        "title": "Analyseergebnis",
+        "sender": "Absender",
+        "type": "Dokumentart",
+        "deadline": "Frist",
+        "urgency": "Dringlichkeit"
+      },
+      "history": {
+        "title": "Verlauf"
+      }
+    },
+    "letterGenerator": {
+      "title": "Briefgenerator",
+      "subtitle": "Erstellen Sie formelle deutsche Briefe mit KI",
+      "letter_type": "Briefart",
+      "types": {
+        "response": "Antwort",
+        "objection": "Widerspruch",
+        "clarification": "Klarstellung",
+        "appeal": "Beschwerde"
+      },
+      "recipient_address": "Empfängeradresse",
+      "recipient_address_placeholder": "Behörde / Name / Straße / PLZ / Ort",
+      "error_recipient_required": "Bitte geben Sie eine Empfängeradresse ein",
+      "generating": "⏳ Brief wird generiert...",
+      "generate": "Brief erstellen",
+      "generated_letter": "Erstellter Brief",
+      "copy": "Kopieren",
+      "download": "Download",
+      "clear": "Löschen",
+      "history": {
+        "title": "Historie"
+      }
+    },
+    "checklist": {
+      "title": "Checkliste",
+      "add_checklist": "Checkliste hinzufügen",
+      "cancel": "Abbrechen",
+      "checklist_name": "Name der Checkliste",
+      "checklist_name_placeholder": "Checkliste benennen",
+      "description": "Beschreibung",
+      "description_placeholder": "Optionale Beschreibung",
+      "items": "Punkte",
+      "item_placeholder": "Aufgabe eingeben",
+      "add_after": "Danach hinzufügen",
+      "create": "Erstellen",
+      "no_checklists": "Keine Checklisten vorhanden",
+      "completed": "erledigt"
+    },
+    "deadlineTracker": {
+      "title": "Fristen",
+      "add_deadline": "Frist hinzufügen",
+      "cancel": "Abbrechen",
+      "title": "Titel",
+      "title_placeholder": "Bezeichnung der Frist",
+      "description": "Beschreibung",
+      "description_placeholder": "Zusätzliche Details",
+      "due_date": "Fälligkeitsdatum",
+      "priority": "Priorität",
+      "low": "Niedrig",
+      "medium": "Mittel",
+      "high": "Hoch",
+      "add": "Hinzufügen",
+      "no_deadlines": "Keine Fristen vorhanden",
+      "days_left": "Tage übrig",
+      "days_overdue": "Tage überfällig"
+    },
+    "templates": {
+      "title": "Vorlagen",
+      "german": "Deutsch",
+      "close": "Schließen",
+      "copy": "Kopieren",
+      "template_tips_title": "💡 Vorlagentipps",
+      "template_tip_1": "Nutzen Sie Vorlagen als Startpunkt und passen Sie Platzhalter an.",
+      "template_tip_2": "Halten Sie Sprache formell und präzise.",
+      "template_tip_3": "Speichern Sie häufige Briefe als Vorlage."
+    }
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "analyzer": "Dokumentanalyse",
+    "letter": "Briefgenerator",
+    "deadline": "Fristen",
+    "checklist": "Checkliste",
+    "templates": "Vorlagen"
+  },
+  "home": {
+    "title": "AmtHelper - Dein Assistent für deutsche Behörden",
+    "description": "Intelligente Dokumentenanalyse und Briefgenerierung",
+    "cta": "Kostenlos starten"
+  },
+  "auth": {
+    "signIn": "Anmelden",
+    "signUp": "Registrieren",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "login": "Anmelden",
+    "register": "Registrieren",
+    "logout": "Abmelden",
+    "language": "Sprache",
+    "loading": "Laden..."
+  },
+  "common": {
+    "welcome": "Willkommen bei AmtHelper!",
+    "subtitle": "Dein Assistent für deutsche Behördenschreiben",
+    "uploadDoc": "Dokument hochladen",
+    "viewDeadlines": "Fristen anzeigen",
+    "features": "Funktionen",
+    "documentAnalyzer": "Dokumentenanalyse",
+    "analyzeDescription": "Lade ein Dokument hoch und erhalte eine KI-Zusammenfassung",
+    "deadlineTracker": "Fristenverwaltung",
+    "trackDescription": "Behalte wichtige Fristen im Blick und erhalte Erinnerungen",
+    "letterGenerator": "Briefgenerator",
+    "generateDescription": "Erstelle Antworten auf Basis von Vorlagen",
+    "documentChecklist": "Dokumentenliste",
+    "checklistDescription": "Behalte benötigte Dokumente für Antworten im Blick",
+    "templates": "Vorlagen",
+    "templatesDescription": "Nutze fertige Vorlagen für verschiedene Briefarten",
+    "multilingual": "Mehrsprachig",
+    "multilingualDescription": "Unterstützung für DE, RU, UK, RO",
+    "recentDocuments": "Letzte Dokumente",
+    "quickLinks": "Schnellzugriff",
+    "noDocuments": "Noch keine Dokumente. Lade dein erstes Dokument hoch!",
+    "stats": {
+      "documents": "Dokumente",
+      "deadlines": "Fristen",
+      "completed": "Erledigt",
+      "letters": "Briefe"
+    },
+    "greetingPrefix": "Hallo",
+    "dashboardDefaultTitle": "Dashboard"
+  }
+}

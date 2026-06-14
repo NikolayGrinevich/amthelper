@@ -1,0 +1,146 @@
+{
+  "nav": {
+    "dashboard": "Панель керування",
+    "analyzer": "Аналіз документів",
+    "letter": "Генератор листів",
+    "deadline": "Терміни",
+    "checklist": "Контрольний список",
+    "templates": "Шаблони"
+  },
+  "home": {
+    "title": "AmtHelper - Помічник для німецьких відомств",
+    "description": "Розумний аналіз документів та генерація листів",
+    "cta": "Почати безкоштовно"
+  },
+  "auth": {
+    "signIn": "Вхід",
+    "signUp": "Реєстрація",
+    "email": "Email",
+    "password": "Пароль",
+    "login": "Увійти",
+    "register": "Зареєструватися",
+    "logout": "Вийти",
+    "language": "Мова",
+    "loading": "Завантаження..."
+  },
+  "common": {
+    "welcome": "Ласкаво просимо в AmtHelper!",
+    "subtitle": "Ваш помічник для німецьких офіційних листів",
+    "uploadDoc": "Завантажити документ",
+    "viewDeadlines": "Переглянути терміни",
+    "features": "Функції",
+    "documentAnalyzer": "Аналізатор документів",
+    "analyzeDescription": "Завантажте лист і отримайте short summary за допомогою AI",
+    "deadlineTracker": "Управління термінами",
+    "trackDescription": "Відстежуйте важливі дати та отримуйте нагадування",
+    "letterGenerator": "Генератор листів",
+    "generateDescription": "Створюйте відповіді на основі шаблонів",
+    "documentChecklist": "Чек-лист документів",
+    "checklistDescription": "Відстежуйте документи, необхідні для відповіді",
+    "templates": "Шаблони",
+    "templatesDescription": "Використовуйте готові шаблони для різних типів листів",
+    "multilingual": "Багатомовність",
+    "multilingualDescription": "Підтримка DE, RU, UK, RO",
+    "recentDocuments": "Останні документи",
+    "quickLinks": "Швидкі посилання",
+    "noDocuments": "Документів поки немає. Завантажте перший!",
+    "stats": {
+      "documents": "Документи",
+      "deadlines": "Терміни",
+      "completed": "Завершено",
+      "letters": "Листи"
+    },
+    "greetingPrefix": "Привіт",
+    "dashboardDefaultTitle": "Панель керування"
+  },
+  "modules": {
+    "documentAnalyzer": {
+      "title": "Аналіз документів",
+      "subtitle": "Завантажте офіційний лист для швидкого аналізу",
+      "uploaderCTA": "Натисніть для завантаження або перетягніть файл",
+      "uploaderHint": "PNG, JPG, GIF до 10MB",
+      "actions": {
+        "analyze": "Аналізувати документ"
+      },
+      "analysis": {
+        "selectFile": "Виберіть файл",
+        "running": "Аналіз..."
+      },
+      "results": {
+        "title": "Результати аналізу",
+        "sender": "Відправник",
+        "type": "Тип документа",
+        "deadline": "Кінцевий термін"
+      },
+      "history": {
+        "title": "Останні аналізи"
+      }
+    },
+    "deadlineTracker": {
+      "title": "Терміни",
+      "add_deadline": "Додати термін",
+      "cancel": "Скасувати",
+      "title": "Назва",
+      "title_placeholder": "Наприклад: відповідь на лист Finanzamt",
+      "description": "Опис",
+      "description_placeholder": "Додаткові деталі",
+      "due_date": "Дата",
+      "priority": "Пріоритет",
+      "low": "Низький",
+      "medium": "Середній",
+      "high": "Високий",
+      "add": "Додати",
+      "no_deadlines": "Термінів поки немає",
+      "days_left": "днів залишилось",
+      "days_overdue": "днів протерміновано"
+    },
+    "checklist": {
+      "title": "Чек-лист",
+      "add_checklist": "Додати чек-лист",
+      "cancel": "Скасувати",
+      "checklist_name": "Назва списку",
+      "checklist_name_placeholder": "Наприклад: документи для оскарження",
+      "description": "Опис",
+      "description_placeholder": "Додаткові деталі",
+      "items": "Пункти",
+      "item_placeholder": "Наприклад: копія паспорта",
+      "add_after": "Додати після",
+      "create": "Створити",
+      "no_checklists": "Списків поки немає",
+      "completed": "виконано"
+    },
+    "letterGenerator": {
+      "title": "Генератор листів",
+      "subtitle": "Створюйте офіційні німецькі листи за допомогою AI",
+      "letter_type": "Тип листа",
+      "types": {
+        "response": "Відповідь",
+        "objection": "Заперечення",
+        "clarification": "Запит уточнення",
+        "appeal": "Апеляція"
+      },
+      "recipient_address": "Адреса отримувача",
+      "recipient_address_placeholder": "Введіть адресу установи/отримувача...",
+      "generate": "Згенерувати лист",
+      "generating": "Генерація...",
+      "error_recipient_required": "Введіть адресу отримувача",
+      "generated_letter": "Згенерований лист",
+      "copy": "Копіювати",
+      "download": "Завантажити",
+      "clear": "Очистити",
+      "history": {
+        "title": "Історія генерацій"
+      }
+    },
+    "templates": {
+      "title": "Шаблони листів",
+      "german": "Німецька",
+      "copy": "Копіювати",
+      "close": "Закрити",
+      "template_tips_title": "Поради з використання",
+      "template_tip_1": "Замінюйте заповнювачі на реальні дані",
+      "template_tip_2": "Перевіряйте лист перед відправкою",
+      "template_tip_3": "Зберігайте копії всіх відправлених листів"
+    }
+  }
+}

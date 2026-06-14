@@ -1,0 +1,146 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "analyzer": "Analiză documente",
+    "letter": "Generator scrisori",
+    "deadline": "Termene",
+    "checklist": "Checklist",
+    "templates": "Șabloane"
+  },
+  "home": {
+    "title": "AmtHelper - Asistentul tău pentru birouri germane",
+    "description": "Analiză inteligentă a documentelor și generare de scrisori",
+    "cta": "Începe gratuit"
+  },
+  "auth": {
+    "signIn": "Autentificare",
+    "signUp": "Înregistrare",
+    "email": "Email",
+    "password": "Parolă",
+    "login": "Autentificare",
+    "register": "Înregistrare",
+    "logout": "Deconectare",
+    "language": "Limbă",
+    "loading": "Încărcare..."
+  },
+  "common": {
+    "welcome": "Binevenit în AmtHelper!",
+    "subtitle": "Asistentul tău pentru analiza și gestionarea scrisorilor oficiale germane",
+    "uploadDoc": "Încarcă document",
+    "viewDeadlines": "Vezi termene",
+    "features": "Funcționalități",
+    "documentAnalyzer": "Analizor de documente",
+    "analyzeDescription": "Încarcă o scrisoare și primește un rezumat cu asistență AI",
+    "deadlineTracker": "Gestionare termene",
+    "trackDescription": "Urmărește datele importante și primește alerte",
+    "letterGenerator": "Generator de scrisori",
+    "generateDescription": "Creează răspunsuri pe baza șabloanelor",
+    "documentChecklist": "Lista de documente",
+    "checklistDescription": "Notează documentele necesare pentru răspuns",
+    "templates": "Șabloane",
+    "templatesDescription": "Folosește șabloane gata făcute pentru diferite tipuri de scrisori",
+    "multilingual": "Multilingv",
+    "multilingualDescription": "Suport pentru DE, RU, UK, RO",
+    "recentDocuments": "Documente recente",
+    "quickLinks": "Linkuri rapide",
+    "noDocuments": "Niciun document. Încarcă primul tău document!",
+    "stats": {
+      "documents": "Documente",
+      "deadlines": "Termene",
+      "completed": "Finalizate",
+      "letters": "Scrisori"
+    },
+    "greetingPrefix": "Salut",
+    "dashboardDefaultTitle": "Panou de control"
+  },
+  "modules": {
+    "documentAnalyzer": {
+      "title": "Analizor de documente",
+      "subtitle": "Încarcă o scrisoare oficială germană pentru o analiză rapidă",
+      "uploaderCTA": "Apasă pentru a încărca sau trage fișierul",
+      "uploaderHint": "PNG, JPG, GIF până la 10MB",
+      "actions": {
+        "analyze": "Analizează documentul"
+      },
+      "analysis": {
+        "selectFile": "Selectează un fișier",
+        "running": "Se analizează..."
+      },
+      "results": {
+        "title": "Rezultatele analizei",
+        "sender": "Expeditor",
+        "type": "Tip document",
+        "deadline": "Termen limită"
+      },
+      "history": {
+        "title": "Analize recente"
+      }
+    },
+    "deadlineTracker": {
+      "title": "Urmărire termene",
+      "add_deadline": "Adaugă termen",
+      "cancel": "Anulează",
+      "title": "Titlu",
+      "title_placeholder": "Ex: Răspuns scrisoare Finanzamt",
+      "description": "Descriere",
+      "description_placeholder": "Detalii opționale",
+      "due_date": "Data limită",
+      "priority": "Prioritate",
+      "low": "Scăzută",
+      "medium": "Medie",
+      "high": "Ridicată",
+      "add": "Adaugă",
+      "no_deadlines": "Niciun termen încă",
+      "days_left": "zile rămase",
+      "days_overdue": "zile întârziere"
+    },
+    "checklist": {
+      "title": "Lista de documente",
+      "add_checklist": "Listă nouă",
+      "cancel": "Anulează",
+      "checklist_name": "Nume listă",
+      "checklist_name_placeholder": "Ex: Documente pentru contestație",
+      "description": "Descriere",
+      "description_placeholder": "Detalii opționale",
+      "items": "Elemente",
+      "item_placeholder": "Ex: Copie pașaport",
+      "add_after": "Adaugă după",
+      "create": "Creează",
+      "no_checklists": "Nicio listă încă",
+      "completed": "finalizate"
+    },
+    "letterGenerator": {
+      "title": "Generator de scrisori",
+      "subtitle": "Generează scrisori oficiale germane cu ajutorul AI",
+      "letter_type": "Tip scrisoare",
+      "types": {
+        "response": "Răspuns",
+        "objection": "Contestație",
+        "clarification": "Solicitare de clarificare",
+        "appeal": "Apel"
+      },
+      "recipient_address": "Adresa destinatarului",
+      "recipient_address_placeholder": "Introdu adresa instituției/destinatarului...",
+      "generate": "Generează scrisoare",
+      "generating": "Se generează...",
+      "error_recipient_required": "Introdu adresa destinatarului",
+      "generated_letter": "Scrisoarea generată",
+      "copy": "Copiază",
+      "download": "Descarcă",
+      "clear": "Șterge",
+      "history": {
+        "title": "Istoric generări"
+      }
+    },
+    "templates": {
+      "title": "Șabloane de scrisori",
+      "german": "Germană",
+      "copy": "Copiază",
+      "close": "Închide",
+      "template_tips_title": "Sfaturi de utilizare",
+      "template_tip_1": "Înlocuiește placeholder-urile cu date reale",
+      "template_tip_2": "Verifică scrisoarea înainte de trimitere",
+      "template_tip_3": "Păstrează copii ale tuturor scrisorilor expediate"
+    }
+  }
+}
