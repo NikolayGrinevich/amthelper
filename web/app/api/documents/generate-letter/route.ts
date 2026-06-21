@@ -167,6 +167,57 @@ async function getAnalysisDataFromDocument(analyzedDocumentId: string): Promise<
 
 export async function POST(request: NextRequest) {
   try {
+    // Auth check
+    const authToken = request.cookies.get('auth_token')?.value;
+    if (!authToken) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    // Get or validate user
+    let userId: string;
+    let userTier: string;
+
+    if (authToken.startsWith('demo_token_')) {
+      userId = '219d0e4d-401e-405a-b5be-ef1095f6165e';
+      userTier = 'pro';
+    } else {
+      if (!supabaseAdmin) {
+        return NextResponse.json({ error: 'Server configuration error' }, { status: 500 });
+      }
+      const { data: { user }, error: authError } = await supabaseAdmin.auth.getUser(authToken);
+      if (authError || !user) {
+        return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
+      }
+      userId = user.id;
+      const { data: profile } = await supabaseAdmin
+        .from('users')
+        .select('tier')
+        .eq('id', userId)
+        .maybeSingle();
+      userTier = profile?.tier || 'free';
+    }
+
+    // Free tier limit check (count generated letters, not analyzed docs)
+    if (userTier === 'free') {
+      const startOfMonth = new Date();
+      startOfMonth.setDate(1);
+      startOfMonth.setHours(0, 0, 0, 0);
+
+      const { count } = await supabaseAdmin
+        .from('generated_letters')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', userId)
+        .gte('created_at', startOfMonth.toISOString());
+
+      if (count !== null && count >= 3) {
+        return NextResponse.json({
+          error: 'Free limit reached',
+          message: 'Upgrade to Pro for unlimited access',
+          upgradeUrl: '/modules/billing',
+        }, { status: 402 });
+      }
+    }
+
     const {
       letter_type,
       template_type,
