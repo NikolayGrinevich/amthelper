@@ -42,14 +42,11 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-6">
-      {/* Welcome Card - white, no gradient */}
+      {/* Welcome Card */}
       <div className="rounded-xl p-6 shadow-sm"
         style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-xl font-bold" style={{ color: 'var(--color-text-primary)' }}>
-              {greeting}
-            </h2>
             <p className="mt-1 text-sm" style={{ color: 'var(--color-text-secondary)' }}>
               {t('subtitle')}
             </p>
