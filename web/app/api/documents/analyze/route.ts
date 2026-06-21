@@ -82,7 +82,7 @@ Respond ONLY with valid JSON, no markdown fences:
 
   const message = await client.messages.create({
     model: 'claude-haiku-4-5-20251001',
-    max_tokens: 4096,
+    max_tokens: 1500,
     messages: [
       {
         role: 'user',
@@ -150,27 +150,37 @@ export async function POST(request: NextRequest) {
     }
 
     // Free tier limit check
-    if (userTier === 'free') {
-      const startOfMonth = new Date();
-      startOfMonth.setDate(1);
-      startOfMonth.setHours(0, 0, 0, 0);
+        if (userTier === 'free') {
+          const startOfMonth = new Date();
+          startOfMonth.setDate(1);
+          startOfMonth.setHours(0, 0, 0, 0);
 
-      const { count } = await supabaseAdmin
-        .from('analyzed_documents')
-        .select('*', { count: 'exact', head: true })
-        .eq('user_id', userId)
-        .gte('created_at', startOfMonth.toISOString());
+          const { count } = await supabaseAdmin
+            .from('analyzed_documents')
+            .select('*', { count: 'exact', head: true })
+            .eq('user_id', userId)
+            .gte('created_at', startOfMonth.toISOString());
 
-      if (count !== null && count >= 3) {
-        return NextResponse.json({
-          error: 'Free limit reached',
-          message: 'Upgrade to Pro for unlimited access',
-          upgradeUrl: '/modules/billing',
-        }, { status: 402 });
-      }
-    }
+          if (count !== null && count >= 3) {
+            return NextResponse.json({
+              error: 'Free limit reached',
+              message: 'Upgrade to Pro for unlimited access',
+              upgradeUrl: '/modules/billing',
+            }, { status: 402 });
+          }
+        }
 
-    const formData = await request.formData();
+        // File size check
+        const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+        const contentLength = request.headers.get('content-length');
+        if (contentLength && parseInt(contentLength) > MAX_FILE_SIZE) {
+          return NextResponse.json(
+            { error: 'File too large. Max 5MB' },
+            { status: 413 }
+          );
+        }
+
+        const formData = await request.formData();
     const lang = (formData.get('language') as string) || 'ru';
 
     // Support both single 'file' and multiple 'files[]'
