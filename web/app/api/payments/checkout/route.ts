@@ -2,10 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import Stripe from 'stripe';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2023-10-16',
-});
-
 function ensureUrl(base: string | undefined): string {
   if (!base) return 'https://amthelper.vercel.app';
   const trimmed = base.trim().replace(/\/+$/, '');
@@ -16,6 +12,9 @@ function ensureUrl(base: string | undefined): string {
 
 export async function POST(request: NextRequest) {
   try {
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+      apiVersion: '2023-10-16',
+    });
     const cookieHeader = request.headers.get('cookie') || '';
     const authToken = cookieHeader
       .split(';')

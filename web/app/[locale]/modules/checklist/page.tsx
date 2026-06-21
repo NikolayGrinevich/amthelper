@@ -111,13 +111,13 @@ export default function ChecklistPage() {
     <div className="max-w-4xl mx-auto space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">{t('title')}</h1>
-        <p className="text-gray-600 mt-1">{t('subtitle')}</p>
+        <h1 className="page-title">{t('title')}</h1>
+        <p className="page-subtitle">{t('subtitle')}</p>
       </div>
 
       {/* Overall progress */}
       {documents.length > 0 && (
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+        <div className="card p-6">
           <div className="flex items-center justify-between mb-3">
             <span className="font-semibold text-gray-800">{t('overall_progress')}</span>
             {totalDone === totalItems && totalItems > 0 ? (
@@ -140,7 +140,7 @@ export default function ChecklistPage() {
 
       {/* Error */}
       {error && (
-        <div className="p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">{error}</div>
+        <div className="p-4 card p-4 text-red-700 text-sm bg-red-50">{error}</div>
       )}
 
       {/* No documents */}
@@ -166,10 +166,10 @@ export default function ChecklistPage() {
           return (
             <div
               key={doc.id}
-              className={`bg-white rounded-2xl border shadow-sm overflow-hidden transition-all ${allDone ? 'border-green-200' : 'border-gray-200'}`}
+              className={`card overflow-hidden transition-all ${allDone ? 'border-green-200' : 'border-gray-200'}`}
             >
               {/* Group header */}
-              <div className={`px-6 py-4 flex items-start justify-between gap-4 ${allDone ? 'bg-green-50' : 'bg-gray-50'} border-b ${allDone ? 'border-green-200' : 'border-gray-200'}`}>
+              <div className={`px-5 py-3 flex items-start justify-between gap-4 ${allDone ? 'bg-green-50' : 'bg-gray-50'}`}>
                 <div className="min-w-0">
                   <div className="flex items-center gap-2">
                     {allDone && (
@@ -214,7 +214,7 @@ export default function ChecklistPage() {
                     <li key={idx}>
                       <label
                         htmlFor={`check-${doc.id}-${idx}`}
-                        className={`flex items-start gap-4 px-6 py-4 cursor-pointer transition-colors ${isChecked ? 'bg-green-50/50' : 'hover:bg-gray-50'}`}
+                        className={`flex items-start gap-4 px-5 py-3 cursor-pointer transition-colors ${isChecked ? 'bg-green-50/50' : 'hover:bg-gray-50'}`}
                       >
                         {/* Custom checkbox */}
                         <div className="flex-shrink-0 mt-0.5">

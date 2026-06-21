@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import type Stripe from 'stripe';
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const { createClient } = require('@supabase/supabase-js');
 
 const supabase = createClient(
@@ -15,6 +14,7 @@ const supabase = createClient(
 export async function POST(request: NextRequest) {
   const body = await request.text();
   const sig = request.headers.get('stripe-signature') || '';
+  const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
   let event;
 

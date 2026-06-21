@@ -161,8 +161,8 @@ export default function TemplatesPage() {
   return (
     <div className="max-w-6xl mx-auto space-y-8">
       <div className="space-y-2">
-        <h1 className="text-3xl font-bold text-gray-900">{t('title')}</h1>
-        <p className="text-gray-600">{t('subtitle')}</p>
+        <h1 className="page-title">{t('title')}</h1>
+        <p className="page-subtitle">{t('subtitle')}</p>
       </div>
 
       <div className="flex flex-col md:flex-row gap-4">
@@ -171,17 +171,17 @@ export default function TemplatesPage() {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder={t('searchPlaceholder')}
-          className="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="flex-1 px-4 py-3 card-input"
         />
       </div>
 
       <div className="flex flex-wrap gap-2">
         <button
           onClick={() => setSelectedCategory('all')}
-          className={`px-4 py-2 rounded-lg transition text-sm font-medium ${
+          className={`px-4 py-2 text-sm font-medium transition ${
             selectedCategory === 'all'
-              ? 'bg-blue-600 text-white'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              ? 'btn-primary'
+              : 'btn-secondary'
           }`}
         >
           {t('all')} ({translatedTemplates.length})
@@ -205,7 +205,7 @@ export default function TemplatesPage() {
         {filteredTemplates.map((template) => (
           <div
             key={template.id}
-            className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 hover:shadow-md transition"
+            className="card p-5 hover:shadow-md transition"
           >
             <div className="flex items-start gap-3 mb-3">
               <span className="text-2xl">{template.icon}</span>
@@ -216,7 +216,7 @@ export default function TemplatesPage() {
             </div>
             <button
               onClick={() => handleUseTemplate(template)}
-              className="w-full px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm font-medium"
+              className="w-full px-4 py-2.5 btn-primary"
             >
               {t('use')}
             </button>

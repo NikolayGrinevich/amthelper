@@ -131,8 +131,8 @@ export default function DeadlineTrackerPage() {
     <div className="max-w-4xl mx-auto space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">{t('title')}</h1>
-        <p className="text-gray-600 mt-1">{t('subtitle')}</p>
+        <h1 className="page-title">{t('title')}</h1>
+        <p className="page-subtitle">{t('subtitle')}</p>
       </div>
 
       {/* Summary bar */}
@@ -143,7 +143,7 @@ export default function DeadlineTrackerPage() {
             const cfg = urgencyConfig[level];
             const label = level === 'critical' ? t('urgency_critical') : level === 'high' ? t('urgency_high') : t('urgency_ok');
             return (
-              <div key={level} className={`rounded-xl border-2 ${cfg.border} ${cfg.bg} p-4 text-center`}>
+              <div key={level} className={`card p-4 text-center ${cfg.bg}`}>
                 <div className="text-3xl font-bold text-gray-900">{count}</div>
                 <div className={`mt-1 text-xs font-semibold px-2 py-0.5 rounded-full border inline-block ${cfg.badge}`}>
                   {label}
@@ -156,7 +156,7 @@ export default function DeadlineTrackerPage() {
 
       {/* No data states */}
       {documents.length === 0 && !error && (
-        <div className="text-center py-16 bg-white rounded-2xl border border-gray-200 shadow-sm">
+        <div className="text-center py-16 card">
           <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -167,7 +167,7 @@ export default function DeadlineTrackerPage() {
       )}
 
       {error && (
-        <div className="p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">{error}</div>
+        <div className="p-4 card p-4 text-red-700 text-sm bg-red-50">{error}</div>
       )}
 
       {/* Documents with deadlines */}
@@ -182,7 +182,7 @@ export default function DeadlineTrackerPage() {
             return (
               <div
                 key={doc.id}
-                className={`rounded-2xl border-2 ${cfg.border} ${cfg.bg} p-5 flex items-center justify-between gap-4 transition-all hover:shadow-md`}
+                className={`card p-4 flex items-center justify-between gap-4 ${cfg.bg}`}
               >
                 <div className="flex items-start gap-4 min-w-0">
                   {/* Urgency dot */}
@@ -214,7 +214,7 @@ export default function DeadlineTrackerPage() {
                   <button
                     id={`create-letter-${doc.id}`}
                     onClick={() => handleCreateLetter(doc)}
-                    className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl text-sm font-medium hover:bg-blue-700 transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 btn-primary"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 01-2-2V7a1 1 0 011-1h1a2 2 0 100-4H4a1 1 0 01-1-1V5a1 1 0 00-1-1h3a1 1 0 001-1V4z" />

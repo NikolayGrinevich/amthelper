@@ -347,8 +347,8 @@ ${letterLocale}`
   return (
       <div className="max-w-4xl mx-auto space-y-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">{t.title}</h1>
-          <p className="text-gray-600 mt-1">{t.subtitle}</p>
+          <h1 className="page-title">{t.title}</h1>
+          <p className="page-subtitle">{t.subtitle}</p>
         </div>
 
         {sourceDoc && (
@@ -370,7 +370,7 @@ ${letterLocale}`
           </div>
         )}
 
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+        <div className="card overflow-hidden">
           {!generatedLetter ? (
             <div className="p-8 space-y-8">
               <div>
@@ -413,7 +413,7 @@ ${letterLocale}`
                   onChange={(e) => setRecipient(e.target.value)}
                   placeholder={t.recipientPlaceholder}
                   rows={4}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                  className="w-full px-4 py-3 card-input transition"
                 />
               </div>
 
@@ -451,7 +451,7 @@ ${letterLocale}`
             <div className="p-8 space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900">{t.preview}</h2>
+                  <h2 className="page-title">{t.preview}</h2>
                   <span className="inline-flex items-center gap-2 px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium mt-2">
                     {templateOptions.find(opt => opt.value === generatedLetter?.template_type)?.icon}
                     {generatedLetter?.template_type}
@@ -530,7 +530,7 @@ ${letterLocale}`
                 </button>
                 <button
                   onClick={handleSave}
-                  className="px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition font-medium flex items-center gap-2"
+                  className="px-6 py-3 btn-primary font-medium flex items-center gap-2"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
