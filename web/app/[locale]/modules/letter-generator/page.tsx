@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { useAuth } from '@/app/providers/AuthProvider'
-import ModuleLayout from '@/app/components/dashboard/ModuleLayout'
 
 interface AnalyzedDocument {
   id: string
@@ -87,6 +86,8 @@ const TRANSLATIONS = {
     generating: 'Генерация...',
     preview: 'Предпросмотр письма',
     edit: 'Редактировать',
+    done: 'Готово',
+    newLetter: '← Новое письмо',
     copy: 'Копировать',
     download: 'Скачать TXT',
     save: 'Сохранить',
@@ -111,6 +112,8 @@ const TRANSLATIONS = {
     generating: 'Brief wird generiert...',
     preview: 'Briefvorschau',
     edit: 'Bearbeiten',
+    done: 'Fertig',
+    newLetter: '← Neuer Brief',
     copy: 'Kopieren',
     download: 'Als TXT herunterladen',
     save: 'Speichern',
@@ -135,6 +138,7 @@ const TRANSLATIONS = {
     generating: 'Генерація...',
     preview: 'Попередній перегляд листа',
     edit: 'Редагувати',
+    done: 'Готово',
     copy: 'Копіювати',
     download: 'Завантажити TXT',
     save: 'Зберегти',
@@ -159,6 +163,7 @@ const TRANSLATIONS = {
     generating: 'Generare...',
     preview: 'Previzualizare scrisoare',
     edit: 'Editează',
+    done: 'Gata',
     copy: 'Copiază',
     download: 'Descarcă TXT',
     save: 'Salvează',
@@ -178,15 +183,18 @@ export default function LetterGeneratorPage() {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const locale = (pathname.split('/')[1] as keyof typeof TRANSLATIONS) || 'ru'
+  const rawLocale = pathname.split('/')[1]
+  const locale = (rawLocale in TRANSLATIONS ? rawLocale : 'ru') as keyof typeof TRANSLATIONS
   const { user, loading: authLoading } = useAuth()
 
   const t = TRANSLATIONS[locale]
-  const templateOptions = TEMPLATE_OPTIONS[locale]
+  const templateOptions = TEMPLATE_OPTIONS[locale] ?? TEMPLATE_OPTIONS.ru
 
   const [selectedTemplate, setSelectedTemplate] = useState<TemplateType | null>(null)
   const [recipient, setRecipient] = useState('')
-  const [generatedContent, setGeneratedContent] = useState('')
+  const [generatedContent, setGeneratedContent] = useState('') // kept for edit textarea (letter_de)
+  const [letterDe, setLetterDe] = useState('')
+  const [letterLocale, setLetterLocale] = useState('')
   const [isGenerating, setIsGenerating] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [generatedLetter, setGeneratedLetter] = useState<GeneratedLetter | null>(null)
@@ -203,9 +211,12 @@ export default function LetterGeneratorPage() {
   // Load source document from URL params
   useEffect(() => {
     const docId = searchParams.get('id')
-    const fromDoc = searchParams.get('from')
-    if (fromDoc === 'document' && docId && user) {
+    const templateParam = searchParams.get('template') as TemplateType | null
+    if (docId && user) {
       loadSourceDocument(docId)
+    }
+    if (templateParam) {
+      setSelectedTemplate(templateParam)
     }
   }, [searchParams, user])
 
@@ -214,7 +225,9 @@ export default function LetterGeneratorPage() {
       const res = await fetch('/api/documents/analyzed', { credentials: 'include' })
       if (res.ok) {
         const data = await res.json()
-        const doc = data.documents?.find((d: AnalyzedDocument) => d.id === docId)
+        const doc = data.documents?.find((d: AnalyzedDocument) => 
+          d.id === docId || d.document_id === docId
+        )
         if (doc && doc.analysis_result) {
           setSourceDoc(doc)
           const analysis = doc.analysis_result
@@ -240,7 +253,7 @@ export default function LetterGeneratorPage() {
       showToast(t.needRecipient)
       return
     }
-    if (!sourceDoc?.id) {
+    if (!sourceDoc?.id && !searchParams.get('template')) {
       showToast(t.needDocument)
       return
     }
@@ -253,18 +266,24 @@ export default function LetterGeneratorPage() {
         credentials: 'include',
         body: JSON.stringify({
           template_type: selectedTemplate,
-          analyzed_document_id: sourceDoc.id,
+          analyzed_document_id: sourceDoc?.id || null,
           locale,
         }),
       })
-
+      if (!res.ok) {
+        throw new Error(`API returned ${res.status}`)
+      }
       const data = await res.json()
-      if (!res.ok) throw new Error(data.error || t.error)
 
-      setGeneratedContent(data.content)
+      const deLetter = (data.letter_de || data.content || '').replace(/\\n/g, '\n').trim()
+      const localeLetter = (data.letter_locale || deLetter).replace(/\\n/g, '\n').trim()
+
+      setLetterDe(deLetter)
+      setLetterLocale(localeLetter)
+      setGeneratedContent(deLetter)
       setGeneratedLetter({
         id: data.id,
-        content: data.content,
+        content: deLetter,
         template_type: data.template_type,
         recipient: data.recipient,
         status: data.status,
@@ -281,18 +300,32 @@ export default function LetterGeneratorPage() {
   }
 
   const handleCopy = async () => {
-    if (!generatedContent) return
-    await navigator.clipboard.writeText(generatedContent)
+    if (!letterDe) return
+    await navigator.clipboard.writeText(letterDe)
+    showToast(t.copySuccess)
+  }
+
+  const handleCopyLocale = async () => {
+    if (!letterLocale) return
+    await navigator.clipboard.writeText(letterLocale)
     showToast(t.copySuccess)
   }
 
   const handleDownload = () => {
-    if (!generatedContent) return
-    const blob = new Blob([generatedContent], { type: 'text/plain;charset=utf-8' })
+    if (!letterDe && !letterLocale) return
+    const templateLabel = templateOptions.find(opt => opt.value === selectedTemplate)?.label || selectedTemplate || 'letter'
+    const combined = `=== 📄 Brief auf Deutsch (zum Versenden) ===
+
+${letterDe}
+
+
+=== 🌐 ${locale === 'de' ? 'Übersetzung' : 'Перевод / Übersetzung'} ===
+
+${letterLocale}`
+    const blob = new Blob([combined], { type: 'text/plain;charset=utf-8' })
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    const templateLabel = templateOptions.find(t => t.value === selectedTemplate)?.label || selectedTemplate || 'letter'
     a.download = `${templateLabel.replace(/[()]/g, '').trim()}_${new Date().toISOString().split('T')[0]}.txt`
     a.click()
     URL.revokeObjectURL(url)
@@ -305,16 +338,13 @@ export default function LetterGeneratorPage() {
 
   if (authLoading) {
     return (
-      <ModuleLayout>
-        <div className="flex items-center justify-center min-h-[400px]">
-          <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent" />
-        </div>
-      </ModuleLayout>
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent" />
+      </div>
     )
   }
 
   return (
-    <ModuleLayout>
       <div className="max-w-4xl mx-auto space-y-8">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">{t.title}</h1>
@@ -390,7 +420,7 @@ export default function LetterGeneratorPage() {
               <div className="pt-4">
                 <button
                   onClick={handleGenerate}
-                  disabled={isGenerating || !selectedTemplate || !recipient.trim() || !sourceDoc?.id}
+                  disabled={isGenerating || !selectedTemplate || !recipient.trim()}
                   className="w-full px-8 py-4 bg-blue-600 text-white rounded-xl hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition font-medium text-lg flex items-center justify-center gap-2"
                 >
                   {isGenerating ? (
@@ -410,7 +440,7 @@ export default function LetterGeneratorPage() {
                     </>
                   )}
                 </button>
-                {!sourceDoc?.id && (
+                {!searchParams.get('id') && !searchParams.get('template') && (
                   <p className="text-center text-sm text-gray-500 mt-3">
                     {t.needDocument} в <a href={`/${locale}/modules/document-analyzer`} className="text-blue-600 hover:underline">{t.docAnalyzerLink}</a>
                   </p>
@@ -423,7 +453,7 @@ export default function LetterGeneratorPage() {
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900">{t.preview}</h2>
                   <span className="inline-flex items-center gap-2 px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium mt-2">
-                    {templateOptions.find(t => t.value === generatedLetter?.template_type)?.icon}
+                    {templateOptions.find(opt => opt.value === generatedLetter?.template_type)?.icon}
                     {generatedLetter?.template_type}
                   </span>
                 </div>
@@ -437,17 +467,46 @@ export default function LetterGeneratorPage() {
 
               <div className="pt-4 border-t border-gray-100" />
 
-              <div className="bg-gray-50 rounded-xl border border-gray-200 p-6 min-h-[400px] font-mono text-sm leading-relaxed whitespace-pre-wrap">
+              {/* Block 1: German letter */}
+              <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="font-semibold text-blue-800">📄 Официальное письмо (немецкий)</h3>
+                  <button
+                    onClick={handleCopy}
+                    className="px-3 py-1.5 text-xs bg-white text-blue-700 border border-blue-300 rounded-lg hover:bg-blue-50 transition font-medium"
+                  >
+                    {t.copy}
+                  </button>
+                </div>
                 {isEditing ? (
                   <textarea
                     value={generatedContent}
-                    onChange={(e) => setGeneratedContent(e.target.value)}
-                    className="w-full bg-transparent border-none focus:outline-none resize-none min-h-[400px] text-gray-900"
+                    onChange={(e) => { setGeneratedContent(e.target.value); setLetterDe(e.target.value) }}
+                    className="w-full bg-transparent border-none focus:outline-none resize-none min-h-[300px] text-sm leading-relaxed text-gray-900 font-mono"
                     spellCheck={false}
+                    style={{ lineHeight: '1.6' }}
                   />
                 ) : (
-                  <div className="text-gray-900">{generatedContent}</div>
+                  <pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit', lineHeight: '1.6', fontSize: '0.875rem', color: '#111827', margin: 0 }}>
+                    {letterDe}
+                  </pre>
                 )}
+              </div>
+
+              {/* Block 2: Translation */}
+              <div className="bg-green-50 border border-green-200 rounded-xl p-6">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="font-semibold text-green-800">🌐 Перевод на ваш язык</h3>
+                  <button
+                    onClick={handleCopyLocale}
+                    className="px-3 py-1.5 text-xs bg-white text-green-700 border border-green-300 rounded-lg hover:bg-green-50 transition font-medium"
+                  >
+                    {t.copy}
+                  </button>
+                </div>
+                <pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit', lineHeight: '1.6', fontSize: '0.875rem', color: '#1f2937', margin: 0 }}>
+                  {letterLocale || '...'}
+                </pre>
               </div>
 
               <div className="flex flex-wrap gap-3 pt-4 border-t border-gray-100">
@@ -485,7 +544,7 @@ export default function LetterGeneratorPage() {
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                   </svg>
-                  {isEditing ? 'Готово' : t.edit}
+                  {isEditing ? t.done : t.edit}
                 </button>
               </div>
             </div>
@@ -506,6 +565,5 @@ export default function LetterGeneratorPage() {
           .animate-slide-up { animation: slide-up 0.3s ease-out; }
         `}</style>
       </div>
-    </ModuleLayout>
   )
 }

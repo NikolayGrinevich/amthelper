@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 export const runtime = 'nodejs';
-export const maxDuration = 60;
+export const maxDuration = 120; // Longer for multiple files
 
 const LANGUAGE_NAMES: Record<string, string> = {
   ru: 'Russian (русский)',
@@ -10,30 +10,57 @@ const LANGUAGE_NAMES: Record<string, string> = {
   ro: 'Romanian (română)',
 };
 
-async function analyzeWithClaude(base64Data: string, mediaType: string, lang: string) {
+async function analyzeWithClaude(
+  files: { base64: string; mediaType: string; fileName: string }[],
+  lang: string
+) {
   const Anthropic = (await import('@anthropic-ai/sdk')).default;
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) throw new Error('Missing ANTHROPIC_API_KEY');
 
   const client = new Anthropic({ apiKey });
-  const isPdf = mediaType === 'application/pdf';
   const targetLanguage = LANGUAGE_NAMES[lang] || LANGUAGE_NAMES['ru'];
 
-  const fileBlock = isPdf
-    ? {
-        type: 'document' as const,
-        source: { type: 'base64' as const, media_type: 'application/pdf' as const, data: base64Data },
-      }
-    : {
-        type: 'image' as const,
-        source: {
-          type: 'base64' as const,
-          media_type: mediaType as 'image/jpeg' | 'image/png' | 'image/gif' | 'image/webp',
-          data: base64Data,
-        },
-      };
+  // Build content array: all image/document blocks + text prompt
+  const content: any[] = [];
 
-  const prompt = `Analyze this German official document.
+  // If multiple files, add a note that these are parts of the same document
+  if (files.length > 1) {
+    content.push({
+      type: 'text',
+      text: `This document is presented in ${files.length} photos/pages. They are all parts of the SAME document. Analyze all of them together as one document.`,
+    });
+  }
+
+  for (const file of files) {
+    const isPdf = file.mediaType === 'application/pdf';
+    const fileBlock = isPdf
+      ? {
+          type: 'document' as const,
+          source: {
+            type: 'base64' as const,
+            media_type: 'application/pdf' as const,
+            data: file.base64,
+          },
+        }
+      : {
+          type: 'image' as const,
+          source: {
+            type: 'base64' as const,
+            media_type: file.mediaType as
+              | 'image/jpeg'
+              | 'image/png'
+              | 'image/gif'
+              | 'image/webp',
+            data: file.base64,
+          },
+        };
+    content.push(fileBlock as any);
+  }
+
+  content.push({
+    type: 'text',
+    text: `Analyze this German official document${files.length > 1 ? ' (all images above are parts of the SAME document)' : ''}.
 
 CRITICAL: ALL values in your JSON response MUST be written in ${targetLanguage}.
 Do NOT use English. Every field — document_type, key_points, required_documents, summary — must be in ${targetLanguage}.
@@ -49,51 +76,83 @@ Respond ONLY with valid JSON, no markdown fences:
   "required_documents": ["document 1 in ${targetLanguage}"],
   "urgency": "low|medium|high|critical",
   "summary": "2-3 sentences in ${targetLanguage}"
-}`;
+}`,
+  });
 
   const message = await client.messages.create({
     model: 'claude-haiku-4-5-20251001',
-    max_tokens: 2048,
+    max_tokens: 4096,
     messages: [
       {
         role: 'user',
-        content: [fileBlock as any, { type: 'text', text: prompt }],
+        content: content,
       },
     ],
   });
 
-  const responseText = message.content[0].type === 'text' ? message.content[0].text : '';
+  const responseText =
+    message.content[0].type === 'text' ? message.content[0].text : '';
   const clean = responseText.replace(/```json|```/g, '').trim();
   return JSON.parse(clean);
+}
+
+async function fileToBase64(file: File): Promise<{
+  base64: string;
+  mediaType: string;
+  fileName: string;
+}> {
+  const buffer = await file.arrayBuffer();
+
+  let mediaType = 'image/jpeg';
+  if (file.type === 'application/pdf') mediaType = 'application/pdf';
+  else if (file.type === 'image/png') mediaType = 'image/png';
+  else if (file.type === 'image/gif') mediaType = 'image/gif';
+  else if (file.type === 'image/webp') mediaType = 'image/webp';
+
+  return {
+    base64: Buffer.from(buffer).toString('base64'),
+    mediaType,
+    fileName: file.name,
+  };
 }
 
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
-    const file = formData.get('file') as File;
     const lang = (formData.get('language') as string) || 'ru';
 
-    if (!file) {
+    // Support both single 'file' and multiple 'files[]'
+    const files: File[] = [];
+    const singleFile = formData.get('file') as File | null;
+    const multipleFiles = formData.getAll('files[]') as File[];
+
+    if (singleFile) {
+      files.push(singleFile);
+    }
+    if (multipleFiles.length > 0) {
+      files.push(...multipleFiles);
+    }
+
+    if (files.length === 0) {
       return NextResponse.json({ error: 'No file provided' }, { status: 400 });
     }
 
-    const buffer = await file.arrayBuffer();
-    const base64Data = Buffer.from(buffer).toString('base64');
+    // Convert all files to base64
+    const fileData = await Promise.all(files.map(fileToBase64));
 
-    let mediaType = 'image/jpeg';
-    if (file.type === 'application/pdf') mediaType = 'application/pdf';
-    else if (file.type === 'image/png') mediaType = 'image/png';
-    else if (file.type === 'image/gif') mediaType = 'image/gif';
-    else if (file.type === 'image/webp') mediaType = 'image/webp';
+    // Send all to Claude in one call
+    const analyzedData = await analyzeWithClaude(fileData, lang);
 
-    const analyzedData = await analyzeWithClaude(base64Data, mediaType, lang);
+    const firstFile = files[0];
 
     return NextResponse.json({
       success: true,
-      file_name: file.name,
-      file_type: file.type,
-      file_size: buffer.byteLength,
+      file_name: files.length > 1 ? `${files.length} photos` : firstFile.name,
+      file_type: firstFile.type,
+      file_size: 0,
       analyzed_data: analyzedData,
+      multi_file: files.length > 1,
+      file_count: files.length,
       timestamp: new Date().toISOString(),
     });
   } catch (error) {

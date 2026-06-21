@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/app/providers/AuthProvider';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 
 interface SidebarClientProps {
   locale: string;
@@ -14,6 +14,7 @@ interface SidebarClientProps {
     checklist: string;
     letter: string;
     templates: string;
+    billing: string;
   };
 }
 
@@ -24,6 +25,7 @@ const menuItems: { href: string; labelKey: keyof SidebarClientProps['nav']; icon
   { href: '/modules/checklist', labelKey: 'checklist', icon: '✅' },
   { href: '/modules/letter-generator', labelKey: 'letter', icon: '✍️' },
   { href: '/modules/templates', labelKey: 'templates', icon: '📋' },
+  { href: '/modules/billing', labelKey: 'billing', icon: '💳' },
 ];
 
 export function SidebarClient({ locale, nav }: SidebarClientProps) {
@@ -37,57 +39,117 @@ export function SidebarClient({ locale, nav }: SidebarClientProps) {
     router.push(`/${locale}/auth/signin`);
   };
 
-  if (loading) return <div style={{width:'240px', minHeight:'100vh', background:'linear-gradient(to bottom, #1e3a8a, #312e81)'}} />;
+  const activeItem = useMemo(() => {
+    return menuItems.find(item => pathname.startsWith(`/${locale}${item.href}`));
+  }, [pathname, locale]);
+
+  // Mock urgent deadlines count — in real app this comes from context
+  const urgentDeadlines = 0;
+
+  if (loading) return <div style={{ width: isOpen ? '256px' : '72px', minHeight: '100vh', background: 'var(--color-sidebar-bg)' }} />;
   if (!isAuthenticated) return null;
 
   return (
-    <div className={`${isOpen ? 'w-64' : 'w-20'} bg-gradient-to-b from-blue-900 to-indigo-900 text-white transition-all duration-300 min-h-screen flex flex-col`}>
-      {/* Header */}
-      <div className="p-4 border-b border-blue-800 flex items-center justify-between">
-        {isOpen && <h2 className="text-xl font-bold">AmtHelper</h2>}
+    <div
+      style={{ background: 'var(--color-sidebar-bg)' }}
+      className={`${isOpen ? 'w-64' : 'w-20'} text-white transition-all duration-300 min-h-screen flex flex-col relative`}
+    >
+      {/* Logo */}
+      <div className="p-4 flex items-center justify-between" style={{ borderBottom: '1px solid var(--color-sidebar-divider)' }}>
+        <div className="flex items-center gap-3 min-w-0">
+          <span className="text-2xl flex-shrink-0">🛡️</span>
+          {isOpen && (
+            <div className="min-w-0">
+              <h2 className="text-base font-bold" style={{ color: 'var(--color-sidebar-text-active)' }}>
+                AmtHelper
+              </h2>
+              <p className="text-xs truncate" style={{ color: 'var(--color-sidebar-text)' }}>
+                Ihr Assistent
+              </p>
+            </div>
+          )}
+        </div>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="p-1 hover:bg-blue-800 rounded-lg transition"
+          className="p-1 rounded transition flex-shrink-0"
+          style={{ color: 'var(--color-sidebar-icon)' }}
         >
-          {isOpen ? '←' : '→'}
+          {isOpen ? '◀' : '▶'}
         </button>
       </div>
 
       {/* Menu */}
-      <nav className="flex-1 p-4 space-y-2">
-        {menuItems.map((item) => (
-          <Link
-            key={item.href}
-            href={`/${locale}${item.href}`}
-            className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-800 transition"
-          >
-            <span className="text-xl">{item.icon}</span>
-            {isOpen && <span className="text-sm">{nav[item.labelKey]}</span>}
-          </Link>
-        ))}
+      <nav className="flex-1 py-3 space-y-0.5 overflow-y-auto">
+        {menuItems.map((item) => {
+          const isActive = activeItem?.href === item.href;
+          return (
+            <Link
+              key={item.href}
+              href={`/${locale}${item.href}`}
+              style={{
+                background: isActive ? 'var(--color-sidebar-active)' : 'transparent',
+                borderLeft: isActive ? '2px solid var(--color-sidebar-active-border)' : '2px solid transparent',
+                color: isActive ? 'var(--color-sidebar-text-active)' : 'var(--color-sidebar-text)',
+              }}
+              className={`flex items-center gap-3 px-4 py-2.5 transition-all duration-150 text-sm ${
+                isOpen ? '' : 'justify-center px-2'
+              }`}
+            >
+              <span className="text-lg flex-shrink-0" style={{ color: isActive ? 'var(--color-sidebar-accent)' : 'var(--color-sidebar-icon)' }}>
+                {item.icon}
+              </span>
+              {isOpen && (
+                <span className="truncate flex-1 font-medium">{nav[item.labelKey]}</span>
+              )}
+              {isOpen && item.href === '/modules/deadline-tracker' && urgentDeadlines > 0 && (
+                <span className="flex-shrink-0 w-5 h-5 flex items-center justify-center text-xs font-bold rounded-full"
+                  style={{ background: 'var(--color-danger)', color: '#fff' }}>
+                  {urgentDeadlines}
+                </span>
+              )}
+            </Link>
+          );
+        })}
       </nav>
 
+      {/* Upgrade block (if free tier) */}
+      {isOpen && user?.role === 'free' && (
+        <div className="mx-3 mb-3 p-3 rounded-lg" style={{ background: 'var(--color-sidebar-upgrade-bg)' }}>
+          <Link href={`/${locale}/modules/billing`} className="block">
+            <p className="text-sm font-medium" style={{ color: 'var(--color-sidebar-accent)' }}>
+              {locale === 'de' ? 'Upgrade auf Pro' : 'Upgrade to Pro'}
+            </p>
+            <p className="text-xs mt-0.5" style={{ color: 'var(--color-sidebar-text)' }}>
+              {locale === 'de' ? 'Alle Funktionen freischalten' : 'Unlock all features'}
+            </p>
+          </Link>
+        </div>
+      )}
+
       {/* User & Logout */}
-      <div className="p-4 border-t border-blue-800 flex-shrink-0">
+      <div className="p-4 flex-shrink-0" style={{ borderTop: '1px solid var(--color-sidebar-divider)' }}>
         {isOpen && (
-          <div className="mb-4 pb-4 border-b border-blue-800 text-xs">
-            <p className="text-blue-200">{user?.email}</p>
-            <p className="text-blue-300 font-medium">{user?.role.toUpperCase()}</p>
+          <div className="mb-3 pb-3 text-xs" style={{ borderBottom: '1px solid var(--color-sidebar-divider)' }}>
+            <p style={{ color: 'var(--color-sidebar-text)' }}>{user?.email}</p>
+            <p className="font-medium mt-0.5" style={{ color: user?.role === 'pro' ? 'var(--color-success)' : 'var(--color-sidebar-text)' }}>
+              {user?.role?.toUpperCase()}
+            </p>
           </div>
         )}
 
-        {/* Language Switcher - always visible */}
-        <div className="mb-3 w-full">
-          <div className="text-xs text-blue-300 mb-1">{isOpen ? 'Sprache' : ''}</div>
+        {/* Language Switcher */}
+        <div className="mb-3">
+          {isOpen && <p className="text-xs mb-1" style={{ color: 'var(--color-sidebar-text)' }}>Sprache</p>}
           <div className="grid grid-cols-4 gap-1 min-w-0">
             {['de', 'ru', 'uk', 'ro'].map((loc) => (
               <button
                 key={loc}
                 onClick={() => { window.location.href = `/${loc}/dashboard`; }}
-                className={`text-xs py-1.5 px-1 rounded transition ${
-                  locale === loc ? 'bg-blue-600 text-white' : 'bg-blue-800 text-blue-200 hover:bg-blue-700 hover:text-white'
-                }`}
-                title={loc.toUpperCase()}
+                className="text-xs py-1.5 px-1 rounded transition font-medium"
+                style={{
+                  background: locale === loc ? 'var(--color-primary)' : 'var(--color-sidebar-active)',
+                  color: locale === loc ? '#fff' : 'var(--color-sidebar-text)',
+                }}
               >
                 {loc.toUpperCase()}
               </button>
@@ -97,9 +159,14 @@ export function SidebarClient({ locale, nav }: SidebarClientProps) {
 
         <button
           onClick={handleLogout}
-          className="w-full px-3 py-2 bg-red-600 hover:bg-red-700 rounded-lg transition text-sm"
+          className="w-full px-3 py-2 rounded-lg transition text-sm font-medium"
+          style={{ background: 'rgba(220,38,38,0.15)', color: '#EF4444' }}
         >
-          {isOpen ? 'Abmelden' : '🚪'}
+          {isOpen ? (
+            <span>{locale === 'de' ? 'Abmelden' : locale === 'ru' ? 'Выйти' : locale === 'uk' ? 'Вийти' : 'Logout'}</span>
+          ) : (
+            <span>🚪</span>
+          )}
         </button>
       </div>
     </div>

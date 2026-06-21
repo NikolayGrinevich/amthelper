@@ -13,6 +13,7 @@ interface ModuleLayoutProps {
     checklist: string;
     letter: string;
     templates: string;
+    billing: string;
   };
   common: {
     greetingPrefix: string;

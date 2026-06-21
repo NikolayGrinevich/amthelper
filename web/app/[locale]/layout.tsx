@@ -5,7 +5,6 @@ import { NextIntlClientProvider } from 'next-intl';
 import { locales, Locale } from '@/i18n.config';
 import { AuthProvider } from '@/app/providers/AuthProvider';
 import { CookieBanner } from '@/app/components/CookieBanner';
-import { Footer } from '@/app/components/Footer';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -41,7 +40,6 @@ export default async function RootLayout({
         <NextIntlClientProvider messages={messages} locale={locale}>
           <AuthProvider locale={locale}>
             {children}
-            <Footer />
             <CookieBanner />
           </AuthProvider>
         </NextIntlClientProvider>

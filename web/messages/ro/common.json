@@ -5,7 +5,8 @@
     "letter": "Generator scrisori",
     "deadline": "Termene",
     "checklist": "Checklist",
-    "templates": "Șabloane"
+    "templates": "Șabloane",
+    "billing": "Facturare"
   },
   "home": {
     "title": "AmtHelper - Asistentul tău pentru birouri germane",
@@ -51,7 +52,10 @@
       "letters": "Scrisori"
     },
     "greetingPrefix": "Salut",
-    "dashboardDefaultTitle": "Panou de control"
+    "dashboardDefaultTitle": "Panou de control",
+    "billing": "Administrare facturare",
+    "billingDescription": "Gestionați abonamentul și metodele de plată",
+    "noSubscription": "Abonamentul nu a fost găsit"
   },
   "modules": {
     "documentAnalyzer": {
@@ -60,7 +64,13 @@
       "uploaderCTA": "Apasă pentru a încărca sau trage fișierul",
       "uploaderHint": "PNG, JPG, GIF până la 10MB",
       "actions": {
-        "analyze": "Analizează documentul"
+        "savePdf": "Salvează ca PDF",
+        "share": "Partajează",
+        "addToCalendar": "Adaugă în calendar",
+        "generateLetter": "Creează scrisoare de răspuns",
+        "newAnalysis": "Analizează document nou",
+        "tryAgain": "Încearcă din nou",
+        "analyze": "Analizează"
       },
       "analysis": {
         "selectFile": "Selectează un fișier",
@@ -70,44 +80,43 @@
         "title": "Rezultatele analizei",
         "sender": "Expeditor",
         "type": "Tip document",
-        "deadline": "Termen limită"
+        "deadline": "Termen limită",
+        "urgency": "Urgență",
+        "keyPoints": "Puncte cheie",
+        "requiredDocs": "Documente necesare"
       },
       "history": {
         "title": "Analize recente"
       }
     },
     "deadlineTracker": {
-      "title": "Urmărire termene",
-      "add_deadline": "Adaugă termen",
-      "cancel": "Anulează",
-      "title": "Titlu",
-      "title_placeholder": "Ex: Răspuns scrisoare Finanzamt",
-      "description": "Descriere",
-      "description_placeholder": "Detalii opționale",
-      "due_date": "Data limită",
-      "priority": "Prioritate",
-      "low": "Scăzută",
-      "medium": "Medie",
-      "high": "Ridicată",
-      "add": "Adaugă",
-      "no_deadlines": "Niciun termen încă",
+      "title": "Termene limită",
+      "subtitle": "Urmărește termenele documentelor tale",
+      "no_deadlines": "Niciun termen limită",
+      "no_documents": "Niciun document analizat",
+      "loading": "Se încarcă...",
       "days_left": "zile rămase",
-      "days_overdue": "zile întârziere"
+      "days_left_one": "zi rămasă",
+      "days_overdue": "zile depășite",
+      "overdue": "Depășit",
+      "no_deadline": "Fără termen",
+      "create_letter": "Creează scrisoare",
+      "urgency_critical": "Critic",
+      "urgency_high": "Urgent",
+      "urgency_ok": "OK"
     },
     "checklist": {
       "title": "Lista de documente",
-      "add_checklist": "Listă nouă",
-      "cancel": "Anulează",
-      "checklist_name": "Nume listă",
-      "checklist_name_placeholder": "Ex: Documente pentru contestație",
-      "description": "Descriere",
-      "description_placeholder": "Detalii opționale",
-      "items": "Elemente",
-      "item_placeholder": "Ex: Copie pașaport",
-      "add_after": "Adaugă după",
-      "create": "Creează",
-      "no_checklists": "Nicio listă încă",
-      "completed": "finalizate"
+      "subtitle": "Documente necesare și termene limită",
+      "no_checklists": "Nu există liste de verificare",
+      "no_documents": "Niciun document analizat",
+      "loading": "Se încarcă...",
+      "completed": "finalizate",
+      "reset": "Resetează",
+      "overall_progress": "Progres total",
+      "items_done": "elemente realizate",
+      "all_done": "Totul este gata!",
+      "no_required_docs": "Nu sunt documente necesare"
     },
     "letterGenerator": {
       "title": "Generator de scrisori",
@@ -135,12 +144,196 @@
     "templates": {
       "title": "Șabloane de scrisori",
       "german": "Germană",
+      "use": "Utilizează",
       "copy": "Copiază",
       "close": "Închide",
+      "all": "Toate",
+      "searchPlaceholder": "Căutați șabloane...",
+      "subtitle": "Șabloane pentru scrisori oficiale germane",
+      "finanzamt": "Finanțe",
+      "jobcenter": "Jobcenter",
+      "auslaenderbehoerde": "Autoritatea pentru Străini",
+      "krankenkasse": "Asigurări de Sănătate",
+      "agentur": "Agenția pentru Muncă",
+      "wohnung": "Locuință",
+      "rentenversicherung": "Asigurări de Pensie",
+      "bamf": "BAMF",
+      "sonstiges": "Altele",
       "template_tips_title": "Sfaturi de utilizare",
       "template_tip_1": "Înlocuiește placeholder-urile cu date reale",
       "template_tip_2": "Verifică scrisoarea înainte de trimitere",
-      "template_tip_3": "Păstrează copii ale tuturor scrisorilor expediate"
+      "template_tip_3": "Păstrează copii ale tuturor scrisorilor expediate",
+      "items": {
+        "widerspruch-steuerbescheid": {
+          "name": "Contestație decizie fiscală",
+          "description": "Contestație oficială împotriva unei decizii fiscale."
+        },
+        "fristverlaengerung-steuer": {
+          "name": "Cerere prelungire termen",
+          "description": "Cerere de prelungire a termenului de contestație."
+        },
+        "ratenzahlung-steuer": {
+          "name": "Cerere plată în rate",
+          "description": "Cerere de plată în rate avantajoasă."
+        },
+        "einspruch-vollstreckung": {
+          "name": "Contestație executare silită",
+          "description": "Contestație împotriva executării silite."
+        },
+        "stundung-steuer": {
+          "name": "Cerere amânare plată",
+          "description": "Cerere de amânare temporară a plății."
+        },
+        "nachfrage-steuerbescheid": {
+          "name": "Solicitare informații decizie",
+          "description": "Solicitare politicoasă pentru clarificări."
+        },
+        "widerspruch-kuerzung": {
+          "name": "Contestație reducere prestații",
+          "description": "Contestație împotriva reducerii prestațiilor."
+        },
+        "weiterzahlung-jobcenter": {
+          "name": "Cerere continuare prestații",
+          "description": "Cerere de continuare a prestațiilor Bürgergeld."
+        },
+        "nachfrage-jobcenter-bescheid": {
+          "name": "Solicitare informații Jobcenter",
+          "description": "Solicitare detalii despre decizie."
+        },
+        "kostenuebernahme-jobcenter": {
+          "name": "Cerere acoperire costuri",
+          "description": "Cerere de acoperire a cheljenilor."
+        },
+        "beschwerde-sachbearbeiter": {
+          "name": "Reclamație angajat Jobcenter",
+          "description": "Reclamație oficială împotriva unui angajat."
+        },
+        "erhoehung-leistungen": {
+          "name": "Cerere majorare prestații",
+          "description": "Cerere de majorare a cuantumului prestațiilor."
+        },
+        "widerspruch-sanktion": {
+          "name": "Contestație sancțiune",
+          "description": "Contestație împotriva sancțiunii aplicate."
+        },
+        "verlaengerung-aufenthaltstitel": {
+          "name": "Cerere prelungire permis ședere",
+          "description": "Cerere de prelungire a permisului de ședere."
+        },
+        "nachfrage-antragsstatus-auslaender": {
+          "name": "Solicitare status cerere",
+          "description": "Solicitare privind stadiul cererii depuse."
+        },
+        "niederlassungserlaubnis": {
+          "name": "Cerere permis permanent",
+          "description": "Cerere pentru permis de ședere permanent."
+        },
+        "widerspruch-ablehnung-aufenthalt": {
+          "name": "Contestație refuz",
+          "description": "Contestație împotriva refuzului permisului."
+        },
+        "familiennachzug": {
+          "name": "Cerere reîntregire familie",
+          "description": "Cerere pentru reîntregirea familiei."
+        },
+        "bearbeitungsstand-anfrage": {
+          "name": "Solicitare stadiu procesare",
+          "description": "Solicitare privind stadiul actual al cererii."
+        },
+        "widerspruch-krankenkasse": {
+          "name": "Contestație asigurare sănătate",
+          "description": "Contestație împotriva refuzului asistenței medicale."
+        },
+        "kostenerstattung-krankenkasse": {
+          "name": "Cerere rambursare cheltuieli",
+          "description": "Cerere de rambursare a cheltuielilor medicale."
+        },
+        "nachfrage-abrechnung": {
+          "name": "Solicitare informații asigurare",
+          "description": "Solicitare privind o factură neclară."
+        },
+        "ausnahmegenehmigung-krankenkasse": {
+          "name": "Cerere aprobare specială",
+          "description": "Cerere de aprobare specială pentru tratament."
+        },
+        "beschwerde-krankenkasse": {
+          "name": "Reclamație tratament medical",
+          "description": "Reclamație privind calitatea îngrijirilor medicale."
+        },
+        "widerspruch-sperrzeit": {
+          "name": "Contestație blocare indemnizație",
+          "description": "Contestație împotriva suspendării ALG."
+        },
+        "verlaengerung-alg": {
+          "name": "Cerere prelungire indemnizație",
+          "description": "Cerere de prelungire a indemnizației de șomaj."
+        },
+        "nachfrage-antrag-arbeitsamt": {
+          "name": "Solicitare Agenția Muncii",
+          "description": "Solicitare detalii privind cererea."
+        },
+        "fahrkostenerstattung-arbeitsamt": {
+          "name": "Rambursare cheltuieli transport",
+          "description": "Cerere de rambursare a cheltuielilor de transport."
+        },
+        "maengelanzeige": {
+          "name": "Notificare defecțiuni",
+          "description": "Notificare oficială a proprietarului despre defecțiuni."
+        },
+        "widerspruch-kuendigung": {
+          "name": "Contestație reziliere contract",
+          "description": "Contestație împotriva rezilierii contractului de chirie."
+        },
+        "mietminderung": {
+          "name": "Cerere reducere chirie",
+          "description": "Cerere de reducere a chiriei."
+        },
+        "kaution-zurueckfordern": {
+          "name": "Returnare garanție",
+          "description": "Cerere de returnare a garanției."
+        },
+        "nebenkostenabrechnung-anfechten": {
+          "name": "Contestație cheltuieli comune",
+          "description": "Contestație împotriva calculului cheltuielilor comune."
+        },
+        "nachfrage-rentenbescheid": {
+          "name": "Solicitare decizie pensie",
+          "description": "Solicitare privind notificarea de pensie."
+        },
+        "kontenklaerung-rente": {
+          "name": "Clarificare cont pensie",
+          "description": "Cerere de clarificare a stagiului de cotizare."
+        },
+        "widerspruch-rentenbescheid": {
+          "name": "Contestație decizie pensie",
+          "description": "Contestație împotriva deciziei de pensionare."
+        },
+        "nachfrage-asylverfahren": {
+          "name": "Solicitare dosar azil",
+          "description": "Solicitare privind stadiul procedurii de azil."
+        },
+        "akteneinsicht-bamf": {
+          "name": "Cerere acces dosar",
+          "description": "Cerere de acces la materialele dosarului."
+        },
+        "kindergeld-widerspruch": {
+          "name": "Contestație alocație copii",
+          "description": "Contestație împotriva refuzului Kindergeld."
+        },
+        "gez-befreiung": {
+          "name": "Cerere scutire GEZ",
+          "description": "Cerere de scutire de la taxa TV."
+        },
+        "anmeldung-ummeldung": {
+          "name": "Anmeldung/Ummeldung",
+          "description": "Documente pentru înregistrare sau schimbare adresă."
+        },
+        "allgemeine-beschwerde": {
+          "name": "Reclamație generală",
+          "description": "Scrisoare universală de reclamație pentru orice autoritate."
+        }
+      },
+      "noResults": "Nu s-au găsit șabloane"
     }
   }
 }

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import type Stripe from 'stripe';
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const { createClient } = require('@supabase/supabase-js');
 
@@ -37,6 +38,26 @@ export async function POST(request: NextRequest) {
 
   try {
     switch (event.type) {
+      case 'checkout.session.completed': {
+        const sessionData = event.data.object as Stripe.Checkout.Session;
+        const customerEmail =
+          sessionData.customer_email ||
+          sessionData.customer_details?.email;
+
+        if (customerEmail) {
+          await supabase
+            .from('users')
+            .update({
+              tier: 'pro',
+              stripe_customer_id: sessionData.customer as string,
+              updated_at: new Date().toISOString(),
+            })
+            .eq('email', customerEmail);
+          console.log(`✓ User ${customerEmail} upgraded to pro, customer: ${sessionData.customer}`);
+        }
+        break;
+      }
+
       case 'customer.subscription.created':
       case 'customer.subscription.updated':
         // Обнови подписку в БД

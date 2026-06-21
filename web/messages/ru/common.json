@@ -5,7 +5,8 @@
     "letter": "Генератор писем",
     "deadline": "Сроки",
     "checklist": "Чеклист",
-    "templates": "Шаблоны"
+    "templates": "Шаблоны",
+    "billing": "Оплата"
   },
   "home": {
     "title": "AmtHelper - Помощник для немецких ведомств",
@@ -51,7 +52,10 @@
       "letters": "Письма"
     },
     "greetingPrefix": "Привет",
-    "dashboardDefaultTitle": "Панель управления"
+    "dashboardDefaultTitle": "Панель управления",
+    "billing": "Управление оплатой",
+    "billingDescription": "Управляйте подпиской и способами оплаты",
+    "noSubscription": "Подписка не найдена"
   },
   "modules": {
     "documentAnalyzer": {
@@ -60,7 +64,13 @@
       "uploaderCTA": "Нажмите для загрузки или перетащите файл",
       "uploaderHint": "PNG, JPG, GIF до 10MB",
       "actions": {
-        "analyze": "Анализировать документ"
+        "analyze": "Анализировать документ",
+        "savePdf": "Сохранить как PDF",
+        "share": "Поделиться",
+        "addToCalendar": "Добавить в календарь",
+        "generateLetter": "Создать ответное письмо",
+        "newAnalysis": "Анализировать другой документ",
+        "tryAgain": "Попробовать снова"
       },
       "analysis": {
         "selectFile": "Выберите файл",
@@ -70,7 +80,10 @@
         "title": "Результаты анализа",
         "sender": "Отправитель",
         "type": "Тип документа",
-        "deadline": "Крайний срок"
+        "deadline": "Крайний срок",
+        "urgency": "Срочность",
+        "keyPoints": "Ключевые моменты",
+        "requiredDocs": "Необходимые документы"
       },
       "history": {
         "title": "Недавние анализы"
@@ -78,36 +91,32 @@
     },
     "deadlineTracker": {
       "title": "Сроки",
-      "add_deadline": "Добавить срок",
-      "cancel": "Отмена",
-      "title": "Название",
-      "title_placeholder": "Например: ответ на письмо Finanzamt",
-      "description": "Описание",
-      "description_placeholder": "Дополнительные детали",
-      "due_date": "Дата",
-      "priority": "Приоритет",
-      "low": "Низкий",
-      "medium": "Средний",
-      "high": "Высокий",
-      "add": "Добавить",
-      "no_deadlines": "Сроков пока нет",
+      "subtitle": "Документы с отслеживаемыми сроками",
+      "no_deadlines": "Нет документов со сроками",
+      "no_documents": "Загрузите документы для отслеживания сроков",
+      "loading": "Загрузка...",
       "days_left": "дней осталось",
-      "days_overdue": "дней просрочено"
+      "days_left_one": "день остался",
+      "days_overdue": "дней просрочено",
+      "overdue": "Просрочено",
+      "no_deadline": "Без срока",
+      "create_letter": "Создать письмо",
+      "urgency_critical": "Критично",
+      "urgency_high": "Скоро",
+      "urgency_ok": "Всё хорошо"
     },
     "checklist": {
       "title": "Чек-лист",
-      "add_checklist": "Добавить чек-лист",
-      "cancel": "Отмена",
-      "checklist_name": "Название списка",
-      "checklist_name_placeholder": "Например: документы для обжалования",
-      "description": "Описание",
-      "description_placeholder": "Дополнительные детали",
-      "items": "Пункты",
-      "item_placeholder": "Например: копия паспорта",
-      "add_after": "Добавить после",
-      "create": "Создать",
-      "no_checklists": "Списков пока нет",
-      "completed": "выполнено"
+      "subtitle": "Список необходимых документов по каждому письму",
+      "no_checklists": "Нет документов с требованиями",
+      "no_documents": "Загрузите документы для формирования чеклистов",
+      "loading": "Загрузка...",
+      "completed": "выполнено",
+      "reset": "Сбросить",
+      "overall_progress": "Общий прогресс",
+      "items_done": "из",
+      "all_done": "Всё готово!",
+      "no_required_docs": "Нет требований к документам"
     },
     "letterGenerator": {
       "title": "Генератор писем",
@@ -136,11 +145,195 @@
       "title": "Шаблоны писем",
       "german": "Немецкий",
       "copy": "Копировать",
+      "use": "Использовать",
       "close": "Закрыть",
       "template_tips_title": "Советы по использованию",
       "template_tip_1": "Заменяйте плейсхолдеры на реальные данные",
       "template_tip_2": "Проверяйте письмо перед отправкой",
-      "template_tip_3": "Сохраняйте копии всех отправленных писем"
+      "template_tip_3": "Сохраняйте копии всех отправленных писем",
+      "items": {
+        "widerspruch-steuerbescheid": {
+          "name": "Возражение на налоговое решение",
+          "description": "Официальное возражение против решения налоговой."
+        },
+        "fristverlaengerung-steuer": {
+          "name": "Заявление о продлении срока",
+          "description": "Запрос на продление срока подачи возражения."
+        },
+        "ratenzahlung-steuer": {
+          "name": "Заявление о рассрочке",
+          "description": "Запрос на выгодную рассрочку платежа."
+        },
+        "einspruch-vollstreckung": {
+          "name": "Возражение против взыскания",
+          "description": "Возражение против принудительного взыскания."
+        },
+        "stundung-steuer": {
+          "name": "Заявление об отсрочке",
+          "description": "Запрос временной отсрочки платежа."
+        },
+        "nachfrage-steuerbescheid": {
+          "name": "Запрос по налоговому решению",
+          "description": "Вежливый запрос по неясным пунктам."
+        },
+        "widerspruch-kuerzung": {
+          "name": "Возражение на сокращение выплат",
+          "description": "Возражение против сокращённых выплат Jobcenter."
+        },
+        "weiterzahlung-jobcenter": {
+          "name": "Заявление о продолжении выплат",
+          "description": "Запрос на продолжение выплат Bürgergeld."
+        },
+        "nachfrage-jobcenter-bescheid": {
+          "name": "Запрос по решению Jobcenter",
+          "description": "Запрос деталей решения."
+        },
+        "kostenuebernahme-jobcenter": {
+          "name": "Заявление о покрытии расходов",
+          "description": "Запрос на покрытие расходов."
+        },
+        "beschwerde-sachbearbeiter": {
+          "name": "Жалоба на сотрудника Jobcenter",
+          "description": "Официальная жалоба на действия сотрудника."
+        },
+        "erhoehung-leistungen": {
+          "name": "Заявление об увеличении выплат",
+          "description": "Запрос на увеличение размера выплат."
+        },
+        "widerspruch-sanktion": {
+          "name": "Возражение против санкции",
+          "description": "Возражение против наложенной санкции."
+        },
+        "verlaengerung-aufenthaltstitel": {
+          "name": "Заявление о продлении ВНЖ",
+          "description": "Запрос на продление вида на жительство."
+        },
+        "nachfrage-antragsstatus-auslaender": {
+          "name": "Запрос статуса заявления",
+          "description": "Запрос о состоянии поданного заявления."
+        },
+        "niederlassungserlaubnis": {
+          "name": "Заявление на ПМЖ",
+          "description": "Заявление на постоянный вид на жительство."
+        },
+        "widerspruch-ablehnung-aufenthalt": {
+          "name": "Возражение на отказ",
+          "description": "Возражение против отказа в ВНЖ."
+        },
+        "familiennachzug": {
+          "name": "Заявление на воссоединение семьи",
+          "description": "Запрос на воссоединение с семьёй."
+        },
+        "bearbeitungsstand-anfrage": {
+          "name": "Запрос о ходе рассмотрения",
+          "description": "Запрос текущего статуса заявления."
+        },
+        "widerspruch-krankenkasse": {
+          "name": "Возражение страховой компании",
+          "description": "Возражение против отказа в медпомощи."
+        },
+        "kostenerstattung-krankenkasse": {
+          "name": "Заявление о возмещении расходов",
+          "description": "Запрос на возмещение медицинских расходов."
+        },
+        "nachfrage-abrechnung": {
+          "name": "Запрос по счёту страховой",
+          "description": "Запрос по неясному счёту."
+        },
+        "ausnahmegenehmigung-krankenkasse": {
+          "name": "Заявление об исключении",
+          "description": "Запрос специального разрешения на лечение."
+        },
+        "beschwerde-krankenkasse": {
+          "name": "Жалоба на лечение",
+          "description": "Жалоба на качество медицинской помощи."
+        },
+        "widerspruch-sperrzeit": {
+          "name": "Возражение на блокировку пособия",
+          "description": "Возражение против приостановки ALG."
+        },
+        "verlaengerung-alg": {
+          "name": "Заявление о продлении ALG",
+          "description": "Запрос на продление пособия по безработице."
+        },
+        "nachfrage-antrag-arbeitsamt": {
+          "name": "Запрос в Биржу труда",
+          "description": "Запрос деталей по заявлению."
+        },
+        "fahrkostenerstattung-arbeitsamt": {
+          "name": "Возмещение транспортных расходов",
+          "description": "Запрос на возмещение расходов на транспорт."
+        },
+        "maengelanzeige": {
+          "name": "Уведомление о дефектах",
+          "description": "Официальное уведомление арендодателя о неисправностях."
+        },
+        "widerspruch-kuendigung": {
+          "name": "Возражение на расторжение договора",
+          "description": "Возражение против расторжения договора аренды."
+        },
+        "mietminderung": {
+          "name": "Заявление о снижении арендной платы",
+          "description": "Запрос на снижение арендной платы."
+        },
+        "kaution-zurueckfordern": {
+          "name": "Возврат залога",
+          "description": "Требование возврата залоговой суммы."
+        },
+        "nebenkostenabrechnung-anfechten": {
+          "name": "Оспаривание счёта за коммунальные услуги",
+          "description": "Возражение против расчёта коммунальных платежей."
+        },
+        "nachfrage-rentenbescheid": {
+          "name": "Запрос по пенсионному решению",
+          "description": "Запрос по пенсионному уведомлению."
+        },
+        "kontenklaerung-rente": {
+          "name": "Запрос уточнения пенсионного счёта",
+          "description": "Запрос на уточнение пенсионного стажа."
+        },
+        "widerspruch-rentenbescheid": {
+          "name": "Возражение по пенсионному решению",
+          "description": "Возражение против пенсионного решения."
+        },
+        "nachfrage-asylverfahren": {
+          "name": "Запрос по делу об убежище",
+          "description": "Запрос о ходе рассмотрения дела."
+        },
+        "akteneinsicht-bamf": {
+          "name": "Запрос на ознакомление с делом",
+          "description": "Запрос доступа к материалам дела."
+        },
+        "kindergeld-widerspruch": {
+          "name": "Возражение по детскому пособию",
+          "description": "Возражение против отказа в Kindergeld."
+        },
+        "gez-befreiung": {
+          "name": "Заявление об освобождении от GEZ",
+          "description": "Запрос на освобождение от оплаты телевизионного сбора."
+        },
+        "anmeldung-ummeldung": {
+          "name": "Анмельдунг/Умельдунг",
+          "description": "Документы для регистрации или смены адреса."
+        },
+        "allgemeine-beschwerde": {
+          "name": "Общая жалоба",
+          "description": "Универсальное письмо-жалоба для любого ведомства."
+        }
+      },
+      "all": "Все",
+      "searchPlaceholder": "Поиск шаблонов...",
+      "subtitle": "Выберите шаблон для вашего письма",
+      "noResults": "Шаблоны не найдены",
+      "finanzamt": "Finanzamt",
+      "jobcenter": "Jobcenter",
+      "auslaenderbehoerde": "Ausländerbehörde",
+      "krankenkasse": "Krankenkasse",
+      "agentur": "Bundesagentur für Arbeit",
+      "wohnung": "Wohnung & Vermieter",
+      "rentenversicherung": "Rentenversicherung",
+      "bamf": "BAMF",
+      "sonstiges": "Sonstiges"
     }
   }
 }

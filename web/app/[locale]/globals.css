@@ -1,23 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* ── Design System: Official Trust ─────────────────────────────────── */
+
+  /* Sidebar */
+  --color-sidebar-bg: #0F2542;
+  --color-sidebar-active: rgba(37,99,168,0.30);
+  --color-sidebar-active-border: #2563A8;
+  --color-sidebar-text: #9BB8D4;
+  --color-sidebar-text-active: #FFFFFF;
+  --color-sidebar-icon: #6B98C2;
+  --color-sidebar-accent: #60A5FA;
+  --color-sidebar-divider: rgba(255,255,255,0.10);
+  --color-sidebar-upgrade-bg: rgba(37,99,168,0.25);
+
+  /* Page */
+  --color-page-bg: #F8FAFC;
+  --color-surface: #FFFFFF;
+  --color-border: #E2E8F0;
+  --color-text-primary: #1E3A5F;
+  --color-text-secondary: #64748B;
+  --color-text-muted: #94A3B8;
+
+  /* Semantic */
+  --color-primary: #2563A8;
+  --color-primary-hover: #1A4B8C;
+  --color-success: #2E7D4F;
+  --color-warning: #D97706;
+  --color-danger: #DC2626;
+  --color-info: #0F2542;
+
+  /* Typography */
+  --font-size-base: 14px;
+  --font-size-sm: 12px;
+  --font-size-lg: 16px;
+  --font-size-xl: 20px;
+  --font-family: 'Inter', -apple-system, sans-serif;
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  /* Shadows */
+  --shadow-card: 0 1px 3px rgba(15,37,66,0.06);
+
+  /* Legacy tokens (keep for backwards compat) */
+  --background: var(--color-surface);
+  --foreground: var(--color-text-primary);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    @apply antialiased;
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    color: var(--color-text-primary);
+    background: var(--color-page-bg);
   }
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 @layer utilities {

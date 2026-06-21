@@ -5,7 +5,8 @@
     "letter": "Генератор листів",
     "deadline": "Терміни",
     "checklist": "Контрольний список",
-    "templates": "Шаблони"
+    "templates": "Шаблони",
+    "billing": "Оплата"
   },
   "home": {
     "title": "AmtHelper - Помічник для німецьких відомств",
@@ -51,7 +52,10 @@
       "letters": "Листи"
     },
     "greetingPrefix": "Привіт",
-    "dashboardDefaultTitle": "Панель керування"
+    "dashboardDefaultTitle": "Панель керування",
+    "billing": "Керування оплатою",
+    "billingDescription": "Керуйте підпискою та способами оплати",
+    "noSubscription": "Підписку не знайдено"
   },
   "modules": {
     "documentAnalyzer": {
@@ -60,7 +64,13 @@
       "uploaderCTA": "Натисніть для завантаження або перетягніть файл",
       "uploaderHint": "PNG, JPG, GIF до 10MB",
       "actions": {
-        "analyze": "Аналізувати документ"
+        "analyze": "Аналізувати документ",
+        "savePdf": "Зберегти як PDF",
+        "share": "Поділитися",
+        "addToCalendar": "Додати до календаря",
+        "generateLetter": "Створити відповідний лист",
+        "newAnalysis": "Аналізувати інший документ",
+        "tryAgain": "Спробувати знову"
       },
       "analysis": {
         "selectFile": "Виберіть файл",
@@ -70,7 +80,10 @@
         "title": "Результати аналізу",
         "sender": "Відправник",
         "type": "Тип документа",
-        "deadline": "Кінцевий термін"
+        "deadline": "Кінцевий термін",
+        "urgency": "Терміновість",
+        "keyPoints": "Ключові моменти",
+        "requiredDocs": "Необхідні документи"
       },
       "history": {
         "title": "Останні аналізи"
@@ -78,36 +91,32 @@
     },
     "deadlineTracker": {
       "title": "Терміни",
-      "add_deadline": "Додати термін",
-      "cancel": "Скасувати",
-      "title": "Назва",
-      "title_placeholder": "Наприклад: відповідь на лист Finanzamt",
-      "description": "Опис",
-      "description_placeholder": "Додаткові деталі",
-      "due_date": "Дата",
-      "priority": "Пріоритет",
-      "low": "Низький",
-      "medium": "Середній",
-      "high": "Високий",
-      "add": "Додати",
-      "no_deadlines": "Термінів поки немає",
+      "subtitle": "Документи з відстежуваними термінами",
+      "no_deadlines": "Немає документів з термінами",
+      "no_documents": "Завантажте документи для відстеження термінів",
+      "loading": "Завантаження...",
       "days_left": "днів залишилось",
-      "days_overdue": "днів протерміновано"
+      "days_left_one": "день залишився",
+      "days_overdue": "днів протерміновано",
+      "overdue": "Протерміно",
+      "no_deadline": "Без терміну",
+      "create_letter": "Створити лист",
+      "urgency_critical": "Критично",
+      "urgency_high": "Скоро",
+      "urgency_ok": "Все добре"
     },
     "checklist": {
-      "title": "Чек-лист",
-      "add_checklist": "Додати чек-лист",
-      "cancel": "Скасувати",
-      "checklist_name": "Назва списку",
-      "checklist_name_placeholder": "Наприклад: документи для оскарження",
-      "description": "Опис",
-      "description_placeholder": "Додаткові деталі",
-      "items": "Пункти",
-      "item_placeholder": "Наприклад: копія паспорта",
-      "add_after": "Додати після",
-      "create": "Створити",
-      "no_checklists": "Списків поки немає",
-      "completed": "виконано"
+      "title": "Чек-ліст",
+      "subtitle": "Список необхідних документів по кожному листу",
+      "no_checklists": "Немає документів з вимогами",
+      "no_documents": "Завантажте документи для формування чеклістів",
+      "loading": "Завантаження...",
+      "completed": "виконано",
+      "reset": "Скинути",
+      "overall_progress": "Загальний прогрес",
+      "items_done": "з",
+      "all_done": "Все готово!",
+      "no_required_docs": "Немає вимог до документів"
     },
     "letterGenerator": {
       "title": "Генератор листів",
@@ -136,11 +145,195 @@
       "title": "Шаблони листів",
       "german": "Німецька",
       "copy": "Копіювати",
+      "use": "Використати",
       "close": "Закрити",
       "template_tips_title": "Поради з використання",
       "template_tip_1": "Замінюйте заповнювачі на реальні дані",
       "template_tip_2": "Перевіряйте лист перед відправкою",
-      "template_tip_3": "Зберігайте копії всіх відправлених листів"
+      "template_tip_3": "Зберігайте копії всіх відправлених листів",
+      "items": {
+        "widerspruch-steuerbescheid": {
+          "name": "Заперечення на податкове рішення",
+          "description": "Офіційне заперечення проти рішення податкової."
+        },
+        "fristverlaengerung-steuer": {
+          "name": "Заява про продовження строку",
+          "description": "Запит на продовження строку подання заперечення."
+        },
+        "ratenzahlung-steuer": {
+          "name": "Заява про розстрочку",
+          "description": "Запит на вигідну розстрочку платежу."
+        },
+        "einspruch-vollstreckung": {
+          "name": "Заперечення против стягнення",
+          "description": "Заперечення проти примусового стягнення."
+        },
+        "stundung-steuer": {
+          "name": "Заява про відстрочку",
+          "description": "Запит тимчасової відстрочки платежу."
+        },
+        "nachfrage-steuerbescheid": {
+          "name": "Запит щодо податкового рішення",
+          "description": "Ввічливий запит щодо незрозумілих пунктів."
+        },
+        "widerspruch-kuerzung": {
+          "name": "Заперечення на скорочення виплат",
+          "description": "Заперечення проти скорочених виплат Jobcenter."
+        },
+        "weiterzahlung-jobcenter": {
+          "name": "Заява про продовження виплат",
+          "description": "Запит на продовження виплат Bürgergeld."
+        },
+        "nachfrage-jobcenter-bescheid": {
+          "name": "Запит щодо рішення Jobcenter",
+          "description": "Запит деталей рішення."
+        },
+        "kostenuebernahme-jobcenter": {
+          "name": "Заява про покриття витрат",
+          "description": "Запит на покриття витрат."
+        },
+        "beschwerde-sachbearbeiter": {
+          "name": "Скарга на співробітника Jobcenter",
+          "description": "Офіційна скарга на дії співробітника."
+        },
+        "erhoehung-leistungen": {
+          "name": "Заява про збільшення виплат",
+          "description": "Запит на збільшення розміру виплат."
+        },
+        "widerspruch-sanktion": {
+          "name": "Заперечення проти санкції",
+          "description": "Заперечення проти накладеної санкції."
+        },
+        "verlaengerung-aufenthaltstitel": {
+          "name": "Заява про продовження посвідки на проживання",
+          "description": "Запит на продовження посвідки на проживання."
+        },
+        "nachfrage-antragsstatus-auslaender": {
+          "name": "Запит статусу заяви",
+          "description": "Запит про стан поданої заяви."
+        },
+        "niederlassungserlaubnis": {
+          "name": "Заява на постійне проживання (ПМЖ)",
+          "description": "Заява на отримання постійної посвідки на проживання."
+        },
+        "widerspruch-ablehnung-aufenthalt": {
+          "name": "Заперечення на відмову",
+          "description": "Заперечення проти відмови у видачі посвідки на проживання."
+        },
+        "familiennachzug": {
+          "name": "Заява на возз'єднання сім'ї",
+          "description": "Запит на возз'єднання з сім'єю."
+        },
+        "bearbeitungsstand-anfrage": {
+          "name": "Запит про хід розгляду",
+          "description": "Запит поточного статусу заяви."
+        },
+        "widerspruch-krankenkasse": {
+          "name": "Заперечення страховій компанії",
+          "description": "Заперечення проти відмови в медичній допомозі."
+        },
+        "kostenerstattung-krankenkasse": {
+          "name": "Заява про відшкодування витрат",
+          "description": "Запит на відшкодування медичних витрат."
+        },
+        "nachfrage-abrechnung": {
+          "name": "Запит щодо рахунку страхової",
+          "description": "Запит щодо незрозумілого рахунку."
+        },
+        "ausnahmegenehmigung-krankenkasse": {
+          "name": "Заява про виняток",
+          "description": "Запит спеціального дозволу на лікування."
+        },
+        "beschwerde-krankenkasse": {
+          "name": "Скарга на лікування",
+          "description": "Скарга на якість медичної допомоги."
+        },
+        "widerspruch-sperrzeit": {
+          "name": "Заперечення на блокування допомоги",
+          "description": "Заперечення проти призупинення виплат ALG."
+        },
+        "verlaengerung-alg": {
+          "name": "Заява про продовження ALG",
+          "description": "Запит на продовження допомоги по безробіттю."
+        },
+        "nachfrage-antrag-arbeitsamt": {
+          "name": "Запит до Біржі праці",
+          "description": "Запит деталей щодо заяви."
+        },
+        "fahrkostenerstattung-arbeitsamt": {
+          "name": "Відшкодування транспортних витрат",
+          "description": "Запит на відшкодування витрат на транспорт."
+        },
+        "maengelanzeige": {
+          "name": "Повідомлення про дефекти",
+          "description": "Офіційне повідомлення орендодавця про несправності."
+        },
+        "widerspruch-kuendigung": {
+          "name": "Заперечення на розірвання договору",
+          "description": "Заперечення проти розірвання договору оренди."
+        },
+        "mietminderung": {
+          "name": "Заява про зниження орендної плати",
+          "description": "Запит на зниження орендної плати."
+        },
+        "kaution-zurueckfordern": {
+          "name": "Повернення застави",
+          "description": "Вимога повернення заставної суми."
+        },
+        "nebenkostenabrechnung-anfechten": {
+          "name": "Оскарження рахунку за комунальні послуги",
+          "description": "Заперечення проти розрахунку комунальних платежів."
+        },
+        "nachfrage-rentenbescheid": {
+          "name": "Запит щодо пенсійного рішення",
+          "description": "Запит щодо пенсійного повідомлення."
+        },
+        "kontenklaerung-rente": {
+          "name": "Запит уточнення пенсійного рахунку",
+          "description": "Запит на уточнення пенсійного стажа."
+        },
+        "widerspruch-rentenbescheid": {
+          "name": "Заперечення щодо пенсійного рішення",
+          "description": "Заперечення проти пенсійного рішення."
+        },
+        "nachfrage-asylverfahren": {
+          "name": "Запит у справі про притулок",
+          "description": "Запит про хід розгляду справи."
+        },
+        "akteneinsicht-bamf": {
+          "name": "Запит на ознайомлення зі справою",
+          "description": "Запит доступу до матеріалів справи."
+        },
+        "kindergeld-widerspruch": {
+          "name": "Заперечення щодо дитячої допомоги",
+          "description": "Заперечення проти відмови у Kindergeld."
+        },
+        "gez-befreiung": {
+          "name": "Заява про звільнення від GEZ",
+          "description": "Запит на звільнення від сплати телевізійного збору."
+        },
+        "anmeldung-ummeldung": {
+          "name": "Реєстрація/Зміна адреси",
+          "description": "Документи для реєстрації або зміни адреси."
+        },
+        "allgemeine-beschwerde": {
+          "name": "Загальна скарга",
+          "description": "Універсальний лист-скарга для будь-якого відомства."
+        }
+      },
+      "all": "Усі",
+      "searchPlaceholder": "Пошук шаблонів...",
+      "subtitle": "Виберіть шаблон для вашого листа",
+      "noResults": "Шаблони не знайдено",
+      "finanzamt": "Finanzamt",
+      "jobcenter": "Jobcenter",
+      "auslaenderbehoerde": "Ausländerbehörde",
+      "krankenkasse": "Krankenkasse",
+      "agentur": "Bundesagentur für Arbeit",
+      "wohnung": "Wohnung & Vermieter",
+      "rentenversicherung": "Rentenversicherung",
+      "bamf": "BAMF",
+      "sonstiges": "Sonstiges"
     }
   }
 }

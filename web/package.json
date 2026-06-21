@@ -12,6 +12,7 @@
     "@anthropic-ai/sdk": "^0.104.1",
     "@stripe/react-stripe-js": "^6.6.0",
     "@stripe/stripe-js": "^9.8.0",
+    "@supabase/ssr": "^0.12.0",
     "@supabase/supabase-js": "^2.108.1",
     "dotenv": "^17.4.2",
     "dragdropx": "^1.0.4",

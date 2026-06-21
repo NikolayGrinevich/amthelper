@@ -1,11 +1,41 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabaseAdmin, getUser } from '@/app/lib/supabase';
+import { supabaseAdmin } from '@/app/lib/supabase';
 
 export const runtime = 'nodejs';
 
+async function getUserFromToken(request: NextRequest) {
+  const authToken = request.cookies.get('auth_token')?.value;
+
+  if (!authToken) {
+    return null;
+  }
+
+  // Demo token handling FIRST (before supabaseAdmin check)
+  if (authToken.startsWith('demo_token_')) {
+    return {
+      id: '219d0e4d-401e-405a-b5be-ef1095f6165e',
+      email: 'demo@amthelper.de',
+    };
+  }
+
+  // Real token - validate with Supabase
+  if (!supabaseAdmin) {
+    console.error('supabaseAdmin not configured - missing SUPABASE_SERVICE_ROLE_KEY');
+    return null;
+  }
+
+  const { data: { user }, error: authError } = await supabaseAdmin.auth.getUser(authToken);
+
+  if (authError || !user) {
+    return null;
+  }
+
+  return user;
+}
+
 export async function POST(request: NextRequest) {
   try {
-    const user = await getUser();
+    const user = await getUserFromToken(request);
     if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
@@ -36,7 +66,6 @@ export async function POST(request: NextRequest) {
           file_name,
           file_type: file_type || 'application/octet-stream',
           file_size: file_size || 0,
-          analysis: analysis_result,
           status: 'completed',
         },
       ])
@@ -46,7 +75,7 @@ export async function POST(request: NextRequest) {
     if (docError) {
       console.error('Document creation error:', docError);
       return NextResponse.json(
-        { error: 'Failed to save document' },
+        { error: 'Failed to save document', details: docError.message, code: docError.code, hint: docError.hint },
         { status: 500 }
       );
     }
@@ -70,7 +99,7 @@ export async function POST(request: NextRequest) {
     if (analysisError) {
       console.error('Analyzed document creation error:', analysisError);
       return NextResponse.json(
-        { error: 'Failed to save analysis' },
+        { error: 'Failed to save analysis', details: analysisError.message, code: analysisError.code, hint: analysisError.hint },
         { status: 500 }
       );
     }
@@ -119,7 +148,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Save analysis error:', error);
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Save failed' },
+      { error: error instanceof Error ? error.message : 'Save failed', stack: error instanceof Error ? error.stack : undefined },
       { status: 500 }
     );
   }

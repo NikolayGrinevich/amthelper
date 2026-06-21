@@ -10,14 +10,22 @@
         "running": "Analyse läuft..."
       },
       "actions": {
-        "analyze": "Analysieren"
+        "analyze": "Analysieren",
+        "savePdf": "Als PDF speichern",
+        "share": "Teilen",
+        "addToCalendar": "Zum Kalender hinzufügen",
+        "generateLetter": "Antwortbrief erstellen",
+        "newAnalysis": "Neues Dokument analysieren",
+        "tryAgain": "Erneut versuchen"
       },
       "results": {
         "title": "Analyseergebnis",
         "sender": "Absender",
         "type": "Dokumentart",
         "deadline": "Frist",
-        "urgency": "Dringlichkeit"
+        "urgency": "Dringlichkeit",
+        "keyPoints": "Wichtige Punkte",
+        "requiredDocs": "Benötigte Dokumente"
       },
       "history": {
         "title": "Verlauf"
@@ -46,48 +54,228 @@
         "title": "Historie"
       }
     },
-    "checklist": {
-      "title": "Checkliste",
-      "add_checklist": "Checkliste hinzufügen",
-      "cancel": "Abbrechen",
-      "checklist_name": "Name der Checkliste",
-      "checklist_name_placeholder": "Checkliste benennen",
-      "description": "Beschreibung",
-      "description_placeholder": "Optionale Beschreibung",
-      "items": "Punkte",
-      "item_placeholder": "Aufgabe eingeben",
-      "add_after": "Danach hinzufügen",
-      "create": "Erstellen",
-      "no_checklists": "Keine Checklisten vorhanden",
-      "completed": "erledigt"
-    },
     "deadlineTracker": {
       "title": "Fristen",
-      "add_deadline": "Frist hinzufügen",
-      "cancel": "Abbrechen",
-      "title": "Titel",
-      "title_placeholder": "Bezeichnung der Frist",
-      "description": "Beschreibung",
-      "description_placeholder": "Zusätzliche Details",
-      "due_date": "Fälligkeitsdatum",
-      "priority": "Priorität",
-      "low": "Niedrig",
-      "medium": "Mittel",
-      "high": "Hoch",
-      "add": "Hinzufügen",
-      "no_deadlines": "Keine Fristen vorhanden",
+      "subtitle": "Dokumente mit verfolgten Fristen",
+      "no_deadlines": "Keine Dokumente mit Fristen",
+      "no_documents": "Laden Sie Dokumente hoch, um Fristen zu verfolgen",
+      "loading": "Laden...",
       "days_left": "Tage übrig",
-      "days_overdue": "Tage überfällig"
+      "days_left_one": "Tag übrig",
+      "days_overdue": "Tage überfällig",
+      "overdue": "Überfällig",
+      "no_deadline": "Kein Fristdatum",
+      "create_letter": "Brief erstellen",
+      "urgency_critical": "Kritisch",
+      "urgency_high": "Bald fällig",
+      "urgency_ok": "Alles gut"
+    },
+    "checklist": {
+      "title": "Checkliste",
+      "subtitle": "Erforderliche Dokumente je Schreiben",
+      "no_checklists": "Keine Dokumente mit Anforderungen",
+      "no_documents": "Laden Sie Dokumente hoch, um Checklisten zu erstellen",
+      "loading": "Laden...",
+      "completed": "erledigt",
+      "reset": "Zurücksetzen",
+      "overall_progress": "Gesamtfortschritt",
+      "items_done": "von",
+      "all_done": "Alles fertig!",
+      "no_required_docs": "Keine Dokumentenanforderungen"
     },
     "templates": {
       "title": "Vorlagen",
       "german": "Deutsch",
       "close": "Schließen",
       "copy": "Kopieren",
+      "use": "Verwenden",
       "template_tips_title": "💡 Vorlagentipps",
       "template_tip_1": "Nutzen Sie Vorlagen als Startpunkt und passen Sie Platzhalter an.",
       "template_tip_2": "Halten Sie Sprache formell und präzise.",
-      "template_tip_3": "Speichern Sie häufige Briefe als Vorlage."
+      "template_tip_3": "Speichern Sie häufige Briefe als Vorlage.",
+      "items": {
+        "widerspruch-steuerbescheid": {
+          "name": "Widerspruch gegen Steuerbescheid",
+          "description": "Formeller Einspruch gegen einen Steuerbescheid mit Begründung."
+        },
+        "fristverlaengerung-steuer": {
+          "name": "Antrag auf Fristverlängerung",
+          "description": "Antrag auf Verlängerung der Einspruchsfrist."
+        },
+        "ratenzahlung-steuer": {
+          "name": "Antrag auf Ratenzahlung",
+          "description": "Beantragung einer zinsgünstigen Ratenzahlung."
+        },
+        "nachfrage-steuerbescheid": {
+          "name": "Nachfrage zum Steuerbescheid",
+          "description": "Höfliche Nachfrage bei unklaren Punkten."
+        },
+        "einspruch-vollstreckung": {
+          "name": "Einspruch gegen Vollstreckung",
+          "description": "Widerspruch gegen Zwangsvollstreckungsmaßnahmen."
+        },
+        "stundung-steuer": {
+          "name": "Antrag auf Stundung",
+          "description": "Beantragung einer vorübergehenden Zahlungsaussetzung."
+        },
+        "widerspruch-kuerzung": {
+          "name": "Widerspruch gegen Kürzung",
+          "description": "Einspruch gegen gekürzte Leistungen."
+        },
+        "weiterzahlung-jobcenter": {
+          "name": "Antrag auf Weiterzahlung",
+          "description": "Antrag auf Fortführung der Leistungen."
+        },
+        "nachfrage-jobcenter-bescheid": {
+          "name": "Nachfrage zum Bescheid",
+          "description": "Nachfrage zu Details des Leistungsbescheids."
+        },
+        "kostenuebernahme-jobcenter": {
+          "name": "Antrag auf Kostenübernahme",
+          "description": "Beantragung einer Kostenübernahme."
+        },
+        "beschwerde-sachbearbeiter": {
+          "name": "Beschwerde über Sachbearbeiter",
+          "description": "Offizielle Beschwerde über Bearbeitungsvorgang."
+        },
+        "erhoehung-leistungen": {
+          "name": "Antrag auf Erhöhung",
+          "description": "Antrag auf Anpassung oder Erhöhung von Leistungen."
+        },
+        "widerspruch-sanktion": {
+          "name": "Widerspruch gegen Sanktion",
+          "description": "Einspruch gegen eine Sanktionsmaßnahme."
+        },
+        "verlaengerung-aufenthaltstitel": {
+          "name": "Antrag auf Verlängerung Aufenthaltstitel",
+          "description": "Antrag auf Verlängerung des Aufenthaltstitels."
+        },
+        "nachfrage-antragsstatus-auslaender": {
+          "name": "Nachfrage zum Antragsstatus",
+          "description": "Anfrage zum Bearbeitungsstand bei der Ausländerbehörde."
+        },
+        "niederlassungserlaubnis": {
+          "name": "Antrag auf Niederlassungserlaubnis",
+          "description": "Antrag auf dauerhafte Niederlassungserlaubnis."
+        },
+        "widerspruch-ablehnung-aufenthalt": {
+          "name": "Widerspruch gegen Ablehnung",
+          "description": "Formeller Widerspruch gegen eine ablehnende Entscheidung."
+        },
+        "familiennachzug": {
+          "name": "Antrag auf Familiennachzug",
+          "description": "Antrag auf Nachzug von Familienangehörigen."
+        },
+        "bearbeitungsstand-anfrage": {
+          "name": "Anfrage Bearbeitungsstand",
+          "description": "Anfrage zum aktuellen Bearbeitungsstand des Antrags."
+        },
+        "widerspruch-krankenkasse": {
+          "name": "Widerspruch gegen Ablehnung",
+          "description": "Einspruch gegen eine abgelehnte Leistung."
+        },
+        "kostenerstattung-krankenkasse": {
+          "name": "Antrag auf Kostenerstattung",
+          "description": "Antrag auf Erstattung von Arzt- oder Medikamentenkosten."
+        },
+        "nachfrage-abrechnung": {
+          "name": "Nachfrage zur Abrechnung",
+          "description": "Nachfrage zu einer unklaren Abrechnung."
+        },
+        "ausnahmegenehmigung-krankenkasse": {
+          "name": "Antrag auf Ausnahmegenehmigung",
+          "description": "Antrag auf eine Heil- oder Kostenausnahme."
+        },
+        "beschwerde-krankenkasse": {
+          "name": "Beschwerde über Behandlung",
+          "description": "Beschwerde über Service oder Leistungsbearbeitung."
+        },
+        "widerspruch-sperrzeit": {
+          "name": "Widerspruch gegen Sperrzeitbescheid",
+          "description": "Einspruch gegen eine Sperrzeit bei Arbeitslosengeld."
+        },
+        "verlaengerung-alg": {
+          "name": "Antrag auf Verlängerung ALG",
+          "description": "Antrag auf Verlängerung des Arbeitslosengelds."
+        },
+        "nachfrage-antrag-arbeitsamt": {
+          "name": "Nachfrage zum Antrag",
+          "description": "Anfrage zum Status eines gestellten Antrags."
+        },
+        "fahrkostenerstattung-arbeitsamt": {
+          "name": "Antrag auf Fahrkostenerstattung",
+          "description": "Beantragung einer Erstattung von Fahrtkosten."
+        },
+        "maengelanzeige": {
+          "name": "Mängelanzeige",
+          "description": "Offizielle Mängelmeldung an den Vermieter."
+        },
+        "widerspruch-kuendigung": {
+          "name": "Widerspruch gegen Kündigung",
+          "description": "Formeller Widerspruch gegen eine Wohnungskündigung."
+        },
+        "mietminderung": {
+          "name": "Antrag auf Mietminderung",
+          "description": "Antrag auf vorübergehende Mietminderung."
+        },
+        "kaution-zurueckfordern": {
+          "name": "Kaution zurückfordern",
+          "description": "Aufforderung zur Rückzahlung der Mietkaution."
+        },
+        "nebenkostenabrechnung-anfechten": {
+          "name": "Nebenkostenabrechnung anfechten",
+          "description": "Einspruch gegen eine zu hohe Nebenkostenabrechnung."
+        },
+        "nachfrage-rentenbescheid": {
+          "name": "Nachfrage zum Rentenbescheid",
+          "description": "Nachfrage zu unklaren Punkten des Rentenbescheids."
+        },
+        "kontenklaerung-rente": {
+          "name": "Antrag auf Kontenklärung",
+          "description": "Beantragung einer Kontenklärung der Rentenversicherung."
+        },
+        "widerspruch-rentenbescheid": {
+          "name": "Widerspruch gegen Bescheid",
+          "description": "Einspruch gegen einen Bescheid der Rentenversicherung."
+        },
+        "nachfrage-asylverfahren": {
+          "name": "Nachfrage zum Asylverfahren",
+          "description": "Anfrage zum aktuellen Stand des Asylverfahrens."
+        },
+        "akteneinsicht-bamf": {
+          "name": "Antrag auf Akteneinsicht",
+          "description": "Antrag auf Einsicht in die Verfahrensakte."
+        },
+        "kindergeld-widerspruch": {
+          "name": "Kindergeld Widerspruch",
+          "description": "Einspruch gegen einen abgelehnten Kindergeldantrag."
+        },
+        "gez-befreiung": {
+          "name": "GEZ Befreiung Antrag",
+          "description": "Antrag auf Befreiung von Rundfunkbeiträgen."
+        },
+        "anmeldung-ummeldung": {
+          "name": "Anmeldung Ummeldung",
+          "description": "Offizielle Ummeldung bei der Meldebehörde."
+        },
+        "allgemeine-beschwerde": {
+          "name": "Allgemeines Beschwerdeschreiben",
+          "description": "Universelles Beschwerdeschreiben an Behörden."
+        }
+      },
+      "all": "Alle",
+      "searchPlaceholder": "Vorlage suchen...",
+      "subtitle": "Wählen Sie eine Vorlage für Ihren Brief",
+      "noResults": "Keine Vorlagen gefunden",
+      "finanzamt": "Finanzamt",
+      "jobcenter": "Jobcenter",
+      "auslaenderbehoerde": "Ausländerbehörde",
+      "krankenkasse": "Krankenkasse",
+      "agentur": "Bundesagentur für Arbeit",
+      "wohnung": "Wohnung & Vermieter",
+      "rentenversicherung": "Rentenversicherung",
+      "bamf": "BAMF",
+      "sonstiges": "Sonstiges"
     }
   },
   "nav": {
@@ -96,7 +284,8 @@
     "letter": "Briefgenerator",
     "deadline": "Fristen",
     "checklist": "Checkliste",
-    "templates": "Vorlagen"
+    "templates": "Vorlagen",
+    "billing": "Abrechnung"
   },
   "home": {
     "title": "AmtHelper - Dein Assistent für deutsche Behörden",
@@ -142,6 +331,9 @@
       "letters": "Briefe"
     },
     "greetingPrefix": "Hallo",
-    "dashboardDefaultTitle": "Dashboard"
+    "dashboardDefaultTitle": "Dashboard",
+    "billing": "Abrechnung verwalten",
+    "billingDescription": "Verwalten Sie Ihr Abonnement und Ihre Zahlungsmethoden",
+    "noSubscription": "Kein Abonnement gefunden"
   }
 }
