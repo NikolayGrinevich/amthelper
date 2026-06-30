@@ -1,7 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
 
 export const runtime = 'nodejs';
+
+/**
+ * Migration helper: provides SQL to run in Supabase SQL Editor.
+ * Run: ALTER TABLE users ADD COLUMN IF NOT EXISTS pro_expires_at TIMESTAMP WITH TIME ZONE;
+ */
+export async function GET(request: NextRequest) {
+  const sql = 'ALTER TABLE users ADD COLUMN IF NOT EXISTS pro_expires_at TIMESTAMP WITH TIME ZONE;';
+  
+  return NextResponse.json({
+    migration_required: true,
+    sql,
+    instructions: 'Run this SQL in Supabase Dashboard → SQL Editor',
+    manual_url: 'https://supabase.com/dashboard/project/lqquydxzehorydznzxcm/sql/new',
+  });
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -12,42 +26,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-    if (!supabaseUrl || !serviceKey) {
-      return NextResponse.json({ error: 'Missing Supabase credentials' }, { status: 500 });
-    }
-
-    // Use service role client
-    const adminDb = createClient(supabaseUrl, serviceKey, {
-      auth: { autoRefreshToken: false, persistSession: false },
-    });
-
-    // Run migration via Supabase Management REST API
-    // We use the service role key to call the SQL endpoint
-    const ref = supabaseUrl.match(/https:\/\/([^.]+)/)?.[1];
-    if (!ref) {
-      return NextResponse.json({ error: 'Invalid project ref' }, { status: 500 });
-    }
-
     const sql = 'ALTER TABLE users ADD COLUMN IF NOT EXISTS pro_expires_at TIMESTAMP WITH TIME ZONE;';
-
-    const mgmtRes = await fetch(`https://api.supabase.com/v1/projects/${ref}/database/query`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${serviceKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ query: sql }),
-    });
-
-    const result = await mgmtRes.text();
-
+    
     return NextResponse.json({
-      success: mgmtRes.ok,
-      status: mgmtRes.status,
-      result: result.substring(0, 500),
+      success: true,
+      sql,
+      note: 'Run this SQL manually in Supabase Dashboard SQL Editor',
+      manual_url: 'https://supabase.com/dashboard/project/lqquydxzehorydznzxcm/sql/new',
     });
   } catch (error) {
     return NextResponse.json({
