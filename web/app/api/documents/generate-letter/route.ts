@@ -198,25 +198,47 @@ export async function POST(request: NextRequest) {
     }
 
     // Free tier limit check (count generated letters, not analyzed docs)
-    if (userTier === 'free') {
-      const startOfMonth = new Date();
-      startOfMonth.setDate(1);
-      startOfMonth.setHours(0, 0, 0, 0);
+        if (userTier === 'free') {
+          const startOfMonth = new Date();
+          startOfMonth.setDate(1);
+          startOfMonth.setHours(0, 0, 0, 0);
 
-      const { count } = await supabaseAdmin
-        .from('generated_letters')
-        .select('*', { count: 'exact', head: true })
-        .eq('user_id', userId)
-        .gte('created_at', startOfMonth.toISOString());
+          const { count } = await supabaseAdmin
+            .from('generated_letters')
+            .select('*', { count: 'exact', head: true })
+            .eq('user_id', userId)
+            .gte('created_at', startOfMonth.toISOString());
 
-      if (count !== null && count >= 3) {
-        return NextResponse.json({
-          error: 'Free limit reached',
-          message: 'Upgrade to Pro for unlimited access',
-          upgradeUrl: '/modules/billing',
-        }, { status: 402 });
-      }
-    }
+          if (count !== null && count >= 3) {
+            return NextResponse.json({
+              error: 'Free limit reached',
+              message: 'Upgrade to Pro for unlimited access',
+              upgradeUrl: '/modules/billing',
+            }, { status: 402 });
+          }
+        }
+
+        // Pro tier limit check
+        if (userTier === 'pro') {
+          const startOfMonth = new Date();
+          startOfMonth.setDate(1);
+          startOfMonth.setHours(0, 0, 0, 0);
+
+          const { count } = await supabaseAdmin
+            .from('generated_letters')
+            .select('*', { count: 'exact', head: true })
+            .eq('user_id', userId)
+            .gte('created_at', startOfMonth.toISOString());
+
+          if (count !== null && count >= 20) {
+            return NextResponse.json({
+              error: 'Pro limit reached',
+              message: 'You have used all 20 letters this month',
+              limit: 20,
+              tier: 'pro',
+            }, { status: 402 });
+          }
+        }
 
     const {
       letter_type,
