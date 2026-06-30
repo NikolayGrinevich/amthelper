@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 
 export default function BillingPage() {
@@ -8,6 +8,18 @@ export default function BillingPage() {
   const locale = useLocale();
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
+  const [userTier, setUserTier] = useState<string | null>(null);
+  const [proExpiresAt, setProExpiresAt] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetch('/api/auth/me', { credentials: 'include' })
+      .then(r => r.json())
+      .then(data => {
+        if (data?.tier) setUserTier(data.tier);
+        if (data?.pro_expires_at) setProExpiresAt(data.pro_expires_at);
+      })
+      .catch(() => {});
+  }, []);
 
   const openPortal = async () => {
     setLoading(true);
@@ -76,7 +88,22 @@ export default function BillingPage() {
             </div>
           </div>
 
-          <button
+                    {/* Pro expiration notice */}
+                    {userTier === 'pro' && proExpiresAt && (
+                      <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
+                        <p className="text-amber-800 text-sm">
+                          {locale === 'de'
+                            ? `Ihr Testzeitraum läuft ab: ${new Date(proExpiresAt).toLocaleDateString('de-DE')}`
+                            : locale === 'ru'
+                              ? `Ваш тестовый период истекает: ${new Date(proExpiresAt).toLocaleDateString('ru-RU')}`
+                              : locale === 'uk'
+                                ? `Ваш тестовий період закінчується: ${new Date(proExpiresAt).toLocaleDateString('uk-UA')}`
+                                : `Your trial period expires: ${new Date(proExpiresAt).toLocaleDateString('en-US')}`}
+                        </p>
+                      </div>
+                    )}
+
+                    <button
           onClick={openPortal}
           disabled={loading}
           className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
