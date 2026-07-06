@@ -46,28 +46,17 @@ export async function POST(request: NextRequest) {
             id: data.user.id,
             email: data.user.email || email,
             full_name: full_name || email.split('@')[0],
-            role: 'free',
+            tier: 'free',
             subscription_status: 'none',
-            language: 'de',
           },
         ]);
 
       if (profileError) {
         console.error('Profile creation error:', profileError);
+        // Don't fail the whole signup — /api/auth/me has a safety net
       }
     } else {
-      // Fallback to anon client (may fail due to RLS)
-      console.warn('supabaseAdmin not available, using anon client for profile creation');
-      const { error: profileError } = await (supabase.from('users') as any).upsert([
-        {
-          id: data.user.id,
-          email: data.user.email || email,
-          full_name: full_name || email.split('@')[0],
-          role: 'free',
-          subscription_status: 'none',
-        },
-      ]);
-      if (profileError) console.error('Profile creation error (anon):', profileError);
+      console.warn('supabaseAdmin not available — SUPABASE_SERVICE_ROLE_KEY missing on server');
     }
 
     const response = NextResponse.json({
@@ -77,7 +66,8 @@ export async function POST(request: NextRequest) {
         email: data.user.email,
         full_name: full_name || email.split('@')[0],
       },
-      message: 'Account created. Please check your email to confirm.',
+      // If email confirmation is disabled in Supabase, session is returned immediately.
+      session: !!data.session,
     });
 
     // Set session cookie if session exists

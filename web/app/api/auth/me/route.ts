@@ -16,18 +16,18 @@ export async function GET(request: NextRequest) {
 
     // First check if it's a demo token
     if (authToken.startsWith('demo_token_')) {
-          const demoUser = {
-            id: authToken,
-            email: 'demo@amthelper.de',
-            full_name: 'Demo User',
-            role: 'pro',
-            tier: 'pro',
-            pro_expires_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
-            subscription_status: 'active',
-            created_at: new Date().toISOString(),
-          };
-          return NextResponse.json({ user: demoUser }, { status: 200 });
-        }
+      const demoUser = {
+        id: authToken,
+        email: 'demo@amthelper.de',
+        full_name: 'Demo User',
+        role: 'pro',
+        tier: 'pro',
+        pro_expires_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+        subscription_status: 'active',
+        created_at: new Date().toISOString(),
+      };
+      return NextResponse.json({ user: demoUser }, { status: 200 });
+    }
 
     // Real token - try to get user from Supabase Auth
     const { data: { user }, error: authError } = await supabaseAdmin.auth.getUser(authToken);
@@ -47,16 +47,33 @@ export async function GET(request: NextRequest) {
       console.error('Profile fetch error:', profileError);
     }
 
+    // Auto-create profile if missing (safety net — signup upsert may have failed)
+    let profileData = profile;
+    if (!profileData) {
+      const { data: newProfile } = await supabaseAdmin
+        .from('users')
+        .upsert([{
+          id: user.id,
+          email: user.email || '',
+          full_name: user.user_metadata?.full_name || (user.email ? user.email.split('@')[0] : 'User'),
+          tier: 'free',
+          subscription_status: 'none',
+        }])
+        .select()
+        .maybeSingle();
+      profileData = newProfile;
+    }
+
     return NextResponse.json({
       user: {
         id: user.id,
         email: user.email,
-        full_name: profile?.full_name || user.user_metadata?.full_name || 'User',
-        role: profile?.tier || profile?.role || 'free',
-        tier: profile?.tier || 'free',
-        pro_expires_at: profile?.pro_expires_at || null,
-        subscription_status: profile?.stripe_customer_id ? 'active' : 'none',
-        created_at: profile?.created_at || user.created_at,
+        full_name: profileData?.full_name || user.user_metadata?.full_name || 'User',
+        role: profileData?.tier || profileData?.role || 'free',
+        tier: profileData?.tier || 'free',
+        pro_expires_at: profileData?.pro_expires_at || null,
+        subscription_status: profileData?.stripe_customer_id ? 'active' : 'none',
+        created_at: profileData?.created_at || user.created_at,
       },
     }, { status: 200 });
   } catch (error) {
