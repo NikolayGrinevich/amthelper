@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ user: null }, { status: 200 });
     }
 
-    // First check if it's a demo token
+    // Demo token
     if (authToken.startsWith('demo_token_')) {
       const demoUser = {
         id: authToken,
@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ user: demoUser }, { status: 200 });
     }
 
-    // Real token - try to get user from Supabase Auth
+    // Real token - validate with Supabase Auth
     const { data: { user }, error: authError } = await supabaseAdmin.auth.getUser(authToken);
 
     if (authError || !user) {
@@ -47,29 +47,34 @@ export async function GET(request: NextRequest) {
       console.error('Profile fetch error:', profileError);
     }
 
-    // Auto-create profile if missing (safety net — signup upsert may have failed)
+    // Safety net: auto-create profile if missing
     let profileData = profile;
     if (!profileData) {
-      const { data: newProfile } = await supabaseAdmin
+      const { data: newProfile, error: createError } = await supabaseAdmin
         .from('users')
         .upsert([{
           id: user.id,
           email: user.email || '',
-          full_name: user.user_metadata?.full_name || (user.email ? user.email.split('@')[0] : 'User'),
           tier: 'free',
-          subscription_status: 'none',
         }])
         .select()
         .maybeSingle();
+
+      if (createError) {
+        console.error('Profile auto-create error:', createError);
+      }
       profileData = newProfile;
     }
+
+    // full_name is NOT a column in users table — use auth metadata or fallback
+    const fullName = user.user_metadata?.full_name || (user.email ? user.email.split('@')[0] : 'User');
 
     return NextResponse.json({
       user: {
         id: user.id,
         email: user.email,
-        full_name: profileData?.full_name || user.user_metadata?.full_name || 'User',
-        role: profileData?.tier || profileData?.role || 'free',
+        full_name: fullName,
+        role: profileData?.tier || 'free',
         tier: profileData?.tier || 'free',
         pro_expires_at: profileData?.pro_expires_at || null,
         subscription_status: profileData?.stripe_customer_id ? 'active' : 'none',

@@ -38,25 +38,36 @@ export async function POST(request: NextRequest) {
     }
 
     // Create user profile in database using service role (bypasses RLS)
-    if (supabaseAdmin) {
-      const { error: profileError } = await supabaseAdmin
-        .from('users')
-        .upsert([
-          {
-            id: data.user.id,
-            email: data.user.email || email,
-            full_name: full_name || email.split('@')[0],
-            tier: 'free',
-            subscription_status: 'none',
-          },
-        ]);
+    // Only columns that exist in the live `users` table: id, email, tier, language, stripe_customer_id, pro_expires_at, created_at, updated_at
+    if (!supabaseAdmin) {
+      console.error('supabaseAdmin not available — SUPABASE_SERVICE_ROLE_KEY missing on server');
+      return NextResponse.json(
+        { error: 'Server configuration error' },
+        { status: 500 }
+      );
+    }
 
-      if (profileError) {
-        console.error('Profile creation error:', profileError);
-        // Don't fail the whole signup — /api/auth/me has a safety net
-      }
-    } else {
-      console.warn('supabaseAdmin not available — SUPABASE_SERVICE_ROLE_KEY missing on server');
+    const { error: profileError } = await supabaseAdmin
+      .from('users')
+      .upsert([
+        {
+          id: data.user.id,
+          email: data.user.email || email,
+          tier: 'free',
+          // language omitted — DB default is 'ru'
+        },
+      ]);
+
+    if (profileError) {
+      // Return the error to the client — don't swallow it
+      console.error('Profile creation error:', profileError);
+      return NextResponse.json(
+        {
+          error: 'Account created in Auth but profile insert failed',
+          details: profileError.message,
+        },
+        { status: 500 }
+      );
     }
 
     const response = NextResponse.json({
@@ -64,9 +75,9 @@ export async function POST(request: NextRequest) {
       user: {
         id: data.user.id,
         email: data.user.email,
-        full_name: full_name || email.split('@')[0],
       },
-      // If email confirmation is disabled in Supabase, session is returned immediately.
+      // If email confirmation is enabled in Supabase (which it is),
+      // session is null and user must confirm email first.
       session: !!data.session,
     });
 
