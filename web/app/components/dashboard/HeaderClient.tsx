@@ -1,6 +1,7 @@
 'use client';
 
 import { useAuth } from '@/app/providers/AuthProvider';
+import { useTranslations } from 'next-intl';
 
 interface HeaderClientProps {
   locale: string;
@@ -14,6 +15,7 @@ interface HeaderClientProps {
 }
 
 export function HeaderClient({ locale, common, auth }: HeaderClientProps) {
+  const t = useTranslations('ui');
   const { user } = useAuth();
 
   return (
@@ -30,7 +32,7 @@ export function HeaderClient({ locale, common, auth }: HeaderClientProps) {
           </span>
         ) : (
           <span className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full">
-            FREE
+            {t('freeBadge')}
           </span>
         )}
       </div>

@@ -1,0 +1,625 @@
+{
+  "modules": {
+    "documentAnalyzer": {
+      "title": "Belge Analizi",
+      "subtitle": "Bir belge yükleyin ve analiz edin",
+      "uploaderCTA": "Seçmek için tıklayın veya dosyayı buraya sürükleyin",
+      "uploaderHint": "PDF ve görseller desteklenir ({{locale}})",
+      "analysis": {
+        "selectFile": "Lütfen önce bir dosya seçin",
+        "running": "Analiz yapılıyor..."
+      },
+      "actions": {
+        "analyze": "Analiz Et",
+        "savePdf": "PDF olarak kaydet",
+        "share": "Paylaş",
+        "addToCalendar": "Takvime ekle",
+        "generateLetter": "Yanıt mektubu oluştur",
+        "newAnalysis": "Yeni belge analiz et",
+        "tryAgain": "Tekrar dene"
+      },
+      "results": {
+        "title": "Analiz Sonucu",
+        "sender": "Gönderen",
+        "type": "Belge türü",
+        "deadline": "Son tarih",
+        "urgency": "Aciliyet",
+        "keyPoints": "Önemli noktalar",
+        "requiredDocs": "Gerekli belgeler"
+      },
+      "history": {
+        "title": "Geçmiş"
+      }
+    },
+    "letterGenerator": {
+      "title": "Mektup Oluşturucu",
+      "subtitle": "Yapay zeka ile resmi Alman mektupları oluşturun",
+      "letter_type": "Mektup türü",
+      "types": {
+        "response": "Yanıt",
+        "objection": "İtiraz",
+        "clarification": "Açıklama talebi",
+        "appeal": "Şikayet"
+      },
+      "recipient_address": "Alıcı adresi",
+      "recipient_address_placeholder": "Kurum / Ad / Sokak / Posta kodu / Şehir",
+      "error_recipient_required": "Lütfen bir alıcı adresi girin",
+      "generating": "⏳ Mektup oluşturuluyor...",
+      "generate": "Mektup oluştur",
+      "generated_letter": "Oluşturulan mektup",
+      "copy": "Kopyala",
+      "download": "İndir",
+      "clear": "Temizle",
+      "history": {
+        "title": "Geçmiş"
+      }
+    },
+    "deadlineTracker": {
+      "title": "Son tarihler",
+      "subtitle": "Takip edilen son tarihli belgeler",
+      "no_deadlines": "Son tarihli belge yok",
+      "no_documents": "Son tarihleri takip etmek için belge yükleyin",
+      "loading": "Yükleniyor...",
+      "days_left": "gün kaldı",
+      "days_left_one": "gün kaldı",
+      "days_overdue": "gün gecikti",
+      "overdue": "Gecikmiş",
+      "no_deadline": "Son tarih yok",
+      "create_letter": "Mektup oluştur",
+      "urgency_critical": "Kritik",
+      "urgency_high": "Yakında",
+      "urgency_ok": "Sorun yok"
+    },
+    "checklist": {
+      "title": "Kontrol listesi",
+      "subtitle": "Her mektup için gerekli belgeler",
+      "no_checklists": "Gerekli belgeli belge yok",
+      "no_documents": "Kontrol listesi oluşturmak için belge yükleyin",
+      "loading": "Yükleniyor...",
+      "completed": "tamamlandı",
+      "reset": "Sıfırla",
+      "overall_progress": "Genel ilerleme",
+      "items_done": "/",
+      "all_done": "Hepsi tamam!",
+      "no_required_docs": "Belge gereksinimi yok"
+    },
+    "templates": {
+      "title": "Şablonlar",
+      "german": "Almanca",
+      "close": "Kapat",
+      "copy": "Kopyala",
+      "use": "Kullan",
+      "template_tips_title": "💡 Şablon ipuçları",
+      "template_tip_1": "Şablonları başlangıç noktası olarak kullanın ve yer tutucuları doldurun.",
+      "template_tip_2": "Dili resmi ve net tutun.",
+      "template_tip_3": "Sık gönderdiğiniz mektupları şablon olarak kaydedin.",
+      "items": {
+        "widerspruch-steuerbescheid": {
+          "name": "Vergi kararına itiraz",
+          "description": "Vergi kararına gerekçeli resmi itiraz."
+        },
+        "fristverlaengerung-steuer": {
+          "name": "Süre uzatma talebi",
+          "description": "İtiraz süresinin uzatılması talebi."
+        },
+        "ratenzahlung-steuer": {
+          "name": "Taksitlendirme talebi",
+          "description": "Düşük faizli taksitli ödeme talebi."
+        },
+        "nachfrage-steuerbescheid": {
+          "name": "Vergi kararı sorgulama",
+          "description": "Belirsiz noktalar hakkında kibar sorgulama."
+        },
+        "einspruch-vollstreckung": {
+          "name": "Cebri icraya itiraz",
+          "description": "Cebri icra tedbirlerine itiraz."
+        },
+        "stundung-steuer": {
+          "name": "Erteleme talebi",
+          "description": "Geçici ödeme erteleme talebi."
+        },
+        "widerspruch-kuerzung": {
+          "name": "Kesintiye itiraz",
+          "description": "Kesilmiş sosyal yardımlara itiraz."
+        },
+        "weiterzahlung-jobcenter": {
+          "name": "Ödeme devam talebi",
+          "description": "Bürgergeld ödemelerinin devamı talebi."
+        },
+        "nachfrage-jobcenter-bescheid": {
+          "name": "Jobcenter kararı sorgulama",
+          "description": "Karar detayları hakkında sorgulama."
+        },
+        "kostenuebernahme-jobcenter": {
+          "name": "Masraf karşılama talebi",
+          "description": "Masrafların karşılanması talebi."
+        },
+        "beschwerde-sachbearbeiter": {
+          "name": "Memur şikayeti",
+          "description": "İşlem süreci hakkında resmi şikayet."
+        },
+        "erhoehung-leistungen": {
+          "name": "Artırım talebi",
+          "description": "Sosyal yardımların artırılması talebi."
+        },
+        "widerspruch-sanktion": {
+          "name": "Yaptırıma itiraz",
+          "description": "Uygulanan yaptırıma itiraz."
+        },
+        "verlaengerung-aufenthaltstitel": {
+          "name": "İkamet izni uzatma talebi",
+          "description": "İkamet izninin uzatılması talebi."
+        },
+        "nachfrage-antragsstatus-auslaender": {
+          "name": "Başvuru durumu sorgulama",
+          "description": "Göçmen dairesindeki başvuru durumu sorgulama."
+        },
+        "niederlassungserlaubnis": {
+          "name": "Süresiz ikamet izni talebi",
+          "description": "Kalıcı ikamet izni başvurusu."
+        },
+        "widerspruch-ablehnung-aufenthalt": {
+          "name": "Redde itiraz",
+          "description": "Reddedilen karara resmi itiraz."
+        },
+        "familiennachzug": {
+          "name": "Aile birleşimi talebi",
+          "description": "Aile üyelerinin birleşimi talebi."
+        },
+        "bearbeitungsstand-anfrage": {
+          "name": "İşlem durumu sorgulama",
+          "description": "Başvurunun güncel işlem durumu sorgulama."
+        },
+        "widerspruch-krankenkasse": {
+          "name": "Redde itiraz",
+          "description": "Reddedilen hizmete itiraz."
+        },
+        "kostenerstattung-krankenkasse": {
+          "name": "Masraf iadesi talebi",
+          "description": "Doktor veya ilaç masraflarının iadesi talebi."
+        },
+        "nachfrage-abrechnung": {
+          "name": "Fatura sorgulama",
+          "description": "Belirsiz fatura hakkında sorgulama."
+        },
+        "ausnahmegenehmigung-krankenkasse": {
+          "name": "İstisna izni talebi",
+          "description": "Özel tedavi veya masraf istisnası talebi."
+        },
+        "beschwerde-krankenkasse": {
+          "name": "Tedavi şikayeti",
+          "description": "Hizmet veya işlem kalitesi şikayeti."
+        },
+        "widerspruch-sperrzeit": {
+          "name": "Hak mahrumiyetine itiraz",
+          "description": "İşsizlik ödemesinin durdurulmasına itiraz."
+        },
+        "verlaengerung-alg": {
+          "name": "ALG uzatma talebi",
+          "description": "İşsizlik ödemesinin uzatılması talebi."
+        },
+        "nachfrage-antrag-arbeitsamt": {
+          "name": "Başvuru sorgulama",
+          "description": "Başvuru durumu sorgulama."
+        },
+        "fahrkostenerstattung-arbeitsamt": {
+          "name": "Ulaşım masrafı iadesi",
+          "description": "Ulaşım masraflarının iadesi talebi."
+        },
+        "maengelanzeige": {
+          "name": "Ayıp bildirimi",
+          "description": "Ev sahibine resmi ayıp bildirimi."
+        },
+        "widerspruch-kuendigung": {
+          "name": "Kira feshine itiraz",
+          "description": "Kira sözleşmesinin feshine resmi itiraz."
+        },
+        "mietminderung": {
+          "name": "Kira indirim talebi",
+          "description": "Geçici kira indirim talebi."
+        },
+        "kaution-zurueckfordern": {
+          "name": "Depozito iadesi",
+          "description": "Kira depozitosunun iadesi talebi."
+        },
+        "nebenkostenabrechnung-anfechten": {
+          "name": "Yan masraf hesabına itiraz",
+          "description": "Yüksek yan masraf hesabına itiraz."
+        },
+        "nachfrage-rentenbescheid": {
+          "name": "Emeklilik kararı sorgulama",
+          "description": "Emeklilik bildiriminin belirsiz noktaları sorgulama."
+        },
+        "kontenklaerung-rente": {
+          "name": "Emeklilik hesabı açıklama talebi",
+          "description": "Emeklilik sigorta hesabının açıklanması talebi."
+        },
+        "widerspruch-rentenbescheid": {
+          "name": "Karara itiraz",
+          "description": "Emeklilik sigortası kararına itiraz."
+        },
+        "nachfrage-asylverfahren": {
+          "name": "Sığınma süreci sorgulama",
+          "description": "Sığınma sürecinin güncel durumu sorgulama."
+        },
+        "akteneinsicht-bamf": {
+          "name": "Dosya inceleme talebi",
+          "description": "Dosya materyallerine erişim talebi."
+        },
+        "kindergeld-widerspruch": {
+          "name": "Çocuk parasına itiraz",
+          "description": "Kindergeld başvurusunun reddine itiraz."
+        },
+        "gez-befreiung": {
+          "name": "GEZ muafiyet talebi",
+          "description": "Yayın bedelinden muafiyet talebi."
+        },
+        "anmeldung-ummeldung": {
+          "name": "Kayıt/Adres değişikliği",
+          "description": "Kayıt memurluğunda resmi adres değişikliği."
+        },
+        "allgemeine-beschwerde": {
+          "name": "Genel şikayet mektubu",
+          "description": "Herhangi bir kurum için evrensel şikayet mektubu."
+        }
+      },
+      "all": "Tümü",
+      "searchPlaceholder": "Şablon ara...",
+      "subtitle": "Mektubunuz için bir şablon seçin",
+      "noResults": "Şablon bulunamadı",
+      "finanzamt": "Finanzamt",
+      "jobcenter": "Jobcenter",
+      "auslaenderbehoerde": "Ausländerbehörde",
+      "krankenkasse": "Krankenkasse",
+      "agentur": "Bundesagentur für Arbeit",
+      "wohnung": "Konut & Ev sahibi",
+      "rentenversicherung": "Emeklilik sigortası",
+      "bamf": "BAMF",
+      "sonstiges": "Diğer"
+    }
+  },
+  "nav": {
+    "dashboard": "Panel",
+    "analyzer": "Belge analizi",
+    "letter": "Mektup oluşturucu",
+    "deadline": "Son tarihler",
+    "checklist": "Kontrol listesi",
+    "templates": "Şablonlar",
+    "billing": "Faturalama"
+  },
+  "home": {
+    "title": "AmtHelper - Alman makamları için asistanın",
+    "description": "Akıllı belge analizi ve mektup oluşturma",
+    "cta": "Ücretsiz başla"
+  },
+  "auth": {
+    "signIn": "Giriş yap",
+    "signUp": "Kayıt ol",
+    "email": "E-posta",
+    "password": "Şifre",
+    "login": "Giriş yap",
+    "register": "Kayıt ol",
+    "logout": "Çıkış yap",
+    "language": "Dil",
+    "loading": "Yükleniyor...",
+    "subtitle": "Alman resmi mektupları için asistanın",
+    "fullName": "Ad Soyad",
+    "confirmPassword": "Şifreyi onayla",
+    "createAccount": "Hesap oluştur",
+    "signInButton": "🔓 Giriş yap",
+    "signingIn": "⏳ Giriş yapılıyor...",
+    "creatingAccount": "⏳ Hesap oluşturuluyor...",
+    "noAccount": "Hesabın yok mu?",
+    "haveAccount": "Zaten hesabın var mı?",
+    "signUpLink": "Kayıt ol",
+    "signInLink": "Giriş yap",
+    "passwordsDoNotMatch": "Şifreler eşleşmiyor",
+    "passwordTooShort": "Şifre en az 6 karakter olmalıdır",
+    "loginFailed": "Giriş başarısız",
+    "signupFailed": "Kayıt başarısız",
+    "forgotPassword": "Şifremi unuttum",
+    "resetPassword": "Şifreyi sıfırla",
+    "sendResetLink": "Sıfırlama bağlantısı gönder",
+    "resetEmailSent": "Sıfırlama bağlantısı e-posta adresinize gönderildi",
+    "newPassword": "Yeni şifre",
+    "confirmNewPassword": "Yeni şifreyi onayla",
+    "updatePassword": "Şifreyi güncelle",
+    "passwordUpdated": "Şifreniz güncellendi",
+    "backToSignIn": "Giriş yapmaya dön",
+    "namePlaceholder": "Adınız Soyadınız",
+    "emailPlaceholder": "ornek@email.com",
+    "passwordPlaceholder": "••••••••"
+  },
+  "common": {
+    "welcome": "AmtHelper'a hoş geldiniz!",
+    "subtitle": "Alman resmi mektupları için asistanın",
+    "uploadDoc": "Belge yükle",
+    "viewDeadlines": "Son tarihleri görüntüle",
+    "features": "Özellikler",
+    "documentAnalyzer": "Belge analizi",
+    "analyzeDescription": "Belge yükle ve yapay zeka özeti al",
+    "deadlineTracker": "Son tarih takibi",
+    "trackDescription": "Önemli tarihleri takip et ve hatırlatmalar al",
+    "letterGenerator": "Mektup oluşturucu",
+    "generateDescription": "Şablonlardan yanıtlar oluştur",
+    "documentChecklist": "Belge kontrol listesi",
+    "checklistDescription": "Yanıt için gereken belgeleri takip et",
+    "templates": "Şablonlar",
+    "templatesDescription": "Farklı mektup türleri için hazır şablonlar",
+    "multilingual": "Çok dilli",
+    "multilingualDescription": "DE, RU, UK, RO, TR desteği",
+    "recentDocuments": "Son belgeler",
+    "quickLinks": "Hızlı erişim",
+    "noDocuments": "Henüz belge yok. İlk belgenizi yükleyin!",
+    "stats": {
+      "documents": "Belgeler",
+      "deadlines": "Son tarihler",
+      "completed": "Tamamlandı",
+      "letters": "Mektuplar"
+    },
+    "greetingPrefix": "Merhaba",
+    "dashboardDefaultTitle": "Panel",
+    "billing": "Faturalama yönetimi",
+    "billingDescription": "Aboneliğinizi ve ödeme yöntemlerinizi yönetin",
+    "noSubscription": "Abonelik bulunamadı"
+  },
+  "ui": {
+    "urgency": {
+      "critical": "Kritik",
+      "high": "Yüksek",
+      "medium": "Orta",
+      "low": "Düşük"
+    },
+    "validation": {
+      "unsupportedFormat": "Desteklenmeyen format. Kullanın: PDF, PNG, JPG, GIF, WebP",
+      "fileTooLarge": "Dosya çok büyük. Maksimum 10 MB",
+      "maxPhotos": "Maksimum {max} fotoğraf"
+    },
+    "selectedPhotos": "Seçilen fotoğraflar: {count}",
+    "cancel": "İptal",
+    "analyzeButton": "Analiz et",
+    "analyzeWithCount": "Analiz et ({count})",
+    "addMorePhotos": "Daha fazla fotoğraf ekle",
+    "share": "Paylaş",
+    "multiPhoto": "{count} fotoğraf",
+    "multiPhotoFileName": "{count} fotoğraf — {name}",
+    "analysisError": "Analiz hatası",
+    "openingPortal": "Portal açılıyor...",
+    "manageInStripe": "Stripe'de aboneliği yönet",
+    "redirectingToStripe": "Stripe'e yönlendiriliyorsunuz...",
+    "upgradeToPro": "Pro'ya yükselt — €4.99/ay",
+    "securePayment": "Stripe üzerinden güvenli ödeme. İstediğiniz zaman iptal edebilirsiniz.",
+    "free": "Ücretsiz",
+    "pro": "Pro",
+    "freeAnalysesMonth": "3 analiz / ay",
+    "freeLettersMonth": "3 mektup / ay",
+    "proAnalysesMonth": "20 analiz / ay",
+    "proLettersMonth": "20 mektup / ay",
+    "trialExpires": "Deneme süreniz doluyor: {date}",
+    "freeBadge": "ÜCRETSİZ",
+    "yourAssistant": "Asistanınız",
+    "upgradePro": "Pro'ya yükselt",
+    "unlockAllFeatures": "Tüm özellikleri aç",
+    "language": "Dil",
+    "logout": "Çıkış",
+    "germanLetter": "Resmi mektup (Almanca)",
+    "translationLabel": "Dilinize çeviri",
+    "unknownSource": "Bilinmeyen kaynak",
+    "unknownDocument": "Bilinmeyen belge",
+    "newLetter": "← Yeni mektup",
+    "loadingText": "Yükleniyor...",
+    "manageBilling": "Faturalandırmayı yönet",
+    "translationSeparator": "Çeviri / Übersetzung",
+    "lg": {
+      "selectTemplate": "Mektup türünü seçin",
+      "templateDescription": "Şablon mektubun yapısını ve tonunu belirler",
+      "recipient": "Alıcı",
+      "recipientPlaceholder": "Kurum / Ad / Sokak / Posta kodu / Şehir",
+      "generate": "Mektup oluştur",
+      "generating": "Oluşturuluyor...",
+      "preview": "Mektup önizleme",
+      "edit": "Düzenle",
+      "done": "Tamam",
+      "copy": "Kopyala",
+      "download": "TXT olarak indir",
+      "save": "Kaydet",
+      "saved": "Kaydedildi!",
+      "error": "Oluşturma hatası",
+      "needRecipient": "Alıcıyı belirtin",
+      "needTemplate": "Mektup türünü seçin",
+      "needDocument": "Önce bir belge yükleyin ve analiz edin",
+      "fromAnalyzer": "Belge analizinden veriler yüklendi",
+      "letterSaved": "Mektup geçmişe kaydedildi",
+      "copySuccess": "Panoya kopyalandı",
+      "docAnalyzerLink": "Belge analizörü",
+      "unknownDocument": "Bilinmeyen belge",
+      "unknownSource": "Bilinmeyen kaynak",
+      "germanLetter": "Resmi mektup (Almanca)",
+      "translationLabel": "Dilinize çeviri",
+      "translationSeparator": "Çeviri / Übersetzung",
+      "newLetter": "← Yeni mektup",
+      "title": "Mektup oluşturucu",
+      "subtitle": "Belge analizine dayalı resmi Alman mektupları oluşturun",
+      "templates": {
+        "widerspruch": {
+          "label": "İtiraz (Widerspruch)",
+          "desc": "Makam kararına itiraz"
+        },
+        "antrag": {
+          "label": "Başvuru (Antrag)",
+          "desc": "Hak/hizmet talebi"
+        },
+        "nachfrage": {
+          "label": "Soru (Nachfrage)",
+          "desc": "Mevcut bir dosya hakkında bilgi"
+        },
+        "beschwerde": {
+          "label": "Şikayet (Beschwerde)",
+          "desc": "Makam hakkında şikayet"
+        }
+      }
+    },
+    "footer": {
+      "legal": "Yasal",
+      "product": "Ürün",
+      "support": "Destek",
+      "social": "Sosyal",
+      "datenschutz": "Gizlilik",
+      "impressum": "Impressum",
+      "prices": "Fiyatlar",
+      "copyright": "© 2026 AmtHelper GmbH. Tüm hakları saklıdır.",
+      "tagline": "DSGVO uyumlu • Güvenlik garantili • Made in Germany"
+    },
+    "error": {
+      "title": "Bir şeyler ters gitti",
+      "code": "Hata kodu: {code}",
+      "unexpected": "Beklenmeyen bir hata oluştu.",
+      "retry": "Tekrar dene"
+    },
+    "pricing": {
+      "title": "Basit, şeffaf fiyatlar",
+      "subtitle": "Size uygun planı seçin.",
+      "popular": "En popüler",
+      "loadingCta": "Yükleniyor…",
+      "footer": "Tüm fiyatlar KDV dahildir.",
+      "contactSales": "Satışla iletişime geç",
+      "free": {
+        "name": "Free",
+        "desc": "Kişisel kullanım için",
+        "f1": "Ayda 5 belge analizi",
+        "f2": "Son tarih takibi",
+        "f3": "Temel mektup şablonları",
+        "f4": "E-posta desteği",
+        "cta": "Başla"
+      },
+      "pro": {
+        "name": "Pro",
+        "desc": "Düzenli bürokrasi yardımı için",
+        "f1": "Sınırsız belge analizi",
+        "f2": "AI mektup oluşturma",
+        "f3": "Tüm şablonlar + özel şablonlar",
+        "f4": "Öncelikli e-posta desteği",
+        "f5": "Son tarih hatırlatmaları",
+        "f6": "Belge geçmişi",
+        "cta": "Pro denemesini başlat"
+      }
+    },
+    "subscription": {
+      "title": "Abonelik",
+      "loading": "Yükleniyor…",
+      "currentPlan": "Mevcut plan",
+      "active": "Aktif",
+      "status": "Durum",
+      "nextBilling": "Sonraki ödeme",
+      "noActive": "Aktif abonelik yok",
+      "viewPlans": "Planları gör"
+    }
+  },
+  "landing": {
+    "badge": "AI asistanı • DSGVO • Made in Germany",
+    "hero": {
+      "title": "Her Alman resmi mektubunu anlayın",
+      "subtitle": "Belge yükleyin — AI analiz eder, anlaşılır şekilde açıklar ve doğru cevap mektubunu hazırlar.",
+      "cta": "Ücretsiz başla",
+      "ctaSecondary": "Nasıl çalışır"
+    },
+    "problem": {
+      "title": "Alman resmi mektupları anlaşılması zor",
+      "item1": "Kimse açıklamayan resmi dil",
+      "item2": "Kolayca kaçırılan son tarihler",
+      "item3": "Yanlış cevap verme korkusu",
+      "item4": "Her mektupta pahalı danışmanlar"
+    },
+    "solution": {
+      "title": "AmtHelper kolaylaştırır",
+      "subtitle": "AI belgenizi okur ve ne yapmanız gerektiğini söyler",
+      "item1Title": "Anlama",
+      "item1Desc": "AI her belgenizi dilinizde açıklar",
+      "item2Title": "Eylem",
+      "item2Desc": "Net son tarihler ve sonraki adımlar",
+      "item3Title": "Yanıt",
+      "item3Desc": "3 tıkla resmi mektup"
+    },
+    "howItWorks": {
+      "title": "AmtHelper nasıl çalışır",
+      "step1Title": "Belge yükle",
+      "step1Desc": "Foto veya PDF — Finanzamt, Jobcenter, Krankenkasse veya makamlardan",
+      "step2Title": "AI analizi al",
+      "step2Desc": "Anlaşılır özet, son tarihler ve gerekli belgeler",
+      "step3Title": "Cevap mektubu oluştur",
+      "step3Desc": "İtiraz, başvuru, soru veya şikayet — Almanca, doğru formüle edilmiş"
+    },
+    "features": {
+      "title": "İhtiyacınız olan her şey",
+      "f1Title": "AI belge analizi",
+      "f1Desc": "Finanzamt, Jobcenter, Ausländerbehörde ve daha fazlasını anlar",
+      "f2Title": "Son tarih takip",
+      "f2Desc": "Önemli son tarihi bir daha kaçırmayın",
+      "f3Title": "Mektup oluşturucu",
+      "f3Desc": "İtiraz, başvuru, soru — Almanca doğru",
+      "f4Title": "Belge kontrol listesi",
+      "f4Desc": "Mektubunuz için hangi belgelerin gerektiğini bilir",
+      "f5Title": "35+ şablon",
+      "f5Desc": "Vergi, Jobcenter, Ausländerbehörde, Krankenkasse, kira ve daha fazlası için",
+      "f6Title": "5 dil",
+      "f6Desc": "Almanca, Rusça, Ukraynaca, Rumence, Türkçe"
+    },
+    "pricing": {
+      "title": "Basit fiyatlar",
+      "subtitle": "Ücretsiz başla. Daha fazlasına ihtiyaç duyduğunda yükselt.",
+      "freeName": "Ücretsiz",
+      "freePrice": "0€",
+      "freePeriod": "/ay",
+      "freeF1": "Ayda 3 belge analizi",
+      "freeF2": "Ayda 3 mektup",
+      "freeF3": "Son tarih takip",
+      "freeF4": "Tüm şablonlar",
+      "freeCta": "Ücretsiz başla",
+      "proName": "Pro",
+      "proPrice": "4,99€",
+      "proPeriod": "/ay",
+      "proF1": "Ayda 20 analiz",
+      "proF2": "Ayda 20 mektup",
+      "proF3": "Sınırsız son tarih takip",
+      "proF4": "Öncelikli destek",
+      "proF5": "Mektup geçmişi",
+      "proCta": "Pro'yu dene",
+      "proBadge": "Popüler"
+    },
+    "security": {
+      "title": "Verileriniz güvende",
+      "item1Title": "DSGVO uyumlu",
+      "item1Desc": "AB standartlarına uygun işleme",
+      "item2Title": "Sunucular Almanya'da",
+      "item2Desc": "Supabase EU hosting, Vercel Frankfurt",
+      "item3Title": "Üçüncü taraflara veri yok",
+      "item3Desc": "Belgeleriniz paylaşılmaz"
+    },
+    "faq": {
+      "title": "Sık sorulan sorular",
+      "q1": "AmtHelper ücretsiz mi?",
+      "a1": "Evet, ayda 3 analiz ve 3 mektup ücretsizdir. Daha fazlası için Pro'ya yükseltebilirsiniz.",
+      "q2": "Hangi belgeleri yükleyebilirim?",
+      "a2": "Finanzamt, Jobcenter, Ausländerbehörde, Krankenkasse, ev sahibi, Rentenversicherung vb. mektuplar. PDF veya fotoğraf.",
+      "q3": "Analiz hangi dilde?",
+      "a3": "Analiz dilinizde — Almanca, Rusça, Ukraynaca, Rumence veya Türkçe. Cevap mektubu her zaman Almancadır.",
+      "q4": "Analiz ne kadar sürer?",
+      "a4": "Belge başına yaklaşık 30–60 saniye.",
+      "q5": "Hukuki bilgi gerekli mi?",
+      "a5": "Hayır. AmtHelper her şeyi anlaşılır şekilde açıklar ve formüllemeyi üstlenir."
+    },
+    "finalCta": {
+      "title": "Resmi mektupları anlamaya hazır mısınız?",
+      "subtitle": "Ücretsiz başla — kredi kartı gerekmez",
+      "cta": "Şimdi kayıt ol"
+    },
+    "footer": {
+      "madeInGermany": "Made in Germany",
+      "rights": "Tüm hakları saklıdır."
+    },
+    "nav": {
+      "login": "Giriş",
+      "signup": "Ücretsiz başla"
+    }
+  }
+}

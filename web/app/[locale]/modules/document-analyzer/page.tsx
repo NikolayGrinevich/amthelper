@@ -52,12 +52,12 @@ const getUrgencyColor = (urgency: string) => {
   }
 };
 
-const getUrgencyLabel = (urgency: string) => {
+const getUrgencyLabel = (urgency: string, t: (k: string) => string) => {
   const labels: Record<string, string> = {
-    critical: 'Критический',
-    high: 'Высокий',
-    medium: 'Средний',
-    low: 'Низкий',
+    critical: t('urgency.critical'),
+    high: t('urgency.high'),
+    medium: t('urgency.medium'),
+    low: t('urgency.low'),
   };
   return labels[urgency] || urgency;
 };
@@ -66,6 +66,7 @@ export default function DocumentAnalyzerPage() {
   const router = useRouter();
   const locale = useLocale();
   const t = useTranslations('modules.documentAnalyzer');
+  const tUI = useTranslations('ui');
   const { user, loading: authLoading } = useAuth();
   const [uploadState, setUploadState] = useState<UploadStateData>({ state: 'idle' });
   const [dragActive, setDragActive] = useState(false);
@@ -90,12 +91,12 @@ export default function DocumentAnalyzerPage() {
     } catch (err) { console.error('Failed to load recent documents:', err); }
   };
 
-  const validateFile = (file: File): string | null => {
+  const validateFile = useCallback((file: File): string | null => {
     const ext = '.' + file.name.split('.').pop()?.toLowerCase();
-    if (!EXTENSIONS.includes(ext)) return 'Неподдерживаемый формат. Используйте: PDF, PNG, JPG, GIF, WebP';
-    if (file.size > MAX_FILE_SIZE) return 'Файл слишком большой. Максимум 10 MB';
+    if (!EXTENSIONS.includes(ext)) return tUI('validation.unsupportedFormat');
+    if (file.size > MAX_FILE_SIZE) return tUI('validation.fileTooLarge');
     return null;
-  };
+  }, [tUI]);
 
   // Add files to the selection
   const addFiles = useCallback((newFiles: FileList | File[]) => {
@@ -118,12 +119,12 @@ export default function DocumentAnalyzerPage() {
       const allFiles = [...existingFiles, ...validFiles];
 
       if (allFiles.length > MAX_PHOTOS) {
-        return { state: 'error', error: `Максимум ${MAX_PHOTOS} фото` };
+        return { state: 'error', error: tUI('validation.maxPhotos', { max: MAX_PHOTOS }) };
       }
 
       return { state: 'selecting', files: allFiles };
     });
-  }, [validateFile]);
+  }, [validateFile, tUI]);
 
   // Remove a specific photo
   const removeFile = useCallback((index: number) => {
@@ -144,7 +145,7 @@ export default function DocumentAnalyzerPage() {
     const files = uploadState.files;
     setUploadState({
       state: 'loading',
-      fileName: files.length > 1 ? `${files.length} фото` : files[0].file.name,
+      fileName: files.length > 1 ? tUI('multiPhoto', { count: files.length }) : files[0].file.name,
     });
 
     try {
@@ -175,7 +176,7 @@ export default function DocumentAnalyzerPage() {
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
         body: JSON.stringify({
-          file_name: files.length > 1 ? `${files.length} фото — ${firstFileName}` : firstFileName,
+          file_name: files.length > 1 ? tUI('multiPhotoFileName', { count: files.length, name: firstFileName }) : firstFileName,
           file_type: 'image/jpeg',
           file_size: 0,
           analysis_result: analysisResult,
@@ -197,10 +198,10 @@ export default function DocumentAnalyzerPage() {
       files.forEach(({ url }) => URL.revokeObjectURL(url));
 
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Ошибка анализа';
+      const message = err instanceof Error ? err.message : tUI('analysisError');
       setUploadState({ state: 'error', error: message, fileName: uploadState.fileName });
     }
-  }, [uploadState, locale]);
+  }, [uploadState, locale, tUI]);
 
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -283,7 +284,7 @@ export default function DocumentAnalyzerPage() {
               </div>
               <p className="text-lg font-medium text-gray-900">{t('uploaderCTA')}</p>
               <p className="text-sm text-gray-500 mt-1">{t('uploaderHint')}</p>
-              <p className="text-xs text-gray-400 mt-2">Можно выбрать несколько фото одного документа</p>
+              <p className="text-xs text-gray-400 mt-2">{tUI('addMorePhotos')}</p>
             </label>
           </div>
         )}
@@ -292,7 +293,7 @@ export default function DocumentAnalyzerPage() {
         {uploadState.state === 'selecting' && uploadState.files && (
           <div className="p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">
-              Выбрано фото: {uploadState.files.length}
+              {tUI('selectedPhotos', { count: uploadState.files.length })}
             </h3>
 
             {/* Photo grid preview */}
@@ -353,7 +354,7 @@ export default function DocumentAnalyzerPage() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                       </svg>
                     </div>
-                    <p className="text-sm font-medium text-gray-600">Добавить ещё фото</p>
+                <p className="text-sm font-medium text-gray-600">{tUI('addMorePhotos')}</p>
                   </div>
                 </div>
               )}
@@ -365,13 +366,13 @@ export default function DocumentAnalyzerPage() {
                 onClick={handleNewAnalysis}
                 className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition text-sm"
               >
-                Отменить
+                {tUI('cancel')}
               </button>
               <button
                 onClick={handleAnalyze}
                 className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm font-medium"
               >
-                Анализировать {uploadState.files.length > 1 ? `(${uploadState.files.length} фото)` : ''}
+                {uploadState.files.length > 1 ? tUI('analyzeWithCount', { count: uploadState.files.length }) : tUI('analyzeButton')}
               </button>
             </div>
           </div>
@@ -464,7 +465,7 @@ export default function DocumentAnalyzerPage() {
                     <div>
                       <label className="text-xs font-medium text-gray-500 uppercase tracking-wider">{t('results.deadline')}</label>
                       <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border mt-1 ${getUrgencyColor(uploadState.result.urgency)}`}>
-                        {getUrgencyLabel(uploadState.result.urgency)}
+                        {getUrgencyLabel(uploadState.result.urgency, tUI)}
                       </span>
                     </div>
                   </div>
@@ -533,7 +534,7 @@ export default function DocumentAnalyzerPage() {
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2" />
                       </svg>
-                      <span>Поделиться</span>
+                      <span>{tUI('share')}</span>
                     </button>
                   </div>
                 </div>

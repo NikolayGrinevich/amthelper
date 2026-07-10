@@ -39,5 +39,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/', '/(de|ru|uk|ro)/:path*'],
+  matcher: ['/', '/(de|ru|uk|ro|tr)/:path*'],
 };

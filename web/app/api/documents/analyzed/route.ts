@@ -10,15 +10,7 @@ async function getUserFromToken(request: NextRequest) {
     return null;
   }
 
-  // Demo token handling FIRST (before supabaseAdmin check)
-  if (authToken.startsWith('demo_token_')) {
-    return {
-      id: '219d0e4d-401e-405a-b5be-ef1095f6165e',
-      email: 'demo@amthelper.de',
-    };
-  }
-
-  // Real token - validate with Supabase
+  // Validate token with Supabase
   if (!supabaseAdmin) {
     console.error('supabaseAdmin not configured - missing SUPABASE_SERVICE_ROLE_KEY');
     return null;

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getMessages } from 'next-intl/server';
+import { getTranslations } from 'next-intl/server';
 import { NextIntlClientProvider } from 'next-intl';
 import { locales, Locale } from '@/i18n.config';
 import { AuthProvider } from '@/app/providers/AuthProvider';
@@ -8,10 +8,13 @@ import { CookieBanner } from '@/app/components/CookieBanner';
 import { Analytics } from '@vercel/analytics/react';
 import './globals.css';
 
-export const metadata: Metadata = {
-  title: 'AmtHelper - Документы для ведомств',
-  description: 'AI помощник для немецких документов и писем',
-};
+export async function generateMetadata({ params: { locale } }: { params: { locale: string } }): Promise<Metadata> {
+  const t = await getTranslations({ locale, namespace: 'home' });
+  return {
+    title: t('title'),
+    description: t('description'),
+  };
+}
 
 export async function generateStaticParams() {
   return locales.map(locale => ({ locale }));

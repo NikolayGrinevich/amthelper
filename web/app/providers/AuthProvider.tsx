@@ -100,8 +100,12 @@ export function AuthProvider({ children, locale }: AuthProviderProps) {
       throw new Error(data?.error || 'Signup failed');
     }
 
-    setUser(data.user);
+    // If email confirmation is required, don't set user or redirect to dashboard
+    if (data.needsEmailConfirmation) {
+      throw new Error('EMAIL_CONFIRMATION_REQUIRED');
+    }
 
+    setUser(data.user);
     router.push(`/${locale}/dashboard`);
   };
 

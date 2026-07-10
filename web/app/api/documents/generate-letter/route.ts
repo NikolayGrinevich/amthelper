@@ -20,6 +20,7 @@ const LOCALE_LANGUAGE: Record<string, string> = {
   uk: 'Ukrainisch',
   ro: 'Rumänisch',
   de: 'Deutsch',
+  tr: 'Türkisch',
 };
 
 async function generateLetterWithClaude(
@@ -177,25 +178,20 @@ export async function POST(request: NextRequest) {
     let userId: string;
     let userTier: string;
 
-    if (authToken.startsWith('demo_token_')) {
-      userId = '219d0e4d-401e-405a-b5be-ef1095f6165e';
-      userTier = 'pro';
-    } else {
-      if (!supabaseAdmin) {
-        return NextResponse.json({ error: 'Server configuration error' }, { status: 500 });
-      }
-      const { data: { user }, error: authError } = await supabaseAdmin.auth.getUser(authToken);
-      if (authError || !user) {
-        return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
-      }
-      userId = user.id;
-      const { data: profile } = await supabaseAdmin
-        .from('users')
-        .select('tier')
-        .eq('id', userId)
-        .maybeSingle();
-      userTier = profile?.tier || 'free';
+    if (!supabaseAdmin) {
+      return NextResponse.json({ error: 'Server configuration error' }, { status: 500 });
     }
+    const { data: { user }, error: authError } = await supabaseAdmin.auth.getUser(authToken);
+    if (authError || !user) {
+      return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
+    }
+    userId = user.id;
+    const { data: profile } = await supabaseAdmin
+      .from('users')
+      .select('tier')
+      .eq('id', userId)
+      .maybeSingle();
+    userTier = profile?.tier || 'free';
 
     // Free tier limit check (count generated letters, not analyzed docs)
         if (userTier === 'free') {

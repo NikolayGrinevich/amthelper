@@ -8,8 +8,8 @@ import { ModuleLayout } from '@/app/components/dashboard/ModuleLayout';
 import '../globals.css';
 
 export const metadata: Metadata = {
-  title: 'AmtHelper - Dashboard',
-  description: 'Ihr persönlicher Assistent für deutsche Behördengänge',
+  title: 'AmtHelper',
+  description: '',
 };
 
 export async function generateStaticParams() {

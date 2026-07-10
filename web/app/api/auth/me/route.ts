@@ -14,21 +14,6 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ user: null }, { status: 200 });
     }
 
-    // Demo token
-    if (authToken.startsWith('demo_token_')) {
-      const demoUser = {
-        id: authToken,
-        email: 'demo@amthelper.de',
-        full_name: 'Demo User',
-        role: 'pro',
-        tier: 'pro',
-        pro_expires_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
-        subscription_status: 'active',
-        created_at: new Date().toISOString(),
-      };
-      return NextResponse.json({ user: demoUser }, { status: 200 });
-    }
-
     // Real token - validate with Supabase Auth
     const { data: { user }, error: authError } = await supabaseAdmin.auth.getUser(authToken);
 

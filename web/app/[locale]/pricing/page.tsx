@@ -1,63 +1,74 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
+import { useTranslations, useLocale } from 'next-intl';
 
 export default function PricingPage() {
   const router = useRouter();
+  const pathname = usePathname();
+  const locale = useLocale();
+  const t = useTranslations('ui');
   const [loading, setLoading] = useState<string | null>(null);
 
   const plans = [
     {
       id: 'free',
-      name: 'Free',
+      name: t('pricing.free.name'),
       price: '€0',
-      period: '/month',
-      description: 'For personal use and trying out the service',
-      features: [
-        '5 document analyses per month',
-        'Deadline tracking',
-        'Basic letter templates',
-        'Email support',
-      ],
-      cta: 'Get Started',
+      period: `/${locale === 'de' ? 'Monat' : 'month'}`,
+      description: t('pricing.free.desc'),
+      features: [t('pricing.free.f1'), t('pricing.free.f2'), t('pricing.free.f3'), t('pricing.free.f4')],
+      cta: t('pricing.free.cta'),
       href: '/auth/signup',
     },
     {
       id: 'pro',
-      name: 'Pro',
+      name: t('pricing.pro.name'),
       price: '€4.99',
-      period: '/month',
-      description: 'For individuals who need regular help with German bureaucracy',
-      features: [
-        'Unlimited document analyses',
-        'AI-powered letter generation',
-        'All templates + custom templates',
-        'Priority email support',
-        'Deadline reminders',
-        'Document history',
-      ],
-      cta: 'Start Pro Trial',
+      period: `/${locale === 'de' ? 'Monat' : 'month'}`,
+      description: t('pricing.pro.desc'),
+      features: [t('pricing.pro.f1'), t('pricing.pro.f2'), t('pricing.pro.f3'), t('pricing.pro.f4'), t('pricing.pro.f5'), t('pricing.pro.f6')],
+      cta: t('pricing.pro.cta'),
       href: '/auth/signup?plan=pro',
       popular: true,
     },
     {
       id: 'business',
-      name: 'Business',
+      name: locale === 'de' ? 'Business' : 'Business',
       price: '€14.99',
-      period: '/month',
-      description: 'For small businesses and teams up to 3 users',
-      features: [
-        'Everything in Pro',
-        'Up to 3 team members',
-        'Evidence Vault & Audit trails',
-        'Action Center with assignments',
-        'Unified Inbox (email + paper)',
-        'Risk Score & compliance reporting',
-        'E-Rechnung 2027 monitoring',
-        'Priority phone + chat support',
+      period: `/${locale === 'de' ? 'Monat' : 'month'}`,
+      description: locale === 'de' ? 'Für kleine Unternehmen und Teams bis zu 3 Nutzer' :
+        locale === 'ru' ? 'Для малого бизнеса и команд до 3 пользователей' :
+        locale === 'uk' ? 'Для малого бізнесу та команд до 3 користувачів' :
+        locale === 'ro' ? 'Pentru mici afaceri și echipe până la 3 utilizatori' :
+        'Küçük işletmeler ve 3 kullanıcıya kadar ekipler için',
+      features: locale === 'de' ? [
+        'Alles aus Pro', 'Bis zu 3 Teammitglieder', 'Evidence Vault & Audit-Trails',
+        'Action Center mit Zuweisungen', 'Unified Inbox (E-Mail + Post)',
+        'Risk Score & Compliance-Reporting', 'E-Rechnung 2027 Monitoring', 'Priorisierter Telefon- & Chat-Support',
+      ] : locale === 'ru' ? [
+        'Всё из Pro', 'До 3 участников команды', 'Evidence Vault & аудит',
+        'Action Center с назначениями', 'Unified Inbox (email + почта)',
+        'Risk Score & compliance-отчёты', 'E-Rechnung 2027 мониторинг', 'Приоритетная телефонная и чат-поддержка',
+      ] : locale === 'uk' ? [
+        'Все з Pro', 'До 3 учасників команди', 'Evidence Vault & аудит',
+        'Action Center з призначеннями', 'Unified Inbox (email + пошта)',
+        'Risk Score & compliance-звіти', 'E-Rechnung 2027 моніторинг', 'Пріоритетна телефонна та чат-підтримка',
+      ] : locale === 'ro' ? [
+        'Tot din Pro', 'Până la 3 membri ai echipei', 'Evidence Vault & audit',
+        'Action Center cu atribuiri', 'Unified Inbox (email + poștă)',
+        'Risk Score & rapoarte de conformitate', 'E-Rechnung 2027 monitorizare', 'Suport prioritar prin telefon și chat',
+      ] : [
+        'Pro\'daki her şey', '3 ekip üyesine kadar', 'Evidence Vault & denetim',
+        'Atamalı Action Center', 'Unified Inbox (e-posta + posta)',
+        'Risk Score & uyum raporları', 'E-Rechnung 2027 izleme', 'Öncelikli telefon ve sohbet desteği',
       ],
-      cta: 'Start Business Trial',
+      cta: locale === 'de' ? 'Business-Test starten' :
+        locale === 'ru' ? 'Начать Business-период' :
+        locale === 'uk' ? 'Почати Business-період' :
+        locale === 'ro' ? 'Începe proba Business' :
+        'Business denemesini başlat',
       href: '/auth/signup?plan=business',
     },
   ];
@@ -74,8 +85,7 @@ export default function PricingPage() {
       const { url } = await res.json();
       if (url) window.location.href = url;
     } catch (e) {
-      // Demo fallback: go to signup
-      router.push(`/auth/signup?plan=${planId}`);
+      router.push(`/${locale}/auth/signup?plan=${planId}`);
     } finally {
       setLoading(null);
     }
@@ -85,8 +95,8 @@ export default function PricingPage() {
     <div className="min-h-screen bg-gray-50 py-16">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-extrabold text-gray-900">Simple, transparent pricing</h1>
-          <p className="mt-4 text-lg text-gray-600">Choose the plan that fits your needs. No hidden fees, cancel anytime.</p>
+          <h1 className="text-4xl font-extrabold text-gray-900">{t('pricing.title')}</h1>
+          <p className="mt-4 text-lg text-gray-600">{t('pricing.subtitle')}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -99,7 +109,7 @@ export default function PricingPage() {
             >
               {plan.popular && (
                 <span className="mb-4 inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700 w-fit">
-                  Most popular
+                  {t('pricing.popular')}
                 </span>
               )}
               <h2 className="text-2xl font-bold text-gray-900">{plan.name}</h2>
@@ -125,15 +135,15 @@ export default function PricingPage() {
                     : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
                 } transition`}
               >
-                {loading === plan.id ? 'Loading…' : plan.cta}
+                {loading === plan.id ? t('pricing.loadingCta') : plan.cta}
               </button>
             </div>
           ))}
         </div>
 
         <p className="mt-12 text-center text-gray-500 text-sm">
-          All prices include VAT where applicable. Need a custom plan for larger teams?{' '}
-          <a href="mailto:sales@amthelper.de" className="text-blue-600 hover:underline">Contact sales</a>.
+          {t('pricing.footer')}{' '}
+          <a href="mailto:sales@amthelper.de" className="text-blue-600 hover:underline">{t('pricing.contactSales')}</a>.
         </p>
       </div>
     </div>

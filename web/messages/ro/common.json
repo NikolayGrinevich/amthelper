@@ -22,7 +22,34 @@
     "register": "Înregistrare",
     "logout": "Deconectare",
     "language": "Limbă",
-    "loading": "Încărcare..."
+    "loading": "Încărcare...",
+    "subtitle": "Asistentul tău pentru scrisorile oficiale germane",
+    "fullName": "Nume complet",
+    "confirmPassword": "Confirmă parola",
+    "createAccount": "Creează cont",
+    "signInButton": "🔓 Autentificare",
+    "signingIn": "⏳ Autentificare...",
+    "creatingAccount": "⏳ Creare cont...",
+    "noAccount": "Nu ai cont?",
+    "haveAccount": "Ai deja cont?",
+    "signUpLink": "Înregistrare",
+    "signInLink": "Autentificare",
+    "passwordsDoNotMatch": "Parolele nu se potrivesc",
+    "passwordTooShort": "Parola trebuie să aibă cel puțin 6 caractere",
+    "loginFailed": "Autentificare eșuată",
+    "signupFailed": "Înregistrare eșuată",
+    "forgotPassword": "Ai uitat parola?",
+    "resetPassword": "Resetează parola",
+    "sendResetLink": "Trimite link de resetare",
+    "resetEmailSent": "Un link de resetare a fost trimis pe email-ul tău",
+    "newPassword": "Parolă nouă",
+    "confirmNewPassword": "Confirmă parola nouă",
+    "updatePassword": "Actualizează parola",
+    "passwordUpdated": "Parola ta a fost actualizată",
+    "backToSignIn": "Înapoi la autentificare",
+    "namePlaceholder": "Numele tău",
+    "emailPlaceholder": "tu@exemplu.com",
+    "passwordPlaceholder": "••••••••"
   },
   "common": {
     "welcome": "Binevenit în AmtHelper!",
@@ -41,7 +68,7 @@
     "templates": "Șabloane",
     "templatesDescription": "Folosește șabloane gata făcute pentru diferite tipuri de scrisori",
     "multilingual": "Multilingv",
-    "multilingualDescription": "Suport pentru DE, RU, UK, RO",
+    "multilingualDescription": "Suport pentru DE, RU, UK, RO, TR",
     "recentDocuments": "Documente recente",
     "quickLinks": "Linkuri rapide",
     "noDocuments": "Niciun document. Încarcă primul tău document!",
@@ -334,6 +361,265 @@
         }
       },
       "noResults": "Nu s-au găsit șabloane"
+    }
+  },
+  "ui": {
+    "urgency": {
+      "critical": "Critic",
+      "high": "Ridicat",
+      "medium": "Mediu",
+      "low": "Scăzut"
+    },
+    "validation": {
+      "unsupportedFormat": "Format nesuportat. Folosiți: PDF, PNG, JPG, GIF, WebP",
+      "fileTooLarge": "Fișier prea mare. Maxim 10 MB",
+      "maxPhotos": "Maxim {max} fotografii"
+    },
+    "selectedPhotos": "Fotografii selectate: {count}",
+    "cancel": "Anulează",
+    "analyzeButton": "Analizează",
+    "analyzeWithCount": "Analizează ({count})",
+    "addMorePhotos": "Adaugă mai multe fotografii",
+    "share": "Distribuie",
+    "multiPhoto": "{count} fotografii",
+    "multiPhotoFileName": "{count} fotografii — {name}",
+    "analysisError": "Eroare de analiză",
+    "openingPortal": "Deschid portalul...",
+    "manageInStripe": "Gestionează abonamentul în Stripe",
+    "redirectingToStripe": "Redirecționare la Stripe...",
+    "upgradeToPro": "Upgrade la Pro acum — €4.99/lună",
+    "securePayment": "Plată securizată prin Stripe. Anulare oricând.",
+    "free": "Gratuit",
+    "pro": "Pro",
+    "freeAnalysesMonth": "3 analize / lună",
+    "freeLettersMonth": "3 scrisori / lună",
+    "proAnalysesMonth": "20 analize / lună",
+    "proLettersMonth": "20 scrisori / lună",
+    "trialExpires": "Perioada de probă expiră: {date}",
+    "freeBadge": "GRATUIT",
+    "yourAssistant": "Asistentul tău",
+    "upgradePro": "Upgrade la Pro",
+    "unlockAllFeatures": "Deblochează toate funcțiile",
+    "language": "Limbă",
+    "logout": "Deconectare",
+    "germanLetter": "Scrisoare oficială (germană)",
+    "translationLabel": "Traducere în limba ta",
+    "unknownSource": "Sursă necunoscută",
+    "unknownDocument": "Document necunoscut",
+    "newLetter": "← Scrisoare nouă",
+    "loadingText": "Se încarcă...",
+    "manageBilling": "Gestionează facturarea",
+    "translationSeparator": "Traducere / Übersetzung",
+    "lg": {
+      "selectTemplate": "Selectați tipul scrisorii",
+      "templateDescription": "Șablonul determină structura și tonul scrisorii",
+      "recipient": "Destinatar",
+      "recipientPlaceholder": "Instituție / Nume / Adresă / Persoană de contact...",
+      "generate": "Generează scrisoarea",
+      "generating": "Generare...",
+      "preview": "Previzualizare scrisoare",
+      "edit": "Editează",
+      "done": "Gata",
+      "copy": "Copiază",
+      "download": "Descarcă TXT",
+      "save": "Salvează",
+      "saved": "Salvat!",
+      "error": "Eroare la generare",
+      "needRecipient": "Specificați destinatarul",
+      "needTemplate": "Selectați tipul scrisorii",
+      "needDocument": "Mai întâi încărcați și analizați un document",
+      "fromAnalyzer": "Date încărcate din analiza documentului",
+      "letterSaved": "Scrisoarea salvată în istoric",
+      "copySuccess": "Copiat în clipboard",
+      "docAnalyzerLink": "Analizatorul de documente",
+      "unknownDocument": "Document necunoscut",
+      "unknownSource": "Sursă necunoscută",
+      "germanLetter": "Scrisoare oficială (germană)",
+      "translationLabel": "Traducere în limba ta",
+      "translationSeparator": "Traducere / Übersetzung",
+      "newLetter": "← Scrisoare nouă",
+      "title": "Generator de scrisori",
+      "subtitle": "Creați scrisori germane oficiale pe baza analizei documentelor",
+      "templates": {
+        "widerspruch": {
+          "label": "Contestație (Widerspruch)",
+          "desc": "Contestarea unei hotărâri a autorităților"
+        },
+        "antrag": {
+          "label": "Cerere (Antrag)",
+          "desc": "Solicitare de drept/serviciu"
+        },
+        "nachfrage": {
+          "label": "Întrebare (Nachfrage)",
+          "desc": "Clarificare detalii dosar existent"
+        },
+        "beschwerde": {
+          "label": "Plângere (Beschwerde)",
+          "desc": "Plângere împotriva autorităților"
+        }
+      }
+    },
+    "footer": {
+      "legal": "Legal",
+      "product": "Produs",
+      "support": "Suport",
+      "social": "Social",
+      "datenschutz": "Confidențialitate",
+      "impressum": "Impressum",
+      "prices": "Prețuri",
+      "copyright": "© 2026 AmtHelper GmbH. Toate drepturile rezervate.",
+      "tagline": "Conform DSGVO • Securitate garantată • Made in Germany"
+    },
+    "error": {
+      "title": "Ceva a mers greșit",
+      "code": "Cod eroare: {code}",
+      "unexpected": "A apărut o eroare neașteptată.",
+      "retry": "Încearcă din nou"
+    },
+    "pricing": {
+      "title": "Prețuri simple și transparente",
+      "subtitle": "Alegeți planul care vi se potrivește.",
+      "popular": "Cel mai popular",
+      "loadingCta": "Se încarcă…",
+      "footer": "Toate prețurile includ TVA.",
+      "contactSales": "Contactați vânzările",
+      "free": {
+        "name": "Free",
+        "desc": "Pentru uz personal",
+        "f1": "5 analize de documente pe lună",
+        "f2": "Urmărirea termenelor",
+        "f3": "Șabloane de scrisori de bază",
+        "f4": "Suport prin email",
+        "cta": "Începe"
+      },
+      "pro": {
+        "name": "Pro",
+        "desc": "Pentru ajutor regulat cu birocrația",
+        "f1": "Analize nelimitate de documente",
+        "f2": "Generare de scrisori cu AI",
+        "f3": "Toate șabloanele + șabloane personalizate",
+        "f4": "Suport prioritar prin email",
+        "f5": "Memento pentru termene",
+        "f6": "Istoricul documentelor",
+        "cta": "Începe proba Pro"
+      }
+    },
+    "subscription": {
+      "title": "Abonament",
+      "loading": "Se încarcă…",
+      "currentPlan": "Planul curent",
+      "active": "Activ",
+      "status": "Status",
+      "nextBilling": "Următoarea facturare",
+      "noActive": "Niciun abonament activ",
+      "viewPlans": "Vezi planurile"
+    }
+  },
+  "landing": {
+    "badge": "Asistent AI • DSGVO • Made in Germany",
+    "hero": {
+      "title": "Înțelegeți fiecare scrisoare oficială germană",
+      "subtitle": "Încărcați un document — AI îl analizează, îl explică pe înțelesul tuturor și pregătește scrisoarea de răspuns corectă.",
+      "cta": "Începe gratuit",
+      "ctaSecondary": "Cum funcționează"
+    },
+    "problem": {
+      "title": "Scrisorile oficiale germane sunt greu de înțeles",
+      "item1": "Jargon pe care nimeni nu îl explică",
+      "item2": "Termene pe care le poți rata ușor",
+      "item3": "Frica de a da un răspuns greșit",
+      "item4": "Consultanți scumpi la fiecare scrisoare"
+    },
+    "solution": {
+      "title": "AmtHelper face simplu",
+      "subtitle": "AI citește documentul și vă spune exact ce trebuie să faceți",
+      "item1Title": "Înțelegere",
+      "item1Desc": "AI explică fiecare document în limba ta",
+      "item2Title": "Acțiune",
+      "item2Desc": "Termene clare și pași următori",
+      "item3Title": "Răspuns",
+      "item3Desc": "Scrisoare oficială în 3 clicuri"
+    },
+    "howItWorks": {
+      "title": "Cum funcționează AmtHelper",
+      "step1Title": "Încărcați documentul",
+      "step1Desc": "Foto sau PDF — de la Finanzamt, Jobcenter, Krankenkasse sau autoritate",
+      "step2Title": "Primește analiza AI",
+      "step2Desc": "Rezumat clar, termene și documente necesare",
+      "step3Title": "Creați scrisoarea de răspuns",
+      "step3Desc": "Contestație, cerere, întrebare sau plângere — în germană, formulat corect"
+    },
+    "features": {
+      "title": "Tot ce ai nevoie",
+      "f1Title": "Analiză AI a documentelor",
+      "f1Desc": "Înțelege scrisori de la Finanzamt, Jobcenter, Ausländerbehörde și altele",
+      "f2Title": "Urmărirea termenelor",
+      "f2Desc": "Nu rata niciodată un termen important",
+      "f3Title": "Generator de scrisori",
+      "f3Desc": "Contestație, cerere, întrebare — corect în germană",
+      "f4Title": "Checklist documente",
+      "f4Desc": "Știe ce acte vă trebuie pentru scrisoare",
+      "f5Title": "35+ șabloane",
+      "f5Desc": "Pentru taxe, Jobcenter, Ausländerbehörde, Krankenkasse, chirie și altele",
+      "f6Title": "5 limbi",
+      "f6Desc": "Germană, rusă, ucraineană, română, turcă"
+    },
+    "pricing": {
+      "title": "Prețuri simple",
+      "subtitle": "Începe gratuit. Fă upgrade când ai nevoie de mai mult.",
+      "freeName": "Gratuit",
+      "freePrice": "0€",
+      "freePeriod": "/lună",
+      "freeF1": "3 analize de documente pe lună",
+      "freeF2": "3 scrisori pe lună",
+      "freeF3": "Urmărirea termenelor",
+      "freeF4": "Toate șabloanele",
+      "freeCta": "Începe gratuit",
+      "proName": "Pro",
+      "proPrice": "4,99€",
+      "proPeriod": "/lună",
+      "proF1": "20 analize pe lună",
+      "proF2": "20 scrisori pe lună",
+      "proF3": "Urmărire nelimitată a termenelor",
+      "proF4": "Suport prioritar",
+      "proF5": "Istoricul scrisorilor",
+      "proCta": "Testează Pro",
+      "proBadge": "Popular"
+    },
+    "security": {
+      "title": "Datele tale sunt în siguranță",
+      "item1Title": "Conform DSGVO",
+      "item1Desc": "Procesare conform standardelor UE",
+      "item2Title": "Servere în Germania",
+      "item2Desc": "Hosting Supabase UE, Vercel Frankfurt",
+      "item3Title": "Nicio dată către terți",
+      "item3Desc": "Documentele tale nu sunt partajate"
+    },
+    "faq": {
+      "title": "Întrebări frecvente",
+      "q1": "AmtHelper este gratuit?",
+      "a1": "Da, primești 3 analize și 3 scrisori pe lună gratuit. Pentru mai mult, poți face upgrade la Pro.",
+      "q2": "Ce documente pot încărca?",
+      "a2": "Scrisori de la Finanzamt, Jobcenter, Ausländerbehörde, Krankenkasse, proprietar, Rentenversicherung și altele. PDF sau foto.",
+      "q3": "În ce limbă este analiza?",
+      "a3": "Analiza este în limba ta — germană, rusă, ucraineană, română sau turcă. Scrisoarea de răspuns este întotdeauna în germană.",
+      "q4": "Cât durează analiza?",
+      "a4": "Aproximativ 30–60 secunde per document.",
+      "q5": "Am nevoie de cunoștințe juridice?",
+      "a5": "Nu. AmtHelper explică totul pe înțelesul tuturor și se ocupă de formulare."
+    },
+    "finalCta": {
+      "title": "Pregătit să înțelegi scrisorile oficiale?",
+      "subtitle": "Începe gratuit — fără card de credit",
+      "cta": "Înregistrează-te acum"
+    },
+    "footer": {
+      "madeInGermany": "Made in Germany",
+      "rights": "Toate drepturile rezervate."
+    },
+    "nav": {
+      "login": "Autentificare",
+      "signup": "Începe gratuit"
     }
   }
 }

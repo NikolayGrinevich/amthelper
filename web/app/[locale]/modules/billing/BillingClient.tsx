@@ -13,6 +13,7 @@ interface BillingClientProps {
 
 export default function BillingClient({ locale, isPro, tier, userId, showManageOnly = false }: BillingClientProps) {
   const t = useTranslations('common');
+  const tUI = useTranslations('ui');
   const [loading, setLoading] = useState(false);
   const [action, setAction] = useState<'upgrade' | 'manage' | null>(null);
 
@@ -70,14 +71,7 @@ export default function BillingClient({ locale, isPro, tier, userId, showManageO
           disabled={loading}
           className="w-full sm:w-auto px-6 py-3 bg-gray-900 text-white rounded-lg font-medium hover:bg-gray-700 transition disabled:opacity-50"
         >
-          {loading && action === 'manage' ? (
-            locale === 'de' ? 'Öffne Portal...' : locale === 'ru' ? 'Открываю портал...' : locale === 'uk' ? 'Відкриваю портал...' : 'Deschid portal...'
-          ) : (
-            locale === 'de' ? 'Abo im Stripe-Portal verwalten' :
-            locale === 'ru' ? 'Управлять подпиской в Stripe' :
-            locale === 'uk' ? 'Керувати підпискою в Stripe' :
-            'Gestionează abonamentul în Stripe'
-          )}
+          {loading && action === 'manage' ? tUI('openingPortal') : tUI('manageInStripe')}
         </button>
       </div>
     );
@@ -119,20 +113,10 @@ export default function BillingClient({ locale, isPro, tier, userId, showManageO
         disabled={loading}
         className="w-full px-6 py-4 bg-gradient-to-r from-blue-600 to-indigo-700 text-white text-lg font-semibold rounded-lg hover:from-blue-700 hover:to-indigo-800 transition shadow-lg disabled:opacity-50"
       >
-        {loading ? (
-          locale === 'de' ? 'Weiterleitung zu Stripe...' : locale === 'ru' ? 'Перенаправление в Stripe...' : locale === 'uk' ? 'Перенаправлення в Stripe...' : 'Redirecționare la Stripe...'
-        ) : (
-          locale === 'de' ? 'Jetzt auf Pro upgraden — €4.99/Monat' :
-          locale === 'ru' ? 'Обновиться на Pro — €4.99/мес' :
-          locale === 'uk' ? 'Оновитись на Pro — €4.99/міс' :
-          'Upgrade la Pro acum — €4.99/lună'
-        )}
+        {loading ? tUI('redirectingToStripe') : tUI('upgradeToPro')}
       </button>
       <p className="text-center text-sm text-gray-500 mt-3">
-        {locale === 'de' ? 'Sichere Bezahlung über Stripe. Jederzeit kündbar.' :
-         locale === 'ru' ? 'Безопасная оплата через Stripe. Отмена в любой момент.' :
-         locale === 'uk' ? 'Безпечна оплата через Stripe. Скасування в будь-який момент.' :
-         'Plată securizată prin Stripe. Anulare oricând.'}
+        {tUI('securePayment')}
       </p>
     </div>
   );

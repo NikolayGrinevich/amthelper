@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
     const { data: user } = await supabase
       .from('users')
       .select('stripe_customer_id')
-      .eq('id', token.replace('demo_token_', ''))
+      .eq('id', token)
       .single();
 
     if (!user?.stripe_customer_id) {
@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
 
     const session = await stripe.billingPortal.sessions.create({
       customer: user.stripe_customer_id,
-      return_url: `${process.env.NEXT_PUBLIC_APP_URL}/de/modules/billing`,
+      return_url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://amthelper.vercel.app'}/de/modules/billing`,
     });
 
     return NextResponse.json({ url: session.url });

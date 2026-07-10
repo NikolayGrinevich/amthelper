@@ -53,9 +53,6 @@ export async function POST(request: NextRequest) {
       }
       userId = supabaseUser.id;
       userEmail = supabaseUser.email!;
-    } else if (authToken.startsWith('demo_token_')) {
-      userId = '219d0e4d-401e-405a-b5be-ef1095f6165e';
-      userEmail = 'demo@amthelper.de';
     } else {
       const { data: { user }, error } = await supabase.auth.getUser(authToken);
       if (error || !user) {

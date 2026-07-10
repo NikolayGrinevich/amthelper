@@ -12,38 +12,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Demo credentials validation (temporary for development)
-    const DEMO_EMAIL = process.env.DEMO_EMAIL || 'demo@amthelper.de';
-    const DEMO_PASSWORD = process.env.DEMO_PASSWORD || 'AmtHelper#2026!';
-
-    // Check for demo credentials first (development testing)
-    console.log('[LOGIN DEBUG]', JSON.stringify({ email, pwLen: password?.length, demoEmail: DEMO_EMAIL, demoPwLen: DEMO_PASSWORD?.length, emailMatch: email === DEMO_EMAIL, pwMatch: password === DEMO_PASSWORD }));
-    if (email === DEMO_EMAIL && password === DEMO_PASSWORD) {
-      const demoUser = {
-        id: 'user_demo_' + Math.random().toString(36).substr(2, 9),
-        email,
-        full_name: 'Demo User',
-        role: 'pro',
-        subscription_status: 'active',
-        created_at: new Date().toISOString(),
-      };
-
-      const response = NextResponse.json({
-        success: true,
-        user: demoUser,
-        mode: 'demo',
-      });
-
-      response.cookies.set('auth_token', 'demo_token_' + demoUser.id, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
-        maxAge: 60 * 60 * 24 * 7,
-      });
-
-      return response;
-    }
-
     // Real login with Supabase
     const { data, error } = await supabase.auth.signInWithPassword({
       email,

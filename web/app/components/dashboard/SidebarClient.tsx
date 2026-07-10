@@ -3,6 +3,8 @@
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/app/providers/AuthProvider';
+import { useTranslations } from 'next-intl';
+import { LanguageSwitcher } from '@/app/components/LanguageSwitcher';
 import { useState, useMemo } from 'react';
 
 interface SidebarClientProps {
@@ -28,9 +30,11 @@ const menuItems: { href: string; labelKey: keyof SidebarClientProps['nav']; icon
   { href: '/modules/billing', labelKey: 'billing', icon: '💳' },
 ];
 
+
 export function SidebarClient({ locale, nav }: SidebarClientProps) {
   const router = useRouter();
   const pathname = usePathname();
+  const t = useTranslations('ui');
   const { user, logout, loading, isAuthenticated } = useAuth();
   const [isOpen, setIsOpen] = useState(true);
 
@@ -43,7 +47,6 @@ export function SidebarClient({ locale, nav }: SidebarClientProps) {
     return menuItems.find(item => pathname.startsWith(`/${locale}${item.href}`));
   }, [pathname, locale]);
 
-  // Mock urgent deadlines count — in real app this comes from context
   const urgentDeadlines = 0;
 
   if (loading) return <div style={{ width: isOpen ? '256px' : '72px', minHeight: '100vh', background: 'var(--color-sidebar-bg)' }} />;
@@ -54,7 +57,6 @@ export function SidebarClient({ locale, nav }: SidebarClientProps) {
       style={{ background: 'var(--color-sidebar-bg)' }}
       className={`${isOpen ? 'w-64' : 'w-20'} text-white transition-all duration-300 min-h-screen flex flex-col relative`}
     >
-      {/* Logo */}
       <div className="p-4 flex items-center justify-between" style={{ borderBottom: '1px solid var(--color-sidebar-divider)' }}>
         <div className="flex items-center gap-3 min-w-0">
           <span className="text-2xl flex-shrink-0">🛡️</span>
@@ -64,7 +66,7 @@ export function SidebarClient({ locale, nav }: SidebarClientProps) {
                 AmtHelper
               </h2>
               <p className="text-xs truncate" style={{ color: 'var(--color-sidebar-text)' }}>
-                Ihr Assistent
+                {t('yourAssistant')}
               </p>
             </div>
           )}
@@ -78,7 +80,6 @@ export function SidebarClient({ locale, nav }: SidebarClientProps) {
         </button>
       </div>
 
-      {/* Menu */}
       <nav className="flex-1 py-3 space-y-0.5 overflow-y-auto">
         {menuItems.map((item) => {
           const isActive = activeItem?.href === item.href;
@@ -112,21 +113,19 @@ export function SidebarClient({ locale, nav }: SidebarClientProps) {
         })}
       </nav>
 
-      {/* Upgrade block (if free tier) */}
       {isOpen && user?.role === 'free' && (
         <div className="mx-3 mb-3 p-3 rounded-lg" style={{ background: 'var(--color-sidebar-upgrade-bg)' }}>
           <Link href={`/${locale}/modules/billing`} className="block">
             <p className="text-sm font-medium" style={{ color: 'var(--color-sidebar-accent)' }}>
-              {locale === 'de' ? 'Upgrade auf Pro' : 'Upgrade to Pro'}
+              {t('upgradePro')}
             </p>
             <p className="text-xs mt-0.5" style={{ color: 'var(--color-sidebar-text)' }}>
-              {locale === 'de' ? 'Alle Funktionen freischalten' : 'Unlock all features'}
+              {t('unlockAllFeatures')}
             </p>
           </Link>
         </div>
       )}
 
-      {/* User & Logout */}
       <div className="p-4 flex-shrink-0" style={{ borderTop: '1px solid var(--color-sidebar-divider)' }}>
         {isOpen && (
           <div className="mb-3 pb-3 text-xs" style={{ borderBottom: '1px solid var(--color-sidebar-divider)' }}>
@@ -137,24 +136,13 @@ export function SidebarClient({ locale, nav }: SidebarClientProps) {
           </div>
         )}
 
-        {/* Language Switcher */}
         <div className="mb-3">
-          {isOpen && <p className="text-xs mb-1" style={{ color: 'var(--color-sidebar-text)' }}>Sprache</p>}
-          <div className="grid grid-cols-4 gap-1 min-w-0">
-            {['de', 'ru', 'uk', 'ro'].map((loc) => (
-              <button
-                key={loc}
-                onClick={() => { window.location.href = `/${loc}/dashboard`; }}
-                className="text-xs py-1.5 px-1 rounded transition font-medium"
-                style={{
-                  background: locale === loc ? 'var(--color-primary)' : 'var(--color-sidebar-active)',
-                  color: locale === loc ? '#fff' : 'var(--color-sidebar-text)',
-                }}
-              >
-                {loc.toUpperCase()}
-              </button>
-            ))}
-          </div>
+          {isOpen && <p className="text-xs mb-1" style={{ color: 'var(--color-sidebar-text)' }}>{t('language')}</p>}
+          {isOpen ? (
+            <LanguageSwitcher variant="dark" className="w-full" />
+          ) : (
+            <LanguageSwitcher variant="dark" className="w-full" />
+          )}
         </div>
 
         <button
@@ -163,7 +151,7 @@ export function SidebarClient({ locale, nav }: SidebarClientProps) {
           style={{ background: 'rgba(220,38,38,0.15)', color: '#EF4444' }}
         >
           {isOpen ? (
-            <span>{locale === 'de' ? 'Abmelden' : locale === 'ru' ? 'Выйти' : locale === 'uk' ? 'Вийти' : 'Logout'}</span>
+            <span>{t('logout')}</span>
           ) : (
             <span>🚪</span>
           )}

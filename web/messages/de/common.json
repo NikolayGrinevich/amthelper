@@ -301,7 +301,34 @@
     "register": "Registrieren",
     "logout": "Abmelden",
     "language": "Sprache",
-    "loading": "Laden..."
+    "loading": "Laden...",
+    "subtitle": "Dein Assistent für deutsche Behördenschreiben",
+    "fullName": "Vollständiger Name",
+    "confirmPassword": "Passwort bestätigen",
+    "createAccount": "Konto erstellen",
+    "signInButton": "🔓 Anmelden",
+    "signingIn": "⏳ Anmeldung läuft...",
+    "creatingAccount": "⏳ Konto wird erstellt...",
+    "noAccount": "Noch kein Konto?",
+    "haveAccount": "Schon ein Konto?",
+    "signUpLink": "Registrieren",
+    "signInLink": "Anmelden",
+    "passwordsDoNotMatch": "Passwörter stimmen nicht überein",
+    "passwordTooShort": "Passwort muss mindestens 6 Zeichen lang sein",
+    "loginFailed": "Anmeldung fehlgeschlagen",
+    "signupFailed": "Registrierung fehlgeschlagen",
+    "forgotPassword": "Passwort vergessen",
+    "resetPassword": "Passwort zurücksetzen",
+    "sendResetLink": "Zurücksetzungs-Link senden",
+    "resetEmailSent": "Ein Link zum Zurücksetzen wurde an Ihre E-Mail gesendet",
+    "newPassword": "Neues Passwort",
+    "confirmNewPassword": "Neues Passwort bestätigen",
+    "updatePassword": "Passwort aktualisieren",
+    "passwordUpdated": "Ihr Passwort wurde aktualisiert",
+    "backToSignIn": "Zurück zur Anmeldung",
+    "namePlaceholder": "Ihr Name",
+    "emailPlaceholder": "sie@beispiel.com",
+    "passwordPlaceholder": "••••••••"
   },
   "common": {
     "welcome": "Willkommen bei AmtHelper!",
@@ -320,7 +347,7 @@
     "templates": "Vorlagen",
     "templatesDescription": "Nutze fertige Vorlagen für verschiedene Briefarten",
     "multilingual": "Mehrsprachig",
-    "multilingualDescription": "Unterstützung für DE, RU, UK, RO",
+    "multilingualDescription": "Unterstützung für DE, RU, UK, RO, TR",
     "recentDocuments": "Letzte Dokumente",
     "quickLinks": "Schnellzugriff",
     "noDocuments": "Noch keine Dokumente. Lade dein erstes Dokument hoch!",
@@ -335,5 +362,264 @@
     "billing": "Abrechnung verwalten",
     "billingDescription": "Verwalten Sie Ihr Abonnement und Ihre Zahlungsmethoden",
     "noSubscription": "Kein Abonnement gefunden"
+  },
+  "ui": {
+    "urgency": {
+      "critical": "Kritisch",
+      "high": "Hoch",
+      "medium": "Mittel",
+      "low": "Niedrig"
+    },
+    "validation": {
+      "unsupportedFormat": "Nicht unterstütztes Format. Verwenden Sie: PDF, PNG, JPG, GIF, WebP",
+      "fileTooLarge": "Datei ist zu groß. Maximum 10 MB",
+      "maxPhotos": "Maximal {max} Fotos"
+    },
+    "selectedPhotos": "Ausgewählte Fotos: {count}",
+    "cancel": "Abbrechen",
+    "analyzeButton": "Analysieren",
+    "analyzeWithCount": "Analysieren ({count})",
+    "addMorePhotos": "Weitere Fotos hinzufügen",
+    "share": "Teilen",
+    "multiPhoto": "{count} Fotos",
+    "multiPhotoFileName": "{count} Fotos — {name}",
+    "analysisError": "Analysefehler",
+    "openingPortal": "Portal wird geöffnet...",
+    "manageInStripe": "Abo im Stripe-Portal verwalten",
+    "redirectingToStripe": "Weiterleitung zu Stripe...",
+    "upgradeToPro": "Jetzt auf Pro upgraden — €4.99/Monat",
+    "securePayment": "Sichere Bezahlung über Stripe. Jederzeit kündbar.",
+    "free": "Kostenlos",
+    "pro": "Pro",
+    "freeAnalysesMonth": "3 Analysen / Monat",
+    "freeLettersMonth": "3 Briefe / Monat",
+    "proAnalysesMonth": "20 Analysen / Monat",
+    "proLettersMonth": "20 Briefe / Monat",
+    "trialExpires": "Ihr Testzeitraum läuft ab: {date}",
+    "freeBadge": "FREE",
+    "yourAssistant": "Ihr Assistent",
+    "upgradePro": "Upgrade auf Pro",
+    "unlockAllFeatures": "Alle Funktionen freischalten",
+    "language": "Sprache",
+    "logout": "Abmelden",
+    "germanLetter": "Offizieller Brief (Deutsch)",
+    "translationLabel": "Übersetzung in Ihre Sprache",
+    "unknownSource": "Unbekannte Quelle",
+    "unknownDocument": "Unbekanntes Dokument",
+    "newLetter": "← Neuer Brief",
+    "loadingText": "Wird geladen...",
+    "manageBilling": "Abrechnung verwalten",
+    "translationSeparator": "Übersetzung",
+    "lg": {
+      "selectTemplate": "Briefart wählen",
+      "templateDescription": "Die Vorlage bestimmt Struktur und Ton des Briefs",
+      "recipient": "Empfänger",
+      "recipientPlaceholder": "Behörde / Name / Straße / PLZ / Ort",
+      "generate": "Brief erstellen",
+      "generating": "Brief wird generiert...",
+      "preview": "Briefvorschau",
+      "edit": "Bearbeiten",
+      "done": "Fertig",
+      "copy": "Kopieren",
+      "download": "Als TXT herunterladen",
+      "save": "Speichern",
+      "saved": "Gespeichert!",
+      "error": "Fehler bei der Generierung",
+      "needRecipient": "Bitte Empfänger angeben",
+      "needTemplate": "Bitte Briefart wählen",
+      "needDocument": "Bitte laden Sie zuerst ein Dokument hoch und analysieren Sie es",
+      "fromAnalyzer": "Daten aus Dokumentenanalyse geladen",
+      "letterSaved": "Brief im Verlauf gespeichert",
+      "copySuccess": "In Zwischenablage kopiert",
+      "docAnalyzerLink": "Dokumentenanalyse",
+      "unknownDocument": "Unbekanntes Dokument",
+      "unknownSource": "Unbekannte Quelle",
+      "germanLetter": "Offizieller Brief (Deutsch)",
+      "translationLabel": "Übersetzung in Ihre Sprache",
+      "translationSeparator": "Übersetzung",
+      "newLetter": "← Neuer Brief",
+      "title": "Briefgenerator",
+      "subtitle": "Erstellen Sie formelle deutsche Briefe mit KI",
+      "templates": {
+        "widerspruch": {
+          "label": "Widerspruch",
+          "desc": "Gegen einen Bescheid vorgehen"
+        },
+        "antrag": {
+          "label": "Antrag",
+          "desc": "Leistung oder Recht beantragen"
+        },
+        "nachfrage": {
+          "label": "Nachfrage",
+          "desc": "Informationen bei Behörde einholen"
+        },
+        "beschwerde": {
+          "label": "Beschwerde",
+          "desc": "Über Behörde/Verwaltung beschweren"
+        }
+      }
+    },
+    "footer": {
+      "legal": "Rechtlich",
+      "product": "Produkt",
+      "support": "Support",
+      "social": "Social",
+      "datenschutz": "Datenschutz",
+      "impressum": "Impressum",
+      "prices": "Preise",
+      "copyright": "© 2026 AmtHelper GmbH. Alle Rechte vorbehalten.",
+      "tagline": "DSGVO-konform • Sicherheit gewährleistet • Made in Germany"
+    },
+    "error": {
+      "title": "Etwas ist schiefgelaufen",
+      "code": "Fehlercode: {code}",
+      "unexpected": "Ein unerwarteter Fehler ist aufgetreten.",
+      "retry": "Erneut versuchen"
+    },
+    "pricing": {
+      "title": "Einfache, transparente Preise",
+      "subtitle": "Wählen Sie den Plan, der zu Ihnen passt.",
+      "popular": "Beliebteste",
+      "loadingCta": "Laden…",
+      "footer": "Alle Preise inkl. MwSt.",
+      "contactSales": "Vertrieb kontaktieren",
+      "free": {
+        "name": "Free",
+        "desc": "Für persönliche Nutzung",
+        "f1": "5 Dokumentenanalysen pro Monat",
+        "f2": "Fristenverfolgung",
+        "f3": "Grundlegende Briefvorlagen",
+        "f4": "E-Mail-Support",
+        "cta": "Loslegen"
+      },
+      "pro": {
+        "name": "Pro",
+        "desc": "Für regelmäßige Hilfe bei Bürokratie",
+        "f1": "Unbegrenzte Dokumentenanalysen",
+        "f2": "KI-gestützte Briefgenerierung",
+        "f3": "Alle Vorlagen + eigene Vorlagen",
+        "f4": "Priorisierter E-Mail-Support",
+        "f5": "Frist-Erinnerungen",
+        "f6": "Dokumentenverlauf",
+        "cta": "Pro-Test starten"
+      }
+    },
+    "subscription": {
+      "title": "Abonnement",
+      "loading": "Laden…",
+      "currentPlan": "Aktueller Plan",
+      "active": "Aktiv",
+      "status": "Status",
+      "nextBilling": "Nächste Abbuchung",
+      "noActive": "Kein aktives Abonnement",
+      "viewPlans": "Pläne ansehen"
+    }
+  },
+  "landing": {
+    "badge": "KI-gestützt • DSGVO-konform • Made in Germany",
+    "hero": {
+      "title": "Verstehe jedes deutsche Behördenschreiben",
+      "subtitle": "Laden Sie ein Dokument hoch — KI analysiert es, erklärt es verständlich und erstellt den richtigen Antwortbrief für Sie.",
+      "cta": "Kostenlos starten",
+      "ctaSecondary": "So funktioniert's"
+    },
+    "problem": {
+      "title": "Deutsche Behördenbriefe sind schwer zu verstehen",
+      "item1": "Fachjargon, das niemand erklärt",
+      "item2": "Fristen, die man leicht verpasst",
+      "item3": "Angst vor falschen Antworten",
+      "item4": "Teure Briefberater bei jedem Schreiben"
+    },
+    "solution": {
+      "title": "AmtHelper macht es einfach",
+      "subtitle": "KI liest Ihr Dokument und sagt Ihnen genau, was zu tun ist",
+      "item1Title": "Verstehen",
+      "item1Desc": "KI erklärt jedes Dokument in Ihrer Sprache",
+      "item2Title": "Handeln",
+      "item2Desc": "Klare Fristen und nächste Schritte",
+      "item3Title": "Antworten",
+      "item3Desc": "Offizieller Brief in 3 Klicks erstellt"
+    },
+    "howItWorks": {
+      "title": "So funktioniert AmtHelper",
+      "step1Title": "Dokument hochladen",
+      "step1Desc": "Foto oder PDF — vom Finanzamt, Jobcenter, Krankenkasse oder Behörde",
+      "step2Title": "KI-Analyse erhalten",
+      "step2Desc": "Verständliche Zusammenfassung, Fristen und benötigte Dokumente",
+      "step3Title": "Antwortbrief erstellen",
+      "step3Desc": "Widerspruch, Antrag, Nachfrage oder Beschwerde — auf Deutsch, korrekt formuliert"
+    },
+    "features": {
+      "title": "Alles was Sie brauchen",
+      "f1Title": "KI-Dokumentenanalyse",
+      "f1Desc": "Versteht Briefe vom Finanzamt, Jobcenter, Ausländerbehörde und mehr",
+      "f2Title": "Fristen-Tracker",
+      "f2Desc": "Verpasst nie wieder eine wichtige Frist",
+      "f3Title": "Briefgenerator",
+      "f3Desc": "Widerspruch, Antrag, Nachfrage — korrekt auf Deutsch",
+      "f4Title": "Dokumenten-Checkliste",
+      "f4Desc": "Weiß, welche Unterlagen Sie für Ihren Brief brauchen",
+      "f5Title": "35+ Vorlagen",
+      "f5Desc": "Für Steuer, Jobcenter, Ausländerbehörde, Krankenkasse, Miete und mehr",
+      "f6Title": "5 Sprachen",
+      "f6Desc": "Deutsch, Russisch, Ukrainisch, Rumänisch, Türkisch"
+    },
+    "pricing": {
+      "title": "Einfache Preise",
+      "subtitle": "Kostenlos starten. Upgraden wenn Sie mehr brauchen.",
+      "freeName": "Kostenlos",
+      "freePrice": "0€",
+      "freePeriod": "/Monat",
+      "freeF1": "3 Dokumentenanalysen pro Monat",
+      "freeF2": "3 Briefe pro Monat",
+      "freeF3": "Fristen-Tracker",
+      "freeF4": "Alle Vorlagen",
+      "freeCta": "Kostenlos starten",
+      "proName": "Pro",
+      "proPrice": "4,99€",
+      "proPeriod": "/Monat",
+      "proF1": "20 Analysen pro Monat",
+      "proF2": "20 Briefe pro Monat",
+      "proF3": "Unbegrenzte Fristen-Verfolgung",
+      "proF4": "Priorisierter Support",
+      "proF5": "Briefverlauf",
+      "proCta": "Pro testen",
+      "proBadge": "Beliebt"
+    },
+    "security": {
+      "title": "Ihre Daten sind sicher",
+      "item1Title": "DSGVO-konform",
+      "item1Desc": "Verarbeitung nach EU-Datenschutzstandards",
+      "item2Title": "Server in Deutschland",
+      "item2Desc": "Supabase EU-Hosting, Vercel Frankfurt",
+      "item3Title": "Keine Daten an Dritte",
+      "item3Desc": "Ihre Dokumente werden nicht weitergegeben"
+    },
+    "faq": {
+      "title": "Häufige Fragen",
+      "q1": "Ist AmtHelper kostenlos?",
+      "a1": "Ja, Sie bekommen 3 Analysen und 3 Briefe pro Monat kostenlos. Für mehr können Sie auf Pro upgraden.",
+      "q2": "Welche Dokumente kann ich hochladen?",
+      "a2": "Briefe vom Finanzamt, Jobcenter, Ausländerbehörde, Krankenkasse, Vermieter, Rentenversicherung und viele mehr. PDF oder Foto.",
+      "q3": "In welcher Sprache ist die Analyse?",
+      "a3": "Die Analyse ist in Ihrer Sprache — Deutsch, Russisch, Ukrainisch, Rumänisch oder Türkisch. Der Antwortbrief wird immer auf Deutsch erstellt.",
+      "q4": "Wie lange dauert die Analyse?",
+      "a4": "Etwa 30–60 Sekunden pro Dokument.",
+      "q5": "Brauche ich juristische Kenntnisse?",
+      "a5": "Nein. AmtHelper erklärt alles verständlich und übernimmt die Formulierung für Sie."
+    },
+    "finalCta": {
+      "title": "Bereit, Ihre Behördenbriefe zu verstehen?",
+      "subtitle": "Starten Sie kostenlos — keine Kreditkarte erforderlich",
+      "cta": "Jetzt registrieren"
+    },
+    "footer": {
+      "madeInGermany": "Made in Germany",
+      "rights": "Alle Rechte vorbehalten."
+    },
+    "nav": {
+      "login": "Anmelden",
+      "signup": "Kostenlos starten"
+    }
   }
 }

@@ -5,6 +5,7 @@ import { useTranslations, useLocale } from 'next-intl';
 
 export default function BillingPage() {
   const t = useTranslations('common');
+  const tUI = useTranslations('ui');
   const locale = useLocale();
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
@@ -43,75 +44,53 @@ export default function BillingPage() {
     }
   };
 
-  const loadingText = locale === 'de' ? 'Wird geladen...' :
-    locale === 'ru' ? 'Загрузка...' :
-    locale === 'uk' ? 'Завантаження...' : 'Loading...';
-
-  const manageText = locale === 'de' ? 'Abrechnung verwalten' :
-    locale === 'ru' ? 'Управлять оплатой' :
-    locale === 'uk' ? 'Керувати оплатою' : 'Manage Billing';
-
   return (
       <div className="space-y-6">
         <div className="bg-white rounded-xl shadow p-6">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('billing')}</h2>
           <p className="text-gray-600 mb-6">{t('billingDescription')}</p>
 
-          {/* Plan comparison */}
           <div className="grid md:grid-cols-2 gap-4 mb-6">
-            {/* Free plan */}
             <div className="border border-gray-200 rounded-lg p-4">
               <h3 className="font-semibold text-lg text-gray-900 mb-1">
-                {locale === 'de' ? 'Kostenlos' : locale === 'ru' ? 'Бесплатно' : locale === 'uk' ? 'Безкоштовно' : 'Free'}
+                {tUI('free')}
               </h3>
-              <p className="text-2xl font-bold text-gray-900 mb-3">
-                0€
-              </p>
+              <p className="text-2xl font-bold text-gray-900 mb-3">0€</p>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li>✓ {locale === 'de' ? '3 Analysen / Monat' : locale === 'ru' ? '3 анализа / месяц' : locale === 'uk' ? '3 аналізи / місяць' : '3 analyses / month'}</li>
-                <li>✓ {locale === 'de' ? '3 Briefe / Monat' : locale === 'ru' ? '3 письма / месяц' : locale === 'uk' ? '3 листи / місяць' : '3 letters / month'}</li>
+                <li>✓ {tUI('freeAnalysesMonth')}</li>
+                <li>✓ {tUI('freeLettersMonth')}</li>
               </ul>
             </div>
 
-            {/* Pro plan */}
             <div className="border-2 border-blue-500 rounded-lg p-4 bg-blue-50">
               <h3 className="font-semibold text-lg text-blue-900 mb-1">
-                {locale === 'de' ? 'Pro' : locale === 'ru' ? 'Pro' : locale === 'uk' ? 'Pro' : 'Pro'}
+                {tUI('pro')}
               </h3>
-              <p className="text-2xl font-bold text-blue-900 mb-3">
-                9,99€
-              </p>
+              <p className="text-2xl font-bold text-blue-900 mb-3">9,99€</p>
               <ul className="space-y-2 text-sm text-blue-800">
-                <li>✓ {locale === 'de' ? '20 Analysen / Monat' : locale === 'ru' ? '20 анализов / месяц' : locale === 'uk' ? '20 аналізів / місяць' : '20 analyses / month'}</li>
-                <li>✓ {locale === 'de' ? '20 Briefe / Monat' : locale === 'ru' ? '20 писем / месяц' : locale === 'uk' ? '20 листів / місяць' : '20 letters / month'}</li>
+                <li>✓ {tUI('proAnalysesMonth')}</li>
+                <li>✓ {tUI('proLettersMonth')}</li>
               </ul>
             </div>
           </div>
 
-                    {/* Pro expiration notice */}
-                    {userTier === 'pro' && proExpiresAt && (
-                      <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
-                        <p className="text-amber-800 text-sm">
-                          {locale === 'de'
-                            ? `Ihr Testzeitraum läuft ab: ${new Date(proExpiresAt).toLocaleDateString('de-DE')}`
-                            : locale === 'ru'
-                              ? `Ваш тестовый период истекает: ${new Date(proExpiresAt).toLocaleDateString('ru-RU')}`
-                              : locale === 'uk'
-                                ? `Ваш тестовий період закінчується: ${new Date(proExpiresAt).toLocaleDateString('uk-UA')}`
-                                : `Your trial period expires: ${new Date(proExpiresAt).toLocaleDateString('en-US')}`}
-                        </p>
-                      </div>
-                    )}
+          {userTier === 'pro' && proExpiresAt && (
+            <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
+              <p className="text-amber-800 text-sm">
+                {tUI('trialExpires', { date: new Date(proExpiresAt).toLocaleDateString(locale) })}
+              </p>
+            </div>
+          )}
 
-                    <button
-          onClick={openPortal}
-          disabled={loading}
-          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
-        >
-          {loading ? loadingText : manageText}
-        </button>
-        {status && <p className="mt-4 text-sm text-gray-600">{status}</p>}
+          <button
+            onClick={openPortal}
+            disabled={loading}
+            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
+          >
+            {loading ? tUI('loadingText') : tUI('manageBilling')}
+          </button>
+          {status && <p className="mt-4 text-sm text-gray-600">{status}</p>}
+        </div>
       </div>
-    </div>
   );
 }

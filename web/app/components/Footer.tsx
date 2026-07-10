@@ -1,42 +1,43 @@
 'use client';
 
 import Link from 'next/link';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 export function Footer() {
   const locale = useLocale();
+  const t = useTranslations('ui');
 
   return (
     <footer className="bg-gray-100 border-t mt-12 py-8">
       <div className="max-w-4xl mx-auto px-4">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
           <div>
-            <h4 className="font-bold mb-3">Rechtlich</h4>
+            <h4 className="font-bold mb-3">{t('footer.legal')}</h4>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link href={`/${locale}/datenschutz`} className="hover:underline">
-                  Datenschutz
+                  {t('footer.datenschutz')}
                 </Link>
               </li>
               <li>
                 <Link href={`/${locale}/impressum`} className="hover:underline">
-                  Impressum
+                  {t('footer.impressum')}
                 </Link>
               </li>
             </ul>
           </div>
           <div>
-            <h4 className="font-bold mb-3">Produkt</h4>
+            <h4 className="font-bold mb-3">{t('footer.product')}</h4>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link href={`/${locale}/pricing`} className="hover:underline">
-                  Preise
+                  {t('footer.prices')}
                 </Link>
               </li>
             </ul>
           </div>
           <div>
-            <h4 className="font-bold mb-3">Support</h4>
+            <h4 className="font-bold mb-3">{t('footer.support')}</h4>
             <ul className="space-y-2 text-sm">
               <li>
                 <a href="mailto:support@amthelper.de" className="hover:underline">
@@ -46,7 +47,7 @@ export function Footer() {
             </ul>
           </div>
           <div>
-            <h4 className="font-bold mb-3">Social</h4>
+            <h4 className="font-bold mb-3">{t('footer.social')}</h4>
             <ul className="space-y-2 text-sm">
               <li>
                 <a href="#" className="hover:underline">
@@ -57,10 +58,8 @@ export function Footer() {
           </div>
         </div>
         <div className="border-t pt-6 text-center text-sm text-gray-600">
-          <p>&copy; 2026 AmtHelper GmbH. Alle Rechte vorbehalten.</p>
-          <p className="mt-2 text-xs">
-            DSGVO-konform • Sicherheit gewährleistet • Made in Germany
-          </p>
+          <p>{t('footer.copyright')}</p>
+          <p className="mt-2 text-xs">{t('footer.tagline')}</p>
         </div>
       </div>
     </footer>

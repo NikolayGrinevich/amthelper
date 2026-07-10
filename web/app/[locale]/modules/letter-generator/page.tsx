@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
+import { useTranslations, useLocale } from 'next-intl'
 import { useAuth } from '@/app/providers/AuthProvider'
 
 interface AnalyzedDocument {
@@ -47,148 +48,27 @@ interface TemplateOption {
   icon: string
 }
 
-const TEMPLATE_OPTIONS: Record<string, TemplateOption[]> = {
-  ru: [
-    { value: 'Widerspruch', label: 'Возражение (Widerspruch)', description: 'Оспаривание решения органа власти', icon: '⚖️' },
-    { value: 'Antrag', label: 'Заявление (Antrag)', description: 'Запрос на предоставление права/услуги', icon: '📝' },
-    { value: 'Nachfrage', label: 'Запрос информации (Nachfrage)', description: 'Уточнение деталей по существующему делу', icon: '❓' },
-    { value: 'Beschwerde', label: 'Жалоба (Beschwerde)', description: 'Жалоба на действия/бездействие органа', icon: '📢' },
-  ],
-  de: [
-    { value: 'Widerspruch', label: 'Widerspruch', description: 'Gegen einen Bescheid vorgehen', icon: '⚖️' },
-    { value: 'Antrag', label: 'Antrag', description: 'Leistung oder Recht beantragen', icon: '📝' },
-    { value: 'Nachfrage', label: 'Nachfrage', description: 'Informationen bei Behörde einholen', icon: '❓' },
-    { value: 'Beschwerde', label: 'Beschwerde', description: 'Über Behörde/Verwaltung beschweren', icon: '📢' },
-  ],
-  uk: [
-    { value: 'Widerspruch', label: 'Відповідь (Widerspruch)', description: 'Скарга на рішення органу влади', icon: '⚖️' },
-    { value: 'Antrag', label: 'Заява (Antrag)', description: 'Запит на надання права/послуги', icon: '📝' },
-    { value: 'Nachfrage', label: 'Запит інформації (Nachfrage)', description: 'Уточнення деталей по існуючій справі', icon: '❓' },
-    { value: 'Beschwerde', label: 'Скарга (Beschwerde)', description: 'Скарга на дії/бездіяльність органу', icon: '📢' },
-  ],
-  ro: [
-    { value: 'Widerspruch', label: 'Contestație (Widerspruch)', description: 'Contestarea unei hotărâri a autorităților', icon: '⚖️' },
-    { value: 'Antrag', label: 'Cerere (Antrag)', description: 'Solicitare de drept/serviciu', icon: '📝' },
-    { value: 'Nachfrage', label: 'Întrebare (Nachfrage)', description: 'Clarificare detalii dosar existent', icon: '❓' },
-    { value: 'Beschwerde', label: 'Plângere (Beschwerde)', description: 'Plângere împotriva autorităților', icon: '📢' },
-  ],
-}
-
-const TRANSLATIONS = {
-  ru: {
-    title: 'Генератор писем',
-    subtitle: 'Создавайте официальные немецкие письма на основе анализа документов',
-    selectTemplate: 'Выберите тип письма',
-    templateDescription: 'Шаблон определяет структуру и тон письма',
-    recipient: 'Получатель',
-    recipientPlaceholder: 'Название органа, адрес, контактное лицо...',
-    generate: 'Сгенерировать письмо',
-    generating: 'Генерация...',
-    preview: 'Предпросмотр письма',
-    edit: 'Редактировать',
-    done: 'Готово',
-    newLetter: '← Новое письмо',
-    copy: 'Копировать',
-    download: 'Скачать TXT',
-    save: 'Сохранить',
-    saved: 'Сохранено!',
-    error: 'Ошибка генерации',
-    needRecipient: 'Укажите получателя',
-    needTemplate: 'Выберите тип письма',
-    needDocument: 'Сначала загрузите и проанализируйте документ',
-    fromAnalyzer: 'Данные подгружены из анализа документа',
-    letterSaved: 'Письмо сохранено в истории',
-    copySuccess: 'Скопировано в буфер обмена',
-    docAnalyzerLink: 'Анализаторе документов',
-  },
-  de: {
-    title: 'Briefgenerator',
-    subtitle: 'Erstellen Sie formelle deutsche Briefe basierend auf Dokumentenanalyse',
-    selectTemplate: 'Briefart wählen',
-    templateDescription: 'Die Vorlage bestimmt Struktur und Ton des Briefs',
-    recipient: 'Empfänger',
-    recipientPlaceholder: 'Behörde / Name / Straße / PLZ / Ort',
-    generate: 'Brief erstellen',
-    generating: 'Brief wird generiert...',
-    preview: 'Briefvorschau',
-    edit: 'Bearbeiten',
-    done: 'Fertig',
-    newLetter: '← Neuer Brief',
-    copy: 'Kopieren',
-    download: 'Als TXT herunterladen',
-    save: 'Speichern',
-    saved: 'Gespeichert!',
-    error: 'Fehler bei der Generierung',
-    needRecipient: 'Bitte Empfänger angeben',
-    needTemplate: 'Bitte Briefart wählen',
-    needDocument: 'Bitte laden Sie zuerst ein Dokument hoch und analysieren Sie es',
-    fromAnalyzer: 'Daten aus Dokumentenanalyse geladen',
-    letterSaved: 'Brief im Verlauf gespeichert',
-    copySuccess: 'In Zwischenablage kopiert',
-    docAnalyzerLink: 'Dokumentenanalyse',
-  },
-  uk: {
-    title: 'Генератор листів',
-    subtitle: 'Створюйте офіційні німецькі листи на основі аналізу документів',
-    selectTemplate: 'Оберіть тип листа',
-    templateDescription: 'Шаблон визначає структуру і тон листа',
-    recipient: 'Одержувач',
-    recipientPlaceholder: 'Назва органу, адреса, контактна особа...',
-    generate: 'Згенерувати лист',
-    generating: 'Генерація...',
-    preview: 'Попередній перегляд листа',
-    edit: 'Редагувати',
-    done: 'Готово',
-    copy: 'Копіювати',
-    download: 'Завантажити TXT',
-    save: 'Зберегти',
-    saved: 'Збережено!',
-    error: 'Помилка генерації',
-    needRecipient: 'Вкажіть одержувача',
-    needTemplate: 'Оберіть тип листа',
-    needDocument: 'Спочатку завантажте та проаналізуйте документ',
-    fromAnalyzer: 'Дані завантажені з аналізу документа',
-    letterSaved: 'Лист збережено в історії',
-    copySuccess: 'Скопійовано в буфер обміну',
-    docAnalyzerLink: 'Аналізатор документів',
-  },
-  ro: {
-    title: 'Generator de scrisori',
-    subtitle: 'Creați scrisori germane oficiale pe baza analizei documentelor',
-    selectTemplate: 'Selectați tipul scrisorii',
-    templateDescription: 'Șablonul determină structura și tonul scrisorii',
-    recipient: 'Destinatar',
-    recipientPlaceholder: 'Instituție / Nume / Adresă / Persoană de contact...',
-    generate: 'Generează scrisoarea',
-    generating: 'Generare...',
-    preview: 'Previzualizare scrisoare',
-    edit: 'Editează',
-    done: 'Gata',
-    copy: 'Copiază',
-    download: 'Descarcă TXT',
-    save: 'Salvează',
-    saved: 'Salvat!',
-    error: 'Eroare la generare',
-    needRecipient: 'Specificați destinatarul',
-    needTemplate: 'Selectați tipul scrisorii',
-    needDocument: 'Mai întâi încărcați și analizați un document',
-    fromAnalyzer: 'Date încărcate din analiza documentului',
-    letterSaved: 'Scrisoarea salvată în istoric',
-    copySuccess: 'Copiat în clipboard',
-    docAnalyzerLink: 'Analizatorul de documente',
-  },
-}
+const TEMPLATE_TYPES: { value: TemplateType; icon: string; labelKey: string; descKey: string }[] = [
+  { value: 'Widerspruch', icon: '⚖️', labelKey: 'templates.widerspruch.label', descKey: 'templates.widerspruch.desc' },
+  { value: 'Antrag', icon: '📝', labelKey: 'templates.antrag.label', descKey: 'templates.antrag.desc' },
+  { value: 'Nachfrage', icon: '❓', labelKey: 'templates.nachfrage.label', descKey: 'templates.nachfrage.desc' },
+  { value: 'Beschwerde', icon: '📢', labelKey: 'templates.beschwerde.label', descKey: 'templates.beschwerde.desc' },
+]
 
 export default function LetterGeneratorPage() {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const rawLocale = pathname.split('/')[1]
-  const locale = (rawLocale in TRANSLATIONS ? rawLocale : 'ru') as keyof typeof TRANSLATIONS
+  const locale = useLocale()
+  const tUI = useTranslations('ui')
   const { user, loading: authLoading } = useAuth()
 
-  const t = TRANSLATIONS[locale]
-  const templateOptions = TEMPLATE_OPTIONS[locale] ?? TEMPLATE_OPTIONS.ru
+  const templateOptions: TemplateOption[] = TEMPLATE_TYPES.map(tt => ({
+    value: tt.value,
+    icon: tt.icon,
+    label: tUI(tt.labelKey as any),
+    description: tUI(tt.descKey as any),
+  }))
 
   const [selectedTemplate, setSelectedTemplate] = useState<TemplateType | null>(null)
   const [recipient, setRecipient] = useState('')
@@ -246,15 +126,15 @@ export default function LetterGeneratorPage() {
 
   const handleGenerate = async () => {
     if (!selectedTemplate) {
-      showToast(t.needTemplate)
+      showToast(tUI('lg.needTemplate') as any)
       return
     }
     if (!recipient.trim()) {
-      showToast(t.needRecipient)
+      showToast(tUI('lg.needRecipient'))
       return
     }
     if (!sourceDoc?.id && !searchParams.get('template')) {
-      showToast(t.needDocument)
+      showToast(tUI('lg.needDocument'))
       return
     }
 
@@ -290,10 +170,10 @@ export default function LetterGeneratorPage() {
         created_at: data.created_at,
       })
       setIsEditing(true)
-      showToast(t.letterSaved)
+      showToast(tUI('lg.letterSaved'))
     } catch (err) {
       console.error('Generate error:', err)
-      showToast(err instanceof Error ? err.message : t.error)
+      showToast(err instanceof Error ? err.message : tUI('lg.error'))
     } finally {
       setIsGenerating(false)
     }
@@ -302,24 +182,24 @@ export default function LetterGeneratorPage() {
   const handleCopy = async () => {
     if (!letterDe) return
     await navigator.clipboard.writeText(letterDe)
-    showToast(t.copySuccess)
+    showToast(tUI('lg.copySuccess'))
   }
 
   const handleCopyLocale = async () => {
     if (!letterLocale) return
     await navigator.clipboard.writeText(letterLocale)
-    showToast(t.copySuccess)
+    showToast(tUI('lg.copySuccess'))
   }
 
   const handleDownload = () => {
     if (!letterDe && !letterLocale) return
     const templateLabel = templateOptions.find(opt => opt.value === selectedTemplate)?.label || selectedTemplate || 'letter'
-    const combined = `=== 📄 Brief auf Deutsch (zum Versenden) ===
+    const combined = `=== 📄 ${tUI('lg.germanLetter')} ===
 
 ${letterDe}
 
 
-=== 🌐 ${locale === 'de' ? 'Übersetzung' : 'Перевод / Übersetzung'} ===
+=== 🌐 ${tUI('lg.translationSeparator')} ===
 
 ${letterLocale}`
     const blob = new Blob([combined], { type: 'text/plain;charset=utf-8' })
@@ -333,7 +213,7 @@ ${letterLocale}`
 
   const handleSave = async () => {
     if (!generatedLetter) return
-    showToast(t.letterSaved)
+    showToast(tUI('lg.letterSaved'))
   }
 
   if (authLoading) {
@@ -347,8 +227,8 @@ ${letterLocale}`
   return (
       <div className="max-w-4xl mx-auto space-y-8">
         <div>
-          <h1 className="page-title">{t.title}</h1>
-          <p className="page-subtitle">{t.subtitle}</p>
+          <h1 className="page-title">{tUI('lg.title')}</h1>
+          <p className="page-subtitle">{tUI('lg.subtitle')}</p>
         </div>
 
         {sourceDoc && (
@@ -360,11 +240,11 @@ ${letterLocale}`
                 </svg>
               </div>
               <div>
-                <p className="font-medium text-blue-900">{t.fromAnalyzer}</p>
-                <p className="text-sm text-blue-700">{sourceDoc.file_name || 'Неизвестный документ'}</p>
+                <p className="font-medium text-blue-900">{tUI('lg.fromAnalyzer')}</p>
+                <p className="text-sm text-blue-700">{sourceDoc.file_name || tUI('lg.unknownDocument')}</p>
               </div>
               <span className="ml-auto px-3 py-1 bg-blue-100 text-blue-700 text-sm rounded-full">
-                {sourceDoc.analysis_result?.sender || sourceDoc.organization_type || 'Неизвестный источник'}
+                {sourceDoc.analysis_result?.sender || sourceDoc.organization_type || tUI('lg.unknownSource')}
               </span>
             </div>
           </div>
@@ -374,8 +254,8 @@ ${letterLocale}`
           {!generatedLetter ? (
             <div className="p-8 space-y-8">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-4">{t.selectTemplate}</label>
-                <p className="text-sm text-gray-500 mb-4">{t.templateDescription}</p>
+                <label className="block text-sm font-medium text-gray-700 mb-4">{tUI('lg.selectTemplate')}</label>
+                <p className="text-sm text-gray-500 mb-4">{tUI('lg.templateDescription')}</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {templateOptions.map((option) => (
                     <button
@@ -407,11 +287,11 @@ ${letterLocale}`
               <div className="pt-6 border-t border-gray-100" />
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">{t.recipient}</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{tUI('lg.recipient')}</label>
                 <textarea
                   value={recipient}
                   onChange={(e) => setRecipient(e.target.value)}
-                  placeholder={t.recipientPlaceholder}
+                  placeholder={tUI('lg.recipientPlaceholder')}
                   rows={4}
                   className="w-full px-4 py-3 card-input transition"
                 />
@@ -429,20 +309,20 @@ ${letterLocale}`
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                       </svg>
-                      {t.generating}
+                      {tUI('lg.generating')}
                     </>
                   ) : (
                     <>
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 01-2-2V7a1 1 0 011-1h1a2 2 0 100-4H4a1 1 0 01-1-1V5a1 1 0 00-1-1h3a1 1 0 001-1V4z" />
                       </svg>
-                      {t.generate}
+                      {tUI('lg.generate')}
                     </>
                   )}
                 </button>
                 {!searchParams.get('id') && !searchParams.get('template') && (
                   <p className="text-center text-sm text-gray-500 mt-3">
-                    {t.needDocument} в <a href={`/${locale}/modules/document-analyzer`} className="text-blue-600 hover:underline">{t.docAnalyzerLink}</a>
+                    {tUI('lg.needDocument')} в <a href={`/${locale}/modules/document-analyzer`} className="text-blue-600 hover:underline">{tUI('lg.docAnalyzerLink')}</a>
                   </p>
                 )}
               </div>
@@ -451,7 +331,7 @@ ${letterLocale}`
             <div className="p-8 space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="page-title">{t.preview}</h2>
+                  <h2 className="page-title">{tUI('lg.preview')}</h2>
                   <span className="inline-flex items-center gap-2 px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium mt-2">
                     {templateOptions.find(opt => opt.value === generatedLetter?.template_type)?.icon}
                     {generatedLetter?.template_type}
@@ -461,7 +341,7 @@ ${letterLocale}`
                   onClick={() => { setGeneratedLetter(null); setGeneratedContent(''); setIsEditing(false); }}
                   className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition"
                 >
-                  ← Новое письмо
+                  {tUI('lg.newLetter')}
                 </button>
               </div>
 
@@ -475,7 +355,7 @@ ${letterLocale}`
                     onClick={handleCopy}
                     className="px-3 py-1.5 text-xs bg-white text-blue-700 border border-blue-300 rounded-lg hover:bg-blue-50 transition font-medium"
                   >
-                    {t.copy}
+                    {tUI('lg.copy')}
                   </button>
                 </div>
                 {isEditing ? (
@@ -496,12 +376,12 @@ ${letterLocale}`
               {/* Block 2: Translation */}
               <div className="bg-green-50 border border-green-200 rounded-xl p-6">
                 <div className="flex justify-between items-center mb-4">
-                  <h3 className="font-semibold text-green-800">🌐 Перевод на ваш язык</h3>
+                  <h3 className="font-semibold text-green-800">🌐 {tUI('lg.translationLabel')}</h3>
                   <button
                     onClick={handleCopyLocale}
                     className="px-3 py-1.5 text-xs bg-white text-green-700 border border-green-300 rounded-lg hover:bg-green-50 transition font-medium"
                   >
-                    {t.copy}
+                    {tUI('lg.copy')}
                   </button>
                 </div>
                 <pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit', lineHeight: '1.6', fontSize: '0.875rem', color: '#1f2937', margin: 0 }}>
@@ -517,7 +397,7 @@ ${letterLocale}`
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2M16 12h.01M12 12h.01M8 12h.01M16 8h.01M12 8h.01M8 8h.01" />
                   </svg>
-                  {t.copy}
+                  {tUI('lg.copy')}
                 </button>
                 <button
                   onClick={handleDownload}
@@ -526,7 +406,7 @@ ${letterLocale}`
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                   </svg>
-                  {t.download}
+                  {tUI('lg.download')}
                 </button>
                 <button
                   onClick={handleSave}
@@ -535,7 +415,7 @@ ${letterLocale}`
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
                   </svg>
-                  {t.save}
+                  {tUI('lg.save')}
                 </button>
                 <button
                   onClick={() => setIsEditing(!isEditing)}
@@ -544,7 +424,7 @@ ${letterLocale}`
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                   </svg>
-                  {isEditing ? t.done : t.edit}
+                  {isEditing ? tUI('lg.done') : tUI('lg.edit')}
                 </button>
               </div>
             </div>

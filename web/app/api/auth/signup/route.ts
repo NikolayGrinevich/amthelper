@@ -37,6 +37,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // If email confirmation is enabled, session is null
+    // User must confirm email before they can log in
+    if (!data.session) {
+      return NextResponse.json({
+        success: true,
+        needsEmailConfirmation: true,
+        user: {
+          id: data.user.id,
+          email: data.user.email,
+        },
+        session: false,
+      });
+    }
+
     // Create user profile in database using service role (bypasses RLS)
     // Only columns that exist in the live `users` table: id, email, tier, language, stripe_customer_id, pro_expires_at, created_at, updated_at
     if (!supabaseAdmin) {
