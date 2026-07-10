@@ -66,7 +66,7 @@ export default function BillingPage() {
               <h3 className="font-semibold text-lg text-blue-900 mb-1">
                 {tUI('pro')}
               </h3>
-              <p className="text-2xl font-bold text-blue-900 mb-3">9,99€</p>
+              <p className="text-2xl font-bold text-blue-900 mb-3">4,99€</p>
               <ul className="space-y-2 text-sm text-blue-800">
                 <li>✓ {tUI('proAnalysesMonth')}</li>
                 <li>✓ {tUI('proLettersMonth')}</li>

@@ -49,10 +49,10 @@ interface TemplateOption {
 }
 
 const TEMPLATE_TYPES: { value: TemplateType; icon: string; labelKey: string; descKey: string }[] = [
-  { value: 'Widerspruch', icon: '⚖️', labelKey: 'templates.widerspruch.label', descKey: 'templates.widerspruch.desc' },
-  { value: 'Antrag', icon: '📝', labelKey: 'templates.antrag.label', descKey: 'templates.antrag.desc' },
-  { value: 'Nachfrage', icon: '❓', labelKey: 'templates.nachfrage.label', descKey: 'templates.nachfrage.desc' },
-  { value: 'Beschwerde', icon: '📢', labelKey: 'templates.beschwerde.label', descKey: 'templates.beschwerde.desc' },
+  { value: 'Widerspruch', icon: '⚖️', labelKey: 'lg.templates.widerspruch.label', descKey: 'lg.templates.widerspruch.desc' },
+  { value: 'Antrag', icon: '📝', labelKey: 'lg.templates.antrag.label', descKey: 'lg.templates.antrag.desc' },
+  { value: 'Nachfrage', icon: '❓', labelKey: 'lg.templates.nachfrage.label', descKey: 'lg.templates.nachfrage.desc' },
+  { value: 'Beschwerde', icon: '📢', labelKey: 'lg.templates.beschwerde.label', descKey: 'lg.templates.beschwerde.desc' },
 ]
 
 export default function LetterGeneratorPage() {
