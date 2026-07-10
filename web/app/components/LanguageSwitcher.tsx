@@ -15,9 +15,12 @@ const localeFlags: Record<Locale, string> = {
 interface LanguageSwitcherProps {
   variant?: 'light' | 'dark';
   className?: string;
+  /** 'up' = dropdown opens upward (for bottom-anchored containers like sidebar) */
+  /** 'down' = dropdown opens downward (for top-anchored containers like nav bars) */
+  dropDirection?: 'up' | 'down';
 }
 
-export function LanguageSwitcher({ variant = 'light', className = '' }: LanguageSwitcherProps) {
+export function LanguageSwitcher({ variant = 'light', className = '', dropDirection = 'down' }: LanguageSwitcherProps) {
   const currentLocale = useLocale();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -37,15 +40,12 @@ export function LanguageSwitcher({ variant = 'light', className = '' }: Language
       setIsOpen(false);
       return;
     }
-    // Use window.location for full page navigation (works reliably across all browsers)
-    // pathname from next/navigation may NOT include locale prefix when using next-intl middleware
     const fullPath = window.location.pathname;
     const segments = fullPath.split('/');
     if (segments.length > 1 && locales.includes(segments[1] as Locale)) {
       segments[1] = newLocale;
       const newPath = segments.join('/') || `/${newLocale}`;
       setIsOpen(false);
-      // Use setTimeout to ensure state update completes before navigation
       setTimeout(() => { window.location.href = newPath; }, 0);
     } else {
       setIsOpen(false);
@@ -57,6 +57,11 @@ export function LanguageSwitcher({ variant = 'light', className = '' }: Language
   const textColor = isDark ? 'text-white' : 'text-gray-700';
   const hoverBg = isDark ? 'hover:bg-white/10' : 'hover:bg-gray-100';
   const borderClass = isDark ? 'border-white/20' : 'border-gray-200';
+
+  // Dropdown positioning: 'up' for sidebar (bottom of screen), 'down' for nav/auth (top of screen)
+  const dropdownPosition = dropDirection === 'up'
+    ? 'bottom-full mb-2'
+    : 'top-full mt-2';
 
   return (
     <div ref={dropdownRef} className={`relative ${className}`}>
@@ -78,7 +83,7 @@ export function LanguageSwitcher({ variant = 'light', className = '' }: Language
       </button>
 
       {isOpen && (
-        <div className="absolute bottom-full mb-2 right-0 left-0 sm:left-auto sm:right-0 sm:min-w-[180px] bg-white rounded-xl shadow-lg border border-gray-100 py-1 z-50">
+        <div className={`absolute ${dropdownPosition} right-0 left-0 sm:left-auto sm:right-0 sm:min-w-[180px] bg-white rounded-xl shadow-lg border border-gray-100 py-1 z-50`}>
           {locales.map((loc) => (
             <button
               key={loc}

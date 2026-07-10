@@ -139,9 +139,9 @@ export function SidebarClient({ locale, nav }: SidebarClientProps) {
         <div className="mb-3">
           {isOpen && <p className="text-xs mb-1" style={{ color: 'var(--color-sidebar-text)' }}>{t('language')}</p>}
           {isOpen ? (
-            <LanguageSwitcher variant="dark" className="w-full" />
+            <LanguageSwitcher variant="dark" dropDirection="up" className="w-full" />
           ) : (
-            <LanguageSwitcher variant="dark" className="w-full" />
+            <LanguageSwitcher variant="dark" dropDirection="up" className="w-full" />
           )}
         </div>
 
