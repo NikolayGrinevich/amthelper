@@ -11,15 +11,17 @@ export default function BillingPage() {
   const [status, setStatus] = useState<string | null>(null);
   const [userTier, setUserTier] = useState<string | null>(null);
   const [proExpiresAt, setProExpiresAt] = useState<string | null>(null);
+  const [profileLoaded, setProfileLoaded] = useState(false);
 
   useEffect(() => {
     fetch('/api/auth/me', { credentials: 'include' })
       .then(r => r.json())
       .then(data => {
-        if (data?.tier) setUserTier(data.tier);
-        if (data?.pro_expires_at) setProExpiresAt(data.pro_expires_at);
+        if (data?.user?.tier) setUserTier(data.user.tier);
+        if (data?.user?.pro_expires_at) setProExpiresAt(data.user.pro_expires_at);
       })
-      .catch(() => {});
+      .catch(() => {})
+      .finally(() => setProfileLoaded(true));
   }, []);
 
   const openPortal = async () => {
@@ -30,6 +32,7 @@ export default function BillingPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
+        body: JSON.stringify({ locale }),
       });
       if (!res.ok) {
         setStatus(t('noSubscription') || 'No subscription found');
@@ -38,6 +41,29 @@ export default function BillingPage() {
       const { url } = await res.json();
       if (url) window.location.href = url;
     } catch (e) {
+      setStatus('Error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCheckout = async () => {
+    setLoading(true);
+    setStatus(null);
+    try {
+      const res = await fetch('/api/payments/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ locale }),
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        setStatus(data.error || t('errorOccurred') || 'Error');
+      }
+    } catch {
       setStatus('Error');
     } finally {
       setLoading(false);
@@ -82,13 +108,30 @@ export default function BillingPage() {
             </div>
           )}
 
-          <button
-            onClick={openPortal}
-            disabled={loading}
-            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
-          >
-            {loading ? tUI('loadingText') : tUI('manageBilling')}
-          </button>
+          {!profileLoaded ? (
+            <button
+              disabled
+              className="px-6 py-3 bg-gray-300 text-white rounded-lg cursor-not-allowed"
+            >
+              {tUI('loadingText')}
+            </button>
+          ) : userTier === 'pro' ? (
+            <button
+              onClick={openPortal}
+              disabled={loading}
+              className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
+            >
+              {loading ? tUI('loadingText') : tUI('manageBilling')}
+            </button>
+          ) : (
+            <button
+              onClick={handleCheckout}
+              disabled={loading}
+              className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-700 text-white rounded-lg hover:from-blue-700 hover:to-indigo-800 transition disabled:opacity-50 font-semibold"
+            >
+              {loading ? tUI('redirectingToStripe') : tUI('upgradeToPro')}
+            </button>
+          )}
           {status && <p className="mt-4 text-sm text-gray-600">{status}</p>}
         </div>
       </div>
