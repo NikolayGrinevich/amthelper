@@ -62,14 +62,30 @@ export async function POST(request: NextRequest) {
       userEmail = user.email!;
     }
 
-    const body = await request.json().catch(() => ({}));
-    const locale = body.locale || 'de';
-
-    const { data: profile } = await supabase
+    // Server-side guard: prevent duplicate subscription for PRO users
+    const { data: profile, error: profileError } = await supabase
       .from('users')
-      .select('stripe_customer_id')
+      .select('tier, stripe_customer_id, subscription_status')
       .eq('id', userId)
       .maybeSingle();
+
+    if (profileError) {
+      console.error('Checkout profile lookup failed');
+      return NextResponse.json(
+        { error: 'Internal server error' },
+        { status: 500 }
+      );
+    }
+
+    if (profile?.tier === 'pro' || profile?.subscription_status === 'active') {
+      return NextResponse.json(
+        { error: 'You already have an active Pro subscription' },
+        { status: 409 }
+      );
+    }
+
+    const body = await request.json().catch(() => ({}));
+    const locale = body.locale || 'de';
 
     let customerId = profile?.stripe_customer_id;
 
@@ -114,7 +130,7 @@ export async function POST(request: NextRequest) {
   } catch (error: any) {
     console.error('Checkout error:', error);
     return NextResponse.json(
-      { error: error.message || 'Internal server error' },
+      { error: 'Internal server error' },
       { status: 500 }
     );
   }

@@ -487,8 +487,8 @@
       "free": {
         "name": "Free",
         "desc": "Kişisel kullanım için",
-        "f1": "Ayda 5 belge analizi",
-        "f2": "Son tarih takibi",
+        "f1": "3 belge analizi ayda",
+        "f2": "3 mektup ayda",
         "f3": "Temel mektup şablonları",
         "f4": "E-posta desteği",
         "cta": "Başla"
@@ -496,13 +496,14 @@
       "pro": {
         "name": "Pro",
         "desc": "Düzenli bürokrasi yardımı için",
-        "f1": "Sınırsız belge analizi",
-        "f2": "AI mektup oluşturma",
+        "f1": "20 belge analizi ayda",
+        "f2": "20 AI mektup ayda",
         "f3": "Tüm şablonlar + özel şablonlar",
         "f4": "Öncelikli e-posta desteği",
         "f5": "Son tarih hatırlatmaları",
         "f6": "Belge geçmişi",
-        "cta": "Pro denemesini başlat"
+        "cta": "Pro'ya geç",
+        "manageCta": "Aboneliği yönet"
       }
     },
     "subscription": {

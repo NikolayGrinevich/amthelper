@@ -487,8 +487,8 @@
       "free": {
         "name": "Free",
         "desc": "Für persönliche Nutzung",
-        "f1": "5 Dokumentenanalysen pro Monat",
-        "f2": "Fristenverfolgung",
+        "f1": "3 Dokumentenanalysen pro Monat",
+        "f2": "3 Briefe pro Monat",
         "f3": "Grundlegende Briefvorlagen",
         "f4": "E-Mail-Support",
         "cta": "Loslegen"
@@ -496,13 +496,14 @@
       "pro": {
         "name": "Pro",
         "desc": "Für regelmäßige Hilfe bei Bürokratie",
-        "f1": "Unbegrenzte Dokumentenanalysen",
-        "f2": "KI-gestützte Briefgenerierung",
+        "f1": "20 Dokumentenanalysen pro Monat",
+        "f2": "20 KI-Briefe pro Monat",
         "f3": "Alle Vorlagen + eigene Vorlagen",
         "f4": "Priorisierter E-Mail-Support",
         "f5": "Frist-Erinnerungen",
         "f6": "Dokumentenverlauf",
-        "cta": "Pro-Test starten"
+        "cta": "Zu Pro wechseln",
+        "manageCta": "Abonnement verwalten"
       }
     },
     "subscription": {

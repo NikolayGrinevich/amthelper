@@ -160,7 +160,7 @@ export async function POST(request: NextRequest) {
               if (count !== null && count >= 3) {
                 return NextResponse.json({
                   error: 'Free limit reached',
-                  message: 'Upgrade to Pro for unlimited access',
+                  message: 'Monthly limit reached. Upgrade to Pro for up to 20 analyses per month.',
                   upgradeUrl: '/modules/billing',
                 }, { status: 402 });
               }

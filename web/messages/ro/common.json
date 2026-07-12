@@ -487,8 +487,8 @@
       "free": {
         "name": "Free",
         "desc": "Pentru uz personal",
-        "f1": "5 analize de documente pe lună",
-        "f2": "Urmărirea termenelor",
+        "f1": "3 analize de documente pe lună",
+        "f2": "3 scrisori pe lună",
         "f3": "Șabloane de scrisori de bază",
         "f4": "Suport prin email",
         "cta": "Începe"
@@ -496,13 +496,14 @@
       "pro": {
         "name": "Pro",
         "desc": "Pentru ajutor regulat cu birocrația",
-        "f1": "Analize nelimitate de documente",
-        "f2": "Generare de scrisori cu AI",
+        "f1": "20 analize de documente pe lună",
+        "f2": "20 scrisori AI pe lună",
         "f3": "Toate șabloanele + șabloane personalizate",
         "f4": "Suport prioritar prin email",
         "f5": "Memento pentru termene",
         "f6": "Istoricul documentelor",
-        "cta": "Începe proba Pro"
+        "cta": "Treci la Pro",
+        "manageCta": "Gestionează abonamentul"
       }
     },
     "subscription": {
