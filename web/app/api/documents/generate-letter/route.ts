@@ -140,29 +140,47 @@ ANTWORTFORMAT — NUR dieses JSON, kein Text davor oder danach:
   }
 }
 
-async function getAnalysisDataFromDocument(analyzedDocumentId: string): Promise<{
-  analysisResult: AnalysisResult | null;
-  recipientAddress: string | null;
-}> {
-  if (!supabaseAdmin) return { analysisResult: null, recipientAddress: null };
+type AnalysisLookupResult =
+  | {
+      status: 'found';
+      analysisResult: AnalysisResult;
+      recipientAddress: string | null;
+    }
+  | {
+      status: 'not_found';
+    }
+  | {
+      status: 'error';
+    };
+
+async function getAnalysisDataFromDocument(
+  analyzedDocumentId: string,
+  userId: string
+): Promise<AnalysisLookupResult> {
+  if (!supabaseAdmin) return { status: 'error' };
 
   try {
     const { data, error } = await supabaseAdmin
       .from('analyzed_documents')
       .select('analysis_result')
       .eq('id', analyzedDocumentId)
-      .single();
+      .eq('user_id', userId)
+      .maybeSingle();
 
-    if (error || !data?.analysis_result) return { analysisResult: null, recipientAddress: null };
+    if (error) {
+      return { status: 'error' };
+    }
+
+    if (!data?.analysis_result) return { status: 'not_found' };
 
     const result = data.analysis_result as AnalysisResult;
 
     const recipientAddress =
       result.recipient_address || result.sender || result.recipient || null;
 
-    return { analysisResult: result, recipientAddress };
+    return { status: 'found', analysisResult: result, recipientAddress };
   } catch {
-    return { analysisResult: null, recipientAddress: null };
+    return { status: 'error' };
   }
 }
 
@@ -253,19 +271,45 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Validate template_type against DB constraint — BEFORE Claude
+    const VALID_TEMPLATE_TYPES = [
+      'Widerspruch',
+      'Antrag',
+      'Nachfrage',
+      'Beschwerde',
+    ] as const;
+    if (!VALID_TEMPLATE_TYPES.includes(effectiveLetterType as any)) {
+      return NextResponse.json(
+        { error: 'Invalid template type' },
+        { status: 400 }
+      );
+    }
+
     // Try to get document analysis data if analyzed_document_id is provided
     let analysisData: AnalysisResult | null = null;
     let effectiveRecipientAddress = recipient_address;
 
     if (analyzed_document_id) {
-      const docData = await getAnalysisDataFromDocument(analyzed_document_id);
+      const docData = await getAnalysisDataFromDocument(analyzed_document_id, userId);
+      if (docData.status === 'not_found') {
+        return NextResponse.json(
+          { error: 'Document not found' },
+          { status: 404 }
+        );
+      }
+      if (docData.status === 'error') {
+        return NextResponse.json(
+          { error: 'Internal server error' },
+          { status: 500 }
+        );
+      }
       analysisData = docData.analysisResult;
       if (!effectiveRecipientAddress && docData.recipientAddress) {
         effectiveRecipientAddress = docData.recipientAddress;
       }
     }
 
-    if (!effectiveRecipientAddress) {
+    if (!effectiveRecipientAddress || typeof effectiveRecipientAddress !== 'string') {
       return NextResponse.json(
         { error: 'Missing recipient_address (provide directly or via analyzed_document_id)' },
         { status: 400 }
@@ -278,6 +322,26 @@ export async function POST(request: NextRequest) {
       effectiveRecipientAddress,
       locale ?? 'de'
     );
+
+    // Save generated letter for usage tracking — BEFORE returning to client
+    const { error: insertError } = await supabaseAdmin
+      .from('generated_letters')
+      .insert([{
+        user_id: userId,
+        analyzed_document_id: analyzed_document_id || null,
+        template_type: effectiveLetterType,
+        recipient: effectiveRecipientAddress,
+        content: letter_de,
+        status: 'draft',
+      }]);
+
+    if (insertError) {
+      console.error('Failed to save generated letter for usage tracking');
+      return NextResponse.json(
+        { error: 'Internal server error' },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json({
       success: true,

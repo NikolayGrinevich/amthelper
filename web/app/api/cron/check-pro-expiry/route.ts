@@ -6,11 +6,15 @@ export const maxDuration = 60;
 
 export async function GET(request: NextRequest) {
   try {
-    // Cron auth: check Vercel CRON secret
+    // Cron auth: fail-closed
     const authHeader = request.headers.get('authorization');
     const cronSecret = process.env.CRON_SECRET;
 
-    if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
+    if (!cronSecret) {
+      return NextResponse.json({ error: 'Server configuration error' }, { status: 503 });
+    }
+
+    if (authHeader !== `Bearer ${cronSecret}`) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -18,7 +22,7 @@ export async function GET(request: NextRequest) {
     const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
     if (!supabaseUrl || !serviceKey) {
-      return NextResponse.json({ error: 'Missing Supabase credentials' }, { status: 500 });
+      return NextResponse.json({ error: 'Server configuration error' }, { status: 500 });
     }
 
     const adminDb = createClient(supabaseUrl, serviceKey, {
@@ -35,18 +39,17 @@ export async function GET(request: NextRequest) {
       .select('id, email');
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json({ error: 'Database error' }, { status: 500 });
     }
 
     return NextResponse.json({
       success: true,
       downgraded: data?.length || 0,
-      users: data || [],
       checked_at: new Date().toISOString(),
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Check failed' },
+      { error: 'Internal server error' },
       { status: 500 }
     );
   }

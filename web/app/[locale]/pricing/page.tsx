@@ -76,16 +76,19 @@ export default function PricingPage() {
   const handleSelect = async (planId: string) => {
     setLoading(planId);
     try {
-      const res = await fetch('/api/subscriptions/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ planId }),
-      });
-      if (!res.ok) throw new Error('Failed to start checkout');
-      const { url } = await res.json();
-      if (url) window.location.href = url;
-    } catch (e) {
-      router.push(`/${locale}/auth/signup?plan=${planId}`);
+      if (planId === 'pro') {
+        // Redirect authorized users to billing page (has checkout button),
+        // unauthorized users to signup with plan hint
+        const res = await fetch('/api/auth/me', { credentials: 'include' });
+        const data = await res.json();
+        if (data?.user) {
+          router.push(`/${locale}/modules/billing`);
+        } else {
+          router.push(`/${locale}/auth/signup?plan=pro`);
+        }
+      } else {
+        router.push(`/${locale}/auth/signup?plan=${planId}`);
+      }
     } finally {
       setLoading(null);
     }

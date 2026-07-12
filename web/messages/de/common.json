@@ -372,7 +372,7 @@
     },
     "validation": {
       "unsupportedFormat": "Nicht unterstütztes Format. Verwenden Sie: PDF, PNG, JPG, GIF, WebP",
-      "fileTooLarge": "Datei ist zu groß. Maximum 10 MB",
+      "fileTooLarge": "Datei ist zu groß. Maximum 5 MB",
       "maxPhotos": "Maximal {max} Fotos"
     },
     "selectedPhotos": "Ausgewählte Fotos: {count}",
@@ -384,6 +384,7 @@
     "multiPhoto": "{count} Fotos",
     "multiPhotoFileName": "{count} Fotos — {name}",
     "analysisError": "Analysefehler",
+    "saveWarning": "Die Analyse wurde abgeschlossen, aber die vollständige Speicherung des Dokuments konnte nicht bestätigt werden. Fristen und Checklisten wurden möglicherweise nicht erstellt.",
     "openingPortal": "Portal wird geöffnet...",
     "manageInStripe": "Abo im Stripe-Portal verwalten",
     "redirectingToStripe": "Weiterleitung zu Stripe...",

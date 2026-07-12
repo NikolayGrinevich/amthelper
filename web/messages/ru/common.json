@@ -89,7 +89,7 @@
       "title": "Анализ документов",
       "subtitle": "Загрузите официальное письмо для быстрого анализа",
       "uploaderCTA": "Нажмите для загрузки или перетащите файл",
-      "uploaderHint": "PNG, JPG, GIF до 10MB",
+      "uploaderHint": "PNG, JPG, GIF до 5MB",
       "actions": {
         "analyze": "Анализировать документ",
         "savePdf": "Сохранить как PDF",
@@ -372,7 +372,7 @@
     },
     "validation": {
       "unsupportedFormat": "Неподдерживаемый формат. Используйте: PDF, PNG, JPG, GIF, WebP",
-      "fileTooLarge": "Файл слишком большой. Максимум 10 MB",
+      "fileTooLarge": "Файл слишком большой. Максимум 5 MB",
       "maxPhotos": "Максимум {max} фото"
     },
     "selectedPhotos": "Выбрано фото: {count}",
@@ -384,6 +384,7 @@
     "multiPhoto": "{count} фото",
     "multiPhotoFileName": "{count} фото — {name}",
     "analysisError": "Ошибка анализа",
+    "saveWarning": "Анализ выполнен, но полное сохранение документа подтвердить не удалось. Дедлайны и чек-листы могли не создаться.",
     "openingPortal": "Открываю портал...",
     "manageInStripe": "Управлять подпиской в Stripe",
     "redirectingToStripe": "Перенаправление в Stripe...",

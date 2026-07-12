@@ -223,6 +223,27 @@ export async function POST(request: NextRequest) {
     // Send all to Claude in one call
     const analyzedData = await analyzeWithClaude(fileData, lang);
 
+    // Save analysis to DB for usage tracking — BEFORE returning to client
+    const { data: insertedAnalysis, error: insertError } = await supabaseAdmin
+      .from('analyzed_documents')
+      .insert([{
+        user_id: userId,
+        file_name: files.length > 1 ? `${files.length} photos` : files[0].name,
+        analysis_result: analyzedData,
+        organization_type: analyzedData.sender || 'Unknown',
+        deadline_date: analyzedData.deadline || null,
+      }])
+      .select('id')
+      .single();
+
+    if (insertError || !insertedAnalysis?.id) {
+      console.error('Failed to save analyzed document for usage tracking');
+      return NextResponse.json(
+        { error: 'Internal server error' },
+        { status: 500 }
+      );
+    }
+
     const firstFile = files[0];
 
     return NextResponse.json({
@@ -231,6 +252,7 @@ export async function POST(request: NextRequest) {
       file_type: firstFile.type,
       file_size: 0,
       analyzed_data: analyzedData,
+      analyzed_document_id: insertedAnalysis.id,
       multi_file: files.length > 1,
       file_count: files.length,
       timestamp: new Date().toISOString(),

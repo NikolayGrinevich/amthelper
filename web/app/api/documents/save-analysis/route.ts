@@ -34,6 +34,7 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json();
     const {
+      analyzed_document_id,
       file_name,
       file_type,
       file_size,
@@ -42,10 +43,55 @@ export async function POST(request: NextRequest) {
       deadline_date,
     } = body;
 
+    if (!analyzed_document_id) {
+      return NextResponse.json(
+        { error: 'Missing analyzed_document_id' },
+        { status: 400 }
+      );
+    }
+
     if (!file_name || !analysis_result) {
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }
+      );
+    }
+
+    if (!supabaseAdmin) {
+      return NextResponse.json(
+        { error: 'Server configuration error' },
+        { status: 500 }
+      );
+    }
+
+    // Ownership check: verify analyzed_document_id belongs to user
+    const { data: existingAnalysis, error: ownershipError } = await supabaseAdmin
+      .from('analyzed_documents')
+      .select('id, document_id')
+      .eq('id', analyzed_document_id)
+      .eq('user_id', user.id)
+      .maybeSingle();
+
+    if (ownershipError) {
+      console.error('Ownership check failed');
+      return NextResponse.json(
+        { error: 'Internal server error' },
+        { status: 500 }
+      );
+    }
+
+    if (!existingAnalysis) {
+      return NextResponse.json(
+        { error: 'Analysis not found' },
+        { status: 404 }
+      );
+    }
+
+    // Duplicate check: if document_id already set, analysis was already saved
+    if (existingAnalysis.document_id) {
+      return NextResponse.json(
+        { error: 'Analysis already saved' },
+        { status: 409 }
       );
     }
 
@@ -67,31 +113,30 @@ export async function POST(request: NextRequest) {
     if (docError) {
       console.error('Document creation error:', docError);
       return NextResponse.json(
-        { error: 'Failed to save document', details: docError.message, code: docError.code, hint: docError.hint },
+        { error: 'Failed to save document' },
         { status: 500 }
       );
     }
 
-    // Create analyzed_document record
+    // UPDATE existing analyzed_document record (created by analyze route)
+    // Do NOT overwrite analysis_result — it's the source of truth from analyze route
     const { data: analyzedDoc, error: analysisError } = await supabaseAdmin
       .from('analyzed_documents')
-      .insert([
-        {
-          user_id: user.id,
-          document_id: document.id,
-          file_name,
-          analysis_result,
-          organization_type: organization_type || analysis_result.sender || 'Unknown',
-          deadline_date: deadline_date || analysis_result.deadline || null,
-        },
-      ])
+      .update({
+        document_id: document.id,
+        file_name,
+        organization_type: organization_type || analysis_result.sender || 'Unknown',
+        deadline_date: deadline_date || analysis_result.deadline || null,
+      })
+      .eq('id', analyzed_document_id)
+      .eq('user_id', user.id)
       .select()
       .single();
 
     if (analysisError) {
-      console.error('Analyzed document creation error:', analysisError);
+      console.error('Analyzed document update error:', analysisError);
       return NextResponse.json(
-        { error: 'Failed to save analysis', details: analysisError.message, code: analysisError.code, hint: analysisError.hint },
+        { error: 'Failed to update analysis' },
         { status: 500 }
       );
     }
@@ -140,7 +185,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Save analysis error:', error);
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Save failed' },
+      { error: 'Internal server error' },
       { status: 500 }
     );
   }

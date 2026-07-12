@@ -36,10 +36,11 @@ interface UploadStateData {
   error?: string;
   fileName?: string;
   documentId?: string | null;
+  warning?: string;
 }
 
 const EXTENSIONS = ['.pdf', '.png', '.jpg', '.jpeg', '.gif', '.webp'];
-const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB per file
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB per file
 const MAX_PHOTOS = 10;
 
 const getUrgencyColor = (urgency: string) => {
@@ -166,6 +167,13 @@ export default function DocumentAnalyzerPage() {
       if (!res.ok) throw new Error(data.error || 'Analysis failed');
 
       const analysisResult: AnalysisResult = data.analyzed_data;
+      const analyzedDocId = data.analyzed_document_id;
+
+      // If no analyzed_document_id, analysis was not properly saved server-side
+      if (!analyzedDocId) {
+        throw new Error(tUI('analysisError'));
+      }
+
       const orgType = data.analyzed_data?.sender || 'Unknown';
       const deadlineDate = data.analyzed_data?.deadline || null;
 
@@ -176,6 +184,7 @@ export default function DocumentAnalyzerPage() {
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
         body: JSON.stringify({
+          analyzed_document_id: analyzedDocId,
           file_name: files.length > 1 ? tUI('multiPhotoFileName', { count: files.length, name: firstFileName }) : firstFileName,
           file_type: 'image/jpeg',
           file_size: 0,
@@ -190,9 +199,17 @@ export default function DocumentAnalyzerPage() {
         if (saveData.document) {
           setRecentDocuments(prev => [saveData.document, ...prev]);
         }
+        setUploadState({ state: 'result', result: analysisResult, fileName: uploadState.fileName, documentId: analyzedDocId });
+      } else {
+        // Analysis saved server-side (usage counted), but deadlines/checklists may not be created
+        setUploadState({
+          state: 'result',
+          result: analysisResult,
+          fileName: uploadState.fileName,
+          documentId: analyzedDocId,
+          warning: tUI('saveWarning'),
+        });
       }
-
-      setUploadState({ state: 'result', result: analysisResult, fileName: uploadState.fileName });
 
       // Cleanup preview URLs
       files.forEach(({ url }) => URL.revokeObjectURL(url));
@@ -416,6 +433,16 @@ export default function DocumentAnalyzerPage() {
         {/* RESULT */}
         {uploadState.state === 'result' && uploadState.result && (
           <div className="p-8">
+            {uploadState.warning && (
+              <div className="mb-6 p-4 bg-amber-50 border border-amber-300 rounded-xl">
+                <div className="flex items-start gap-3">
+                  <svg className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M5 19h14a2 2 0 001.84-2.75L13.74 4a2 2 0 00-3.48 0L3.16 16.25A2 2 0 005 19z" />
+                  </svg>
+                  <p className="text-sm text-amber-800">{uploadState.warning}</p>
+                </div>
+              </div>
+            )}
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-gray-900">{t('results.title')}</h2>
               <div className="flex gap-2">

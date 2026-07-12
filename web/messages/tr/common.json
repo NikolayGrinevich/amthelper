@@ -372,7 +372,7 @@
     },
     "validation": {
       "unsupportedFormat": "Desteklenmeyen format. Kullanın: PDF, PNG, JPG, GIF, WebP",
-      "fileTooLarge": "Dosya çok büyük. Maksimum 10 MB",
+      "fileTooLarge": "Dosya çok büyük. Maksimum 5 MB",
       "maxPhotos": "Maksimum {max} fotoğraf"
     },
     "selectedPhotos": "Seçilen fotoğraflar: {count}",
@@ -384,6 +384,7 @@
     "multiPhoto": "{count} fotoğraf",
     "multiPhotoFileName": "{count} fotoğraf — {name}",
     "analysisError": "Analiz hatası",
+    "saveWarning": "Analiz tamamlandı, ancak belgenin tam olarak kaydedildiği doğrulanamadı. Son tarihler ve kontrol listeleri oluşturulmamış olabilir.",
     "openingPortal": "Portal açılıyor...",
     "manageInStripe": "Stripe'de aboneliği yönet",
     "redirectingToStripe": "Stripe'e yönlendiriliyorsunuz...",

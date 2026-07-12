@@ -89,7 +89,7 @@
       "title": "Analizor de documente",
       "subtitle": "Încarcă o scrisoare oficială germană pentru o analiză rapidă",
       "uploaderCTA": "Apasă pentru a încărca sau trage fișierul",
-      "uploaderHint": "PNG, JPG, GIF până la 10MB",
+      "uploaderHint": "PNG, JPG, GIF până la 5MB",
       "actions": {
         "savePdf": "Salvează ca PDF",
         "share": "Partajează",
@@ -372,7 +372,7 @@
     },
     "validation": {
       "unsupportedFormat": "Format nesuportat. Folosiți: PDF, PNG, JPG, GIF, WebP",
-      "fileTooLarge": "Fișier prea mare. Maxim 10 MB",
+      "fileTooLarge": "Fișier prea mare. Maxim 5 MB",
       "maxPhotos": "Maxim {max} fotografii"
     },
     "selectedPhotos": "Fotografii selectate: {count}",
@@ -384,6 +384,7 @@
     "multiPhoto": "{count} fotografii",
     "multiPhotoFileName": "{count} fotografii — {name}",
     "analysisError": "Eroare de analiză",
+    "saveWarning": "Analiza a fost finalizată, dar salvarea completă a documentului nu a putut fi confirmată. Este posibil ca termenele și listele de verificare să nu fi fost create.",
     "openingPortal": "Deschid portalul...",
     "manageInStripe": "Gestionează abonamentul în Stripe",
     "redirectingToStripe": "Redirecționare la Stripe...",

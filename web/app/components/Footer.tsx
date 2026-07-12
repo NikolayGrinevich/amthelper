@@ -46,16 +46,6 @@ export function Footer() {
               </li>
             </ul>
           </div>
-          <div>
-            <h4 className="font-bold mb-3">{t('footer.social')}</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <a href="#" className="hover:underline">
-                  Twitter
-                </a>
-              </li>
-            </ul>
-          </div>
         </div>
         <div className="border-t pt-6 text-center text-sm text-gray-600">
           <p>{t('footer.copyright')}</p>
